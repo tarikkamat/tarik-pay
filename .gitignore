@@ -1,0 +1,19 @@
+# Node Modules
+node_modules
+package.json
+package-lock.json
+webpack.config.js
+src
+
+# Composer
+composer.lock
+composer.json
+
+# IDE
+.idea
+
+# VS Code
+.vscode
+
+# Logs
+log_files
