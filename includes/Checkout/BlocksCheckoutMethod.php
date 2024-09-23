@@ -11,7 +11,7 @@ use Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodTyp
  */
 class BlocksCheckoutMethod extends AbstractPaymentMethodType {
 
-	private $gateway;
+	public $gateway;
 	protected $name = 'iyzico';
 
 	public function initialize(): void
@@ -26,12 +26,15 @@ class BlocksCheckoutMethod extends AbstractPaymentMethodType {
 
 	public function get_payment_method_script_handles()
 	{
+		$dependencies = [];
+		$version = time();
+
 		$path = plugin_dir_path(PLUGIN_BASEFILE) . '/assets/blocks/woocommerce/blocks.asset.php';
 
 		if (file_exists($path)) {
 			$asset = require $path;
 			$version = filemtime(plugin_dir_path(PLUGIN_BASEFILE) . 'assets/blocks/woocommerce/blocks.js');
-			$dependencies = $asset['dependencies'] ?? [];
+			$dependencies = is_null($asset['dependencies']);
 		}
 
 		wp_register_script(
