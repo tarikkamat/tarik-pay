@@ -211,3 +211,9 @@ msgstr ""
 
 msgid "Payment Checkout Value"
 msgstr "Ödeme Ekran Mesajı"
+
+msgid "These payment method settings are made through the admin menu."
+msgstr "Bu ödeme yöntemi ayarları yönetici menüsünden yapılmaktadır."
+
+msgid "Click to go to settings."
+msgstr "Ayarlar için tıklayınız."

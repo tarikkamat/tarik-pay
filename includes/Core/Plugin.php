@@ -27,7 +27,6 @@ class Plugin {
 		require_once PLUGIN_PATH . '/includes/Common/Hooks/IyzicoResponse.php';
 		require_once PLUGIN_PATH . '/includes/Common/Interfaces/PaymentGatewayInterface.php';
 
-
 		require_once PLUGIN_PATH . '/includes/Checkout/CheckoutForm.php';
 		require_once PLUGIN_PATH . '/includes/Checkout/BlocksCheckoutMethod.php';
 		require_once PLUGIN_PATH . '/includes/Common/Helpers/BlocksCheckoutSupport.php';
@@ -61,8 +60,8 @@ class Plugin {
 	public function actionLinks( $links ): array {
 		$custom_links   = array();
 		$custom_links[] = '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout&section=iyzico' ) . '">' . __( 'Settings', 'woocommerce' ) . '</a>';
-		$custom_links[] = '<a target="_blank" href="https://dev.iyzipay.com/tr/acik-kaynak/woocommerce">' . __( 'Docs', 'woocommerce' ) . '</a>';
-		$custom_links[] = '<a target="_blank" href="https://www.iyzico.com/destek/iletisim">' . __( 'Support', 'woocommerce-iyzico' ) . '</a>';
+		$custom_links[] = '<a target="_blank" href="https://docs.iyzico.com/">' . __( 'Docs', 'woocommerce' ) . '</a>';
+		$custom_links[] = '<a target="_blank" href="https://iyzico.com/destek/iletisim">' . __( 'Support', 'woocommerce-iyzico' ) . '</a>';
 
 		return array_merge( $custom_links, $links );
 	}

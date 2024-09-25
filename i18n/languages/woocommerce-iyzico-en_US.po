@@ -199,3 +199,9 @@ msgstr "*Contact to activate webhook "
 
 msgid "Payment Checkout Value"
 msgstr "Payment Checkout Message "
+
+msgid "These payment method settings are made through the admin menu."
+msgstr "These payment method settings are made through the admin menu."
+
+msgid "Click to go to settings."
+msgstr "Click to go to settings."
