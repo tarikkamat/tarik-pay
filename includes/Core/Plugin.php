@@ -2,6 +2,7 @@
 
 namespace Iyzico\IyzipayWoocommerce\Core;
 
+use Iyzico\IyzipayWoocommerce\Admin\SettingsPage;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\BlocksSupport;
 use Iyzico\IyzipayWoocommerce\Checkout\CheckoutForm;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\Logger;
@@ -22,20 +23,26 @@ class Plugin {
 
 		BlocksSupport::init();
 		HighPerformanceOrderStorageSupport::init();
+
+		if ( is_admin() ) {
+			new SettingsPage();
+		}
 	}
 
 	private function loadDependencies(): void {
+		require_once PLUGIN_PATH . '/includes/Common/Helpers/BlocksSupport.php';
+		require_once PLUGIN_PATH . '/includes/Common/Helpers/HighPerformanceOrderStorageSupport.php';
+
+		require_once PLUGIN_PATH . '/includes/Admin/SettingsPage.php';
+
 		require_once PLUGIN_PATH . '/includes/Common/Hooks/IyzicoResponse.php';
 		require_once PLUGIN_PATH . '/includes/Common/Interfaces/PaymentGatewayInterface.php';
 
 		require_once PLUGIN_PATH . '/includes/Checkout/CheckoutForm.php';
 		require_once PLUGIN_PATH . '/includes/Checkout/BlocksCheckoutMethod.php';
-		require_once PLUGIN_PATH . '/includes/Common/Helpers/BlocksSupport.php';
 
 		require_once PLUGIN_PATH . '/includes/Pwi/Pwi.php';
 		require_once PLUGIN_PATH . '/includes/Pwi/BlocksPwiMethod.php';
-
-		require_once PLUGIN_PATH . '/includes/Common/Helpers/HighPerformanceOrderStorageSupport.php';
 	}
 
 	private function setLocale(): void {

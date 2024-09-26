@@ -11,7 +11,7 @@ const Label = (props) => {
 
 const { getSetting } = window.wc.wcSettings
 const settings = getSetting('iyzico_data', {})
-const label = decodeEntities(settings.title)
+const label = decodeEntities(settings.title || "Credit/Debit Card")
 
 const CheckoutOptions = {
     name: "iyzico",

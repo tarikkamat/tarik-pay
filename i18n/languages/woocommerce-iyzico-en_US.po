@@ -208,3 +208,15 @@ msgstr "Click to go to settings."
 
 msgid "Your money safe with iyzico! Store your iyzico card and enjoy one-click payment. All your transactions under the iyzico Buyer Protection guarantee. Get live support 24/7."
 msgstr "Your money safe with iyzico! Store your iyzico card and enjoy one-click payment. All your transactions under the iyzico Buyer Protection guarantee. Get live support 24/7."
+
+msgid "Save Settings"
+msgstr "Save Settings"
+
+msgid "Permission denied."
+msgstr "Permission denied."
+
+msgid "Error"
+msgstr "Error"
+
+msgid "Checkout Form"
+msgstr "Checkout Form"

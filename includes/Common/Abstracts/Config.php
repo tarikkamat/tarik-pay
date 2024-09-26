@@ -4,6 +4,8 @@ namespace Iyzico\IyzipayWoocommerce\Common\Abstracts;
 
 abstract class Config {
 	public $optionsTableKey;
+	public $defaultSettings = array();
+	public $form_fields = array();
 
 	public function getSettings() {
 		$settings = get_option( $this->optionsTableKey, array() );
@@ -52,7 +54,7 @@ abstract class Config {
 					'enabled'     => 'yes',
 					'title'       => __( 'Pay with iyzico', 'woocommerce-iyzico' ),
 					'button_text' => __( 'Pay with iyzico', 'woocommerce-iyzico' ),
-					'description' => __( 'Your money safe with iyzico! Store your iyzico card and enjoy one-click payment. All your transactions under the iyzico Buyer Protection guarantee. Get live support 24/7.', 'woocommerce-iyzico' )
+					'description' => __( "Your money safe with iyzico! Store your iyzico card and enjoy one-click payment. All your transactions under the iyzico Buyer Protection guarantee. Get live support 24/7.", 'woocommerce-iyzico' ),
 				),
 			)
 		);

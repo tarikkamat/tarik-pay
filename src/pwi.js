@@ -11,7 +11,7 @@ const Label = (props) => {
 
 const { getSetting } = window.wc.wcSettings
 const settings = getSetting('pwi_data', {})
-const label = decodeEntities(settings.title)
+const label = decodeEntities(settings.title || "Pay with iyzico")
 
 const PwiOptions = {
     name: "pwi",

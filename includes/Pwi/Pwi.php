@@ -13,23 +13,30 @@ use Iyzico\IyzipayWoocommerce\Common\Interfaces\PaymentGatewayInterface;
 class Pwi extends WC_Payment_Gateway_CC implements PaymentGatewayInterface {
 
 	public $pwiSettings;
-	public WC_Order|null $order;
+	public $order;
+	public $form_fields;
 
 	public function __construct() {
 		$this->id                 = "pwi";
-		$this->pwiSettings        = new PwiSettings();
 		$this->method_title       = __( 'Pay with iyzico', 'woocommerce-iyzico' );
 		$this->method_description = __( 'Best Payment Solution', 'woocommerce-iyzico' );
-		$this->enabled            = $this->pwiSettings->findByKey( 'enabled' );
-		$this->title              = apply_filters( 'pwi_woocommerce_gateway_title_text', $this->pwiSettings->findByKey( 'title' ) );
-		$this->description        = apply_filters( 'pwi_woocommerce_gateway_description_text', $this->pwiSettings->findByKey( 'description' ) );
-		$this->order_button_text  = apply_filters( 'pwi_woocommerce_gateway_button_text', $this->pwiSettings->findByKey( 'button_text' ) );
-		$this->has_fields         = true;
-		$this->supports           = [
+		$this->pwiSettings        = new PwiSettings();
+		$this->form_fields        = $this->pwiSettings->getFormFields();
+		$this->init_settings();
+		$settings = $this->pwiSettings->getSettings();
+
+		$this->enabled           = $settings['enabled'];
+		$this->title             = $settings['title'];
+		$this->description       = $settings['description'];
+		$this->order_button_text = $settings['button_text'] ?? '';
+		$this->icon              = $settings['icon'] ?? '';
+		$this->has_fields        = true;
+		$this->supports          = [
 			'products',
 			'refunds'
 		];
-		$this->init_settings();
+
+		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ] );
 	}
 
 	public function process_payment( $order_id ) {

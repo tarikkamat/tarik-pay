@@ -48,7 +48,7 @@ class BlocksPwiMethod extends AbstractPaymentMethodType {
 	public function get_payment_method_data(): array {
 		return [
 			'title'       => $this->settings['title'] ?? 'Pay with iyzico',
-			'description' => $this->get_setting( 'description' )
+			'description' => $this->get_setting( 'description' ) ?? 'Best Payment Solution',
 		];
 	}
 }

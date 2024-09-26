@@ -220,3 +220,15 @@ msgstr "Ayarlar için tıklayınız."
 
 msgid "Your money safe with iyzico! Store your iyzico card and enjoy one-click payment. All your transactions under the iyzico Buyer Protection guarantee. Get live support 24/7."
 msgstr "iyzico ile Öde-Şimdi Kolay! Alışverişini ister iyzico bakiyenle, ister saklı kartınla, ister havale/EFT yöntemi ile kolayca öde; aklına takılan herhangi bir konuda iyzico Korumalı Alışveriş avantajıyla 7/24 canlı destek al."
+
+msgid "Save Settings"
+msgstr "Ayarları Kaydet"
+
+msgid "Permission denied."
+msgstr "İzin reddedildi."
+
+msgid "Error"
+msgstr "Hata"
+
+msgid "Checkout Form"
+msgstr "Ödeme Formu"
