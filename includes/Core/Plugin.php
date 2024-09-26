@@ -2,11 +2,12 @@
 
 namespace Iyzico\IyzipayWoocommerce\Core;
 
-use Iyzico\IyzipayWoocommerce\Checkout\BlocksCheckoutSupport;
+use Iyzico\IyzipayWoocommerce\Common\Helpers\BlocksSupport;
 use Iyzico\IyzipayWoocommerce\Checkout\CheckoutForm;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\Logger;
 use Iyzico\IyzipayWoocommerce\Common\Traits\PluginLoader;
 use Iyzico\IyzipayWoocommerce\Database\DatabaseManager;
+use Iyzico\IyzipayWoocommerce\Pwi\Pwi;
 
 class Plugin {
 
@@ -19,7 +20,7 @@ class Plugin {
 		$this->initPaymentGateway();
 		$this->generateWebhookKey();
 
-		BlocksCheckoutSupport::init();
+		BlocksSupport::init();
 		HighPerformanceOrderStorageSupport::init();
 	}
 
@@ -29,7 +30,10 @@ class Plugin {
 
 		require_once PLUGIN_PATH . '/includes/Checkout/CheckoutForm.php';
 		require_once PLUGIN_PATH . '/includes/Checkout/BlocksCheckoutMethod.php';
-		require_once PLUGIN_PATH . '/includes/Common/Helpers/BlocksCheckoutSupport.php';
+		require_once PLUGIN_PATH . '/includes/Common/Helpers/BlocksSupport.php';
+
+		require_once PLUGIN_PATH . '/includes/Pwi/Pwi.php';
+		require_once PLUGIN_PATH . '/includes/Pwi/BlocksPwiMethod.php';
 
 		require_once PLUGIN_PATH . '/includes/Common/Helpers/HighPerformanceOrderStorageSupport.php';
 	}
@@ -53,6 +57,7 @@ class Plugin {
 
 	public function addGateways( $methods ) {
 		$methods[] = CheckoutForm::class;
+		$methods[] = Pwi::class;
 
 		return $methods;
 	}

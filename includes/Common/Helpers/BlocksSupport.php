@@ -1,16 +1,18 @@
 <?php
 
-namespace Iyzico\IyzipayWoocommerce\Checkout;
+namespace Iyzico\IyzipayWoocommerce\Common\Helpers;
 
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
 use Automattic\WooCommerce\Utilities\FeaturesUtil;
+use Iyzico\IyzipayWoocommerce\Checkout\BlocksCheckoutMethod;
+use Iyzico\IyzipayWoocommerce\Pwi\BlocksPwiMethod;
 
 /**
  * Class BlocksCheckoutSupport
  *
  * @package Iyzico\IyzipayWoocommerce\Checkout
  */
-class BlocksCheckoutSupport {
+class BlocksSupport {
 
 	/**
 	 * @return void
@@ -37,6 +39,7 @@ class BlocksCheckoutSupport {
 			'woocommerce_blocks_payment_method_type_registration',
 			function ( PaymentMethodRegistry $payment_method_registry ) {
 				$payment_method_registry->register( new BlocksCheckoutMethod );
+				$payment_method_registry->register( new BlocksPwiMethod );
 			}
 		);
 	}

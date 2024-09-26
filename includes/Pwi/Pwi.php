@@ -1,6 +1,6 @@
 <?php
 
-namespace Iyzico\IyzipayWoocommerce\Checkout;
+namespace Iyzico\IyzipayWoocommerce\Pwi;
 
 use Exception;
 use Iyzico\IyzipayWoocommerce\Common\Hooks\IyzicoResponse;
@@ -10,21 +10,20 @@ use WC_Order_Item_Fee;
 use WC_Payment_Gateway_CC;
 use Iyzico\IyzipayWoocommerce\Common\Interfaces\PaymentGatewayInterface;
 
-class CheckoutForm extends WC_Payment_Gateway_CC implements PaymentGatewayInterface {
+class Pwi extends WC_Payment_Gateway_CC implements PaymentGatewayInterface {
 
-	public $checkoutSettings;
+	public $pwiSettings;
 	public WC_Order|null $order;
 
 	public function __construct() {
-		$this->id                 = "iyzico";
-		$this->checkoutSettings   = new CheckoutSettings();
-		$this->method_title       = __( 'iyzico Checkout', 'woocommerce-iyzico' );
+		$this->id                 = "pwi";
+		$this->pwiSettings        = new PwiSettings();
+		$this->method_title       = __( 'Pay with iyzico', 'woocommerce-iyzico' );
 		$this->method_description = __( 'Best Payment Solution', 'woocommerce-iyzico' );
-		$this->enabled            = $this->checkoutSettings->findByKey( 'enabled' );
-		$this->title              = apply_filters( 'iyzico_woocommerce_gateway_title_text', $this->checkoutSettings->findByKey( 'title' ) );
-		$this->description        = apply_filters( 'iyzico_woocommerce_gateway_description_text', $this->checkoutSettings->findByKey( 'description' ) );
-		$this->order_button_text  = apply_filters( 'iyzico_woocommerce_gateway_button_text', $this->checkoutSettings->findByKey( 'button_text' ) );
-		$this->icon               = $this->checkoutSettings->findByKey( 'icon' );
+		$this->enabled            = $this->pwiSettings->findByKey( 'enabled' );
+		$this->title              = apply_filters( 'pwi_woocommerce_gateway_title_text', $this->pwiSettings->findByKey( 'title' ) );
+		$this->description        = apply_filters( 'pwi_woocommerce_gateway_description_text', $this->pwiSettings->findByKey( 'description' ) );
+		$this->order_button_text  = apply_filters( 'pwi_woocommerce_gateway_button_text', $this->pwiSettings->findByKey( 'button_text' ) );
 		$this->has_fields         = true;
 		$this->supports           = [
 			'products',
@@ -39,7 +38,7 @@ class CheckoutForm extends WC_Payment_Gateway_CC implements PaymentGatewayInterf
 			$response    = $this->response_filter( $_POST );
 
 			// Ödeme işlemi başarılı olursa
-			if ( $this->checkoutSettings->findByKey( 'form_class' ) == 'redirect' ) {
+			if ( $this->pwiSettings->findByKey( 'form_class' ) == 'redirect' ) {
 				// TODO: some code here
 			}
 
@@ -68,7 +67,7 @@ class CheckoutForm extends WC_Payment_Gateway_CC implements PaymentGatewayInterf
 			);
 		}
 
-		if ( $this->checkoutSettings->findByKey( 'form_class' ) ) {
+		if ( $this->pwiSettings->findByKey( 'form_class' ) ) {
 			$this->redirect_payment_form( $received_url );
 		}
 
@@ -105,7 +104,7 @@ class CheckoutForm extends WC_Payment_Gateway_CC implements PaymentGatewayInterf
 				wc_get_checkout_url()
 			);
 
-			if ( $this->checkoutSettings->findByKey( 'use_iframe' ) ) {
+			if ( $this->pwiSettings->findByKey( 'use_iframe' ) ) {
 				$this->redirect_payment_form( $checkout_url );
 			}
 

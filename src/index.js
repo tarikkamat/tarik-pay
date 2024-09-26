@@ -1,6 +1,7 @@
 import CheckoutOptions from './checkout'
+import PwiOptions from "./pwi";
 
 const { registerPaymentMethod } = window.wc.wcBlocksRegistry
 
 registerPaymentMethod(CheckoutOptions)
-console.log('iyzico-woocommerce script loaded successfully.');
+registerPaymentMethod(PwiOptions)

@@ -24,7 +24,6 @@ abstract class Config {
 		return array_key_exists( $key, $settings ) ? $settings[ $key ] : false;
 	}
 
-
 	public function setSettings( mixed $options ) {
 		update_option( $this->optionsTableKey, $options );
 
@@ -48,6 +47,12 @@ abstract class Config {
 					'success_status' => 'processing',
 					'overlay_script' => 'bottomLeft',
 					'form_class'     => 'responsive',
+				),
+				'woocommerce_pwi_settings'    => array(
+					'enabled'     => 'yes',
+					'title'       => __( 'Pay with iyzico', 'woocommerce-iyzico' ),
+					'button_text' => __( 'Pay with iyzico', 'woocommerce-iyzico' ),
+					'description' => __( 'Your money safe with iyzico! Store your iyzico card and enjoy one-click payment. All your transactions under the iyzico Buyer Protection guarantee. Get live support 24/7.', 'woocommerce-iyzico' )
 				),
 			)
 		);
