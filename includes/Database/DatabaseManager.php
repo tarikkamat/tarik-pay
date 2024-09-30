@@ -104,4 +104,35 @@ class DatabaseManager {
 		return $sql;
 	}
 
+	public function findUserCardKey( $customerId, $apiKey ) {
+		$tableName = self::$wpdb->prefix . 'iyzico_card';
+		$fieldName = 'card_user_key';
+
+		$sql = self::$wpdb->prepare( "
+			SELECT $fieldName
+			FROM $tableName
+			WHERE customer_id = %d AND api_key = %s
+			ORDER BY iyzico_card_id DESC LIMIT 1;
+		", $customerId, $apiKey );
+
+		$result = self::$wpdb->get_col( $sql );
+
+		return $result[0] ?? null;
+	}
+
+	public function saveUserCardKey( $customerId, $cardUserKey, $apiKey ) {
+		$tableName = self::$wpdb->prefix . 'iyzico_card';
+
+		return self::$wpdb->insert(
+			$tableName,
+			[
+				'customer_id'   => $customerId,
+				'card_user_key' => $cardUserKey,
+				'api_key'       => $apiKey
+			],
+			[ '%d', '%s', '%s' ]
+		);
+	}
+
+
 }

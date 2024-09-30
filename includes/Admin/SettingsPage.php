@@ -20,6 +20,23 @@ class SettingsPage
 		$this->restApi = new RestAPI();
 	}
 
+	public function renderAdminOptions()
+	{
+		?>
+		<style>
+            .woocommerce-save-button {
+                display: none !important;
+            }
+		</style>
+		<h3>
+			<?php esc_html_e('These payment method settings are made through the admin menu.', 'woocommerce-iyzico'); ?>
+			<a href="<?php echo esc_url(admin_url('admin.php?page=iyzico')); ?>">
+				<?php esc_html_e('Click to go to settings.', 'woocommerce-iyzico'); ?>
+			</a>
+		</h3>
+		<?php
+	}
+
 	public function renderPage(): void
 	{
 		include_once PLUGIN_DIR_PATH . 'views/index.php';
