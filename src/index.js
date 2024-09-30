@@ -1,7 +1,13 @@
-import CheckoutOptions from './checkout'
-import PwiOptions from "./pwi";
+import domReady from '@wordpress/dom-ready'
+import { createRoot } from '@wordpress/element'
+import './index.css'
 
-const { registerPaymentMethod } = window.wc.wcBlocksRegistry
+import App from "./App"
 
-registerPaymentMethod(CheckoutOptions)
-registerPaymentMethod(PwiOptions)
+domReady(() => {
+    const root = createRoot(
+        document.getElementById('iyzico-app')
+    )
+
+    root.render(<App />)
+})

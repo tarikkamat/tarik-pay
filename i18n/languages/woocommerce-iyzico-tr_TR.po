@@ -232,3 +232,21 @@ msgstr "Hata"
 
 msgid "Checkout Form"
 msgstr "Ödeme Formu"
+
+msgid "Total Earnings (30 Days)"
+msgstr "Toplam Kazanç (30 Günlük)"
+
+msgid "Growth from Last Month"
+msgstr "Geçen Aya Göre Büyüme"
+
+msgid "Total Orders (30 Days)"
+msgstr "Toplam Sipariş (30 Günlük)"
+
+msgid "Last 30 Days Earnings"
+msgstr "Son 30 Günlük Kazanç"
+
+msgid "Growth Compared to Last Month"
+msgstr "Geçen Aya Göre Büyüme"
+
+msgid "Number of Orders in the Last 30 Days"
+msgstr "Son 30 Gündeki Sipariş Sayısı"

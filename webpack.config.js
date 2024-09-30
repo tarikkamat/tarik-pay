@@ -1,35 +1,43 @@
 const path = require('path');
-const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
+const defaults = require('@wordpress/scripts/config/webpack.config');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    entry: './src/index.js',
+    ...defaults,
+    externals: {
+        react: 'React',
+        'react-dom': 'ReactDOM',
+    },
     output: {
-        filename: 'blocks.js',
-        path: path.resolve(__dirname, 'assets/blocks/woocommerce'),
+        path: path.resolve(__dirname, 'assets/admin'), // Çıkış dizini
+        filename: 'index.js', // JavaScript dosyasının adı
     },
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
+                test: /\.js$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react']
-                    }
-                }
-            }
-        ]
-    },
-    resolve: {
-        extensions: ['.js', '.jsx']
-    },
-    externals: {
-        '@wordpress/element': 'wp.element',
-        '@wordpress/components': 'wp.components',
-        '@wordpress/html-entities': 'wp.htmlEntities'
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                    },
+                },
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    MiniCssExtractPlugin.loader, // CSS'i ayrı dosyaya çıkartır
+                    'css-loader',
+                    'postcss-loader',
+                ],
+            },
+        ],
     },
     plugins: [
-        new DependencyExtractionWebpackPlugin()
-    ]
+        ...defaults.plugins,
+        new MiniCssExtractPlugin({
+            filename: 'index.css', // Çıkacak CSS dosyasının adı
+        }),
+    ],
 };

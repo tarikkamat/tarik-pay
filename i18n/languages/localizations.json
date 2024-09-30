@@ -1,0 +1,118 @@
+{
+    "tr_TR": {
+        "dashboard": {
+            "widget": {
+                "title": "Genel Bakış",
+                "description": "Bu alanda, işletmenizin performans metriklerini detaylı bir şekilde inceleyebilirsiniz."
+            },
+            "chart": {
+                "title": "Grafiksel Analiz",
+                "description": "Aşağıdaki grafikler, işletmenizin performansını ve işlem metriklerini görsel olarak analiz etmenizi sağlar.",
+                "keys": {
+                    "total": "Toplam",
+                    "completed": "Tamamlanan",
+                    "processing": "İşlenen",
+                    "pending": "Bekleyen",
+                    "failed": "Başarısız"
+                }
+            },
+            "charts": {
+                "title_1": "30 Günlük Sipariş Grafiği",
+                "title_2": "Ödeme Yöntemlerine Göre Satışlar",
+                "title_3": "En Çok Satış Yapan İlk 5 Ürün",
+                "title_4": "En Çok Satış Yapan İlk 5 Kategori"
+            }
+        },
+        "orders": {
+            "header": "Siparişler",
+            "description": "Bu alanda, işletmenizde gerçekleşen siparişleri detaylı bir şekilde inceleyebilirsiniz.",
+            "row": {
+                "guest": "Misafir",
+                "all": "Tümü",
+                "pending": "Beklemede",
+                "processing": "İşleniyor",
+                "on-hold": "Beklemede",
+                "cancelled": "İptal Edildi",
+                "completed": "Tamamlandı",
+                "refunded": "İade Edildi",
+                "failed": "Başarısız",
+                "id": "Sipariş ID",
+                "customer": "Müşteri",
+                "date": "Tarih",
+                "total": "Toplam",
+                "status": "Durum"
+            },
+            "search_placeholder": "Sipariş ID",
+            "loading": "Yükleniyor...",
+            "previous": "Önceki",
+            "next": "Sonraki",
+            "page": "Sayfa {{current}} / {{total}}"
+        },
+        "header": {
+            "menu": {
+                "dashboard": "Genel Bakış",
+                "orders": "Siparişler",
+                "settings": "Genel Ayarlar",
+                "subscriptions": "Abonelik Yönetimi"
+            }
+        }
+    },
+    "en_US": {
+        "dashboard": {
+            "widget": {
+                "title": "Overview",
+                "description": "In this area, you can examine your business's performance metrics in detail."
+            },
+            "chart": {
+                "title": "Graphical Analysis",
+                "description": "The following graphs allow you to visually analyze your business's performance and transaction metrics.",
+                "keys": {
+                    "total": "Total",
+                    "completed": "Completed",
+                    "processing": "Processing",
+                    "pending": "Pending",
+                    "failed": "Failed"
+                }
+            },
+            "charts": {
+                "title_1": "30-Day Order Graph",
+                "title_2": "Sales by Payment Methods",
+                "title_3": "Top 5 Best Selling Products",
+                "title_4": "Top 5 Best Selling Categories"
+            }
+        },
+        "orders": {
+            "header": "Orders",
+            "description": "In this area, you can examine the orders taking place in your business in detail.",
+            "row": {
+                "guest": "Guest",
+                "all": "All",
+                "pending": "Pending",
+                "processing": "Processing",
+                "on-hold": "On Hold",
+                "cancelled": "Cancelled",
+                "completed": "Completed",
+                "refunded": "Refunded",
+                "failed": "Failed",
+                "id": "Order ID",
+                "customer": "Customer",
+                "date": "Date",
+                "total": "Total",
+                "status": "Status"
+            },
+            "search_placeholder": "Order ID",
+            "loading": "Loading...",
+            "previous": "Previous",
+            "next": "Next",
+            "page": "Page {{current}} / {{total}}"
+        },
+        "header": {
+            "menu": {
+                "dashboard": "Overview",
+                "orders": "Orders",
+                "settings": "General Settings",
+                "subscriptions": "Subscription Management"
+            }
+        }
+    }
+}

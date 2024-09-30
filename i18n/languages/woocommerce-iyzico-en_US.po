@@ -220,3 +220,21 @@ msgstr "Error"
 
 msgid "Checkout Form"
 msgstr "Checkout Form"
+
+msgid "Total Earnings (30 Days)"
+msgstr "Total Earnings (30 Days)"
+
+msgid "Growth from Last Month"
+msgstr "Growth from Last Month"
+
+msgid "Total Orders (30 Days)"
+msgstr "Total Orders (30 Days)"
+
+msgid "Last 30 Days Earnings"
+msgstr "Last 30 Days Earnings"
+
+msgid "Growth Compared to Last Month"
+msgstr "Growth Compared to Last Month"
+
+msgid "Number of Orders in the Last 30 Days"
+msgstr "Number of Orders in the Last 30 Days"
