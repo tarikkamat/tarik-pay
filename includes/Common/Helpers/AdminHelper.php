@@ -1,6 +1,8 @@
 <?php
 
 namespace Iyzico\IyzipayWoocommerce\Common\Helpers;
+use Iyzico\IyzipayWoocommerce\Checkout\CheckoutSettings;
+use Iyzico\IyzipayWoocommerce\Pwi\PwiSettings;
 
 class AdminHelper
 {
@@ -110,6 +112,39 @@ class AdminHelper
 			'topProductsData' => $top_products_data,
 			'topCategoriesData' => $top_categories_data,
 		];
+	}
+
+	public function getSettings()
+	{
+		$checkoutSettings = new CheckoutSettings();
+		$pwiSettings = new PwiSettings();
+
+		$settings = [
+			'iyzicoWebhookUrlKey' => get_site_url() . "/wp-json/iyzico/v1/webhook/" . get_option('iyzicoWebhookUrlKey'),
+			'checkout' => $checkoutSettings->getSettings(),
+			'pwi' => $pwiSettings->getSettings()
+		];
+
+		return $settings;
+	}
+
+	public function saveSettings($request)
+	{
+		$checkoutSettings = new CheckoutSettings();
+		$pwiSettings = new PwiSettings();
+
+		$request = $request->get_params();
+		$pwi_enable = $request['pwi_enabled'];
+		unset($request['pwi_enabled']);
+		unset($request['rest_route']);
+		unset($request['_locale']);
+
+		$checkoutSettings->setSettings($request);
+		$pwiSettings->setSettings(['enabled', $pwi_enable]);
+
+		return rest_ensure_response([
+			'success' => true,
+		]);
 	}
 
 	public function getOrders($request)

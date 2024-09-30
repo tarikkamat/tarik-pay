@@ -563,12 +563,12 @@ var Svg = function Svg(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   fetchData: () => (/* binding */ fetchData),
-/* harmony export */   getLast30DaysRevenue: () => (/* binding */ getLast30DaysRevenue),
-/* harmony export */   getLastMonthOrdersByStatus: () => (/* binding */ getLastMonthOrdersByStatus),
 /* harmony export */   getLocalizations: () => (/* binding */ getLocalizations),
 /* harmony export */   getOrders: () => (/* binding */ getOrders),
+/* harmony export */   getSettings: () => (/* binding */ getSettings),
 /* harmony export */   getSettingsDashboardCharts: () => (/* binding */ getSettingsDashboardCharts),
-/* harmony export */   getSettingsDashboardWidgets: () => (/* binding */ getSettingsDashboardWidgets)
+/* harmony export */   getSettingsDashboardWidgets: () => (/* binding */ getSettingsDashboardWidgets),
+/* harmony export */   saveSettings: () => (/* binding */ saveSettings)
 /* harmony export */ });
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__);
@@ -667,7 +667,7 @@ var getOrders = /*#__PURE__*/function () {
     return _ref2.apply(this, arguments);
   };
 }();
-var getSettingsDashboardWidgets = /*#__PURE__*/function () {
+var getSettings = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
     var response;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
@@ -676,7 +676,7 @@ var getSettingsDashboardWidgets = /*#__PURE__*/function () {
           _context3.prev = 0;
           _context3.next = 3;
           return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
-            path: iyzicoRestApi.SettingsDashboardWidgetsUrl,
+            path: iyzicoRestApi.SettingsUrl,
             method: 'GET',
             headers: BASE_HEADERS
           });
@@ -694,47 +694,107 @@ var getSettingsDashboardWidgets = /*#__PURE__*/function () {
       }
     }, _callee3, null, [[0, 7]]);
   }));
-  return function getSettingsDashboardWidgets() {
+  return function getSettings() {
     return _ref3.apply(this, arguments);
   };
 }();
-var getSettingsDashboardCharts = /*#__PURE__*/function () {
+var saveSettings = /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-    var response;
+    var formData,
+      response,
+      _args4 = arguments;
     return _regeneratorRuntime().wrap(function _callee4$(_context4) {
       while (1) switch (_context4.prev = _context4.next) {
         case 0:
-          _context4.prev = 0;
-          _context4.next = 3;
+          formData = _args4.length > 0 && _args4[0] !== undefined ? _args4[0] : null;
+          _context4.prev = 1;
+          _context4.next = 4;
+          return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+            path: iyzicoRestApi.SaveSettingsUrl,
+            method: 'POST',
+            headers: BASE_HEADERS,
+            body: formData
+          });
+        case 4:
+          response = _context4.sent;
+          return _context4.abrupt("return", response);
+        case 8:
+          _context4.prev = 8;
+          _context4.t0 = _context4["catch"](1);
+          console.error('Error fetching orders:', _context4.t0);
+          return _context4.abrupt("return", null);
+        case 12:
+        case "end":
+          return _context4.stop();
+      }
+    }, _callee4, null, [[1, 8]]);
+  }));
+  return function saveSettings() {
+    return _ref4.apply(this, arguments);
+  };
+}();
+var getSettingsDashboardWidgets = /*#__PURE__*/function () {
+  var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+    var response;
+    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+      while (1) switch (_context5.prev = _context5.next) {
+        case 0:
+          _context5.prev = 0;
+          _context5.next = 3;
+          return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+            path: iyzicoRestApi.SettingsDashboardWidgetsUrl,
+            method: 'GET',
+            headers: BASE_HEADERS
+          });
+        case 3:
+          response = _context5.sent;
+          return _context5.abrupt("return", response);
+        case 7:
+          _context5.prev = 7;
+          _context5.t0 = _context5["catch"](0);
+          console.error('Error fetching dashboard widgets:', _context5.t0);
+          return _context5.abrupt("return", null);
+        case 11:
+        case "end":
+          return _context5.stop();
+      }
+    }, _callee5, null, [[0, 7]]);
+  }));
+  return function getSettingsDashboardWidgets() {
+    return _ref5.apply(this, arguments);
+  };
+}();
+var getSettingsDashboardCharts = /*#__PURE__*/function () {
+  var _ref6 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
+    var response;
+    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+      while (1) switch (_context6.prev = _context6.next) {
+        case 0:
+          _context6.prev = 0;
+          _context6.next = 3;
           return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
             path: iyzicoRestApi.SettingsDashboardChartsUrl,
             method: 'GET',
             headers: BASE_HEADERS
           });
         case 3:
-          response = _context4.sent;
-          return _context4.abrupt("return", response);
+          response = _context6.sent;
+          return _context6.abrupt("return", response);
         case 7:
-          _context4.prev = 7;
-          _context4.t0 = _context4["catch"](0);
-          console.error('Error fetching dashboard charts:', _context4.t0);
-          return _context4.abrupt("return", null);
+          _context6.prev = 7;
+          _context6.t0 = _context6["catch"](0);
+          console.error('Error fetching dashboard charts:', _context6.t0);
+          return _context6.abrupt("return", null);
         case 11:
         case "end":
-          return _context4.stop();
+          return _context6.stop();
       }
-    }, _callee4, null, [[0, 7]]);
+    }, _callee6, null, [[0, 7]]);
   }));
   return function getSettingsDashboardCharts() {
-    return _ref4.apply(this, arguments);
+    return _ref6.apply(this, arguments);
   };
 }();
-var getLast30DaysRevenue = function getLast30DaysRevenue() {
-  return fetchData(iyzicoRestApi.Last30DaysTotalBalanceUrl);
-};
-var getLastMonthOrdersByStatus = function getLastMonthOrdersByStatus() {
-  return fetchData(iyzicoRestApi.LastMonthOrdersByStatusUrl);
-};
 var getLocalizations = function getLocalizations() {
   return fetchData(iyzicoRestApi.LocalizationsUrl);
 };
@@ -1284,10 +1344,10 @@ var Orders = function Orders() {
 
 /***/ }),
 
-/***/ "./src/pages/Settings/ConnectionSettings.js":
-/*!**************************************************!*\
-  !*** ./src/pages/Settings/ConnectionSettings.js ***!
-  \**************************************************/
+/***/ "./src/pages/Settings/IyzicoSettings.js":
+/*!**********************************************!*\
+  !*** ./src/pages/Settings/IyzicoSettings.js ***!
+  \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1295,99 +1355,204 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_Localization__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/Localization */ "./src/components/Localization.js");
 
-var ConnectionSettings = function ConnectionSettings(_ref) {
-  var environment = _ref.environment,
+
+
+var IyzicoSettings = function IyzicoSettings(_ref) {
+  var iyzicoWebhookUrlKey = _ref.iyzicoWebhookUrlKey,
+    environment = _ref.environment,
     setEnvironment = _ref.setEnvironment,
     apiKey = _ref.apiKey,
     setApiKey = _ref.setApiKey,
     secretKey = _ref.secretKey,
-    setSecretKey = _ref.setSecretKey;
-  return /*#__PURE__*/React.createElement("div", {
+    setSecretKey = _ref.setSecretKey,
+    title = _ref.title,
+    setTitle = _ref.setTitle,
+    description = _ref.description,
+    setDescription = _ref.setDescription,
+    formClass = _ref.formClass,
+    setFormClass = _ref.setFormClass,
+    paymentCheckoutValue = _ref.paymentCheckoutValue,
+    setPaymentCheckoutValue = _ref.setPaymentCheckoutValue,
+    orderStatus = _ref.orderStatus,
+    setOrderStatus = _ref.setOrderStatus,
+    overlayScript = _ref.overlayScript,
+    setOverlayScript = _ref.setOverlayScript,
+    formLanguage = _ref.formLanguage,
+    setFormLanguage = _ref.setFormLanguage,
+    affiliateNetwork = _ref.affiliateNetwork,
+    setAffiliateNetwork = _ref.setAffiliateNetwork,
+    enabled = _ref.enabled,
+    setEnabled = _ref.setEnabled,
+    pwiEnabled = _ref.pwiEnabled,
+    setPwiEnabled = _ref.setPwiEnabled;
+  var isLocalizationLoaded = (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.useLocalization)();
+  if (!isLocalizationLoaded) {
+    return null;
+  }
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "border-b border-gray-900/10 pb-12"
-  }, /*#__PURE__*/React.createElement("h2", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
     className: "text-base font-semibold leading-7 text-gray-900"
-  }, "Ba\u011Flant\u0131 Ayarlar\u0131"), /*#__PURE__*/React.createElement("p", {
+  }, (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.title")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "mt-1 text-sm leading-6 text-gray-600"
-  }, "Bu k\u0131s\u0131mdan iyzico hesab\u0131n\u0131z\u0131 ba\u011Flayabilir ve \xF6deme ayarlar\u0131n\u0131z\u0131 y\xF6netebilirsiniz."), /*#__PURE__*/React.createElement("div", {
-    className: "settings-form mt-5"
-  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
-    label: "Ortam Se\xE7imi",
+  }, (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.description")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "settings-form mt-5 space-y-4"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
+    value: iyzicoWebhookUrlKey,
+    label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.webhook.label"),
+    disabled: true
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
+    label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.environment.title"),
     value: environment,
     options: [{
-      label: 'Seçiniz',
-      value: ''
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.environment.values.live"),
+      value: 'https://api.iyzipay.com'
     }, {
-      label: 'Canlı',
-      value: 'live'
-    }, {
-      label: 'Sandbox',
-      value: 'sandbox'
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.environment.values.sandbox"),
+      value: 'https://sandbox-api.iyzipay.com'
     }],
     onChange: function onChange(value) {
       return setEnvironment(value);
     }
-  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
     value: apiKey,
-    label: "API KEY",
-    type: "text",
+    label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.api_key.title"),
     onChange: function onChange(value) {
       return setApiKey(value);
     }
-  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
     value: secretKey,
-    label: "SECRET KEY",
-    type: "password",
+    label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.secret_key.title"),
     onChange: function onChange(value) {
       return setSecretKey(value);
     }
-  })));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ConnectionSettings);
-
-/***/ }),
-
-/***/ "./src/pages/Settings/DashboardSettings.js":
-/*!*************************************************!*\
-  !*** ./src/pages/Settings/DashboardSettings.js ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
-
-var DashboardSettings = function DashboardSettings(_ref) {
-  var environment = _ref.environment,
-    setEnvironment = _ref.setEnvironment,
-    apiKey = _ref.apiKey,
-    setApiKey = _ref.setApiKey,
-    secretKey = _ref.secretKey,
-    setSecretKey = _ref.setSecretKey;
-  return /*#__PURE__*/React.createElement("div", {
-    className: "border-b border-gray-900/10 pb-12"
-  }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-base font-semibold leading-7 text-gray-900"
-  }, "G\xF6sterge Paneli Ayarlar\u0131"), /*#__PURE__*/React.createElement("p", {
-    className: "mt-1 text-sm leading-6 text-gray-600"
-  }, "Bu k\u0131s\u0131mdan eklentinizin g\xF6sterge paneli ayarlar\u0131n\u0131z\u0131 y\xF6netebilirsiniz."), /*#__PURE__*/React.createElement("div", {
-    className: "settings-form mt-5"
-  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.ToggleControl, {
-    label: "Fixed Background",
-    help:  true ? 'Has fixed background.' : 0,
-    checked: true,
-    onChange: function onChange(e) {
-      return console.log(e);
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "flex flex-row space-x-4"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CheckboxControl, {
+    label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.enabled.title"),
+    checked: enabled,
+    onChange: function onChange(value) {
+      return setEnabled(value);
     }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CheckboxControl, {
+    label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.enabled.title_pwi"),
+    checked: pwiEnabled,
+    onChange: function onChange(value) {
+      return setPwiEnabled(value);
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
+    value: title,
+    label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.title.title"),
+    onChange: function onChange(value) {
+      return setTitle(value);
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
+    value: description,
+    label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.description.title"),
+    onChange: function onChange(value) {
+      return setDescription(value);
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
+    label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.form_class.title"),
+    value: formClass,
+    options: [{
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.form_class.values.responsive"),
+      value: 'responsive'
+    }, {
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.form_class.values.popup"),
+      value: 'popup'
+    }, {
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.form_class.values.redirect"),
+      value: 'redirect'
+    }],
+    onChange: function onChange(value) {
+      return setFormClass(value);
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
+    value: paymentCheckoutValue,
+    label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.payment_checkout_value.title"),
+    onChange: function onChange(value) {
+      return setPaymentCheckoutValue(value);
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
+    label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.order_status.title"),
+    value: orderStatus,
+    options: [{
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.order_status.values.default"),
+      value: 'default'
+    }, {
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.order_status.values.pending"),
+      value: 'pending'
+    }, {
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.order_status.values.processing"),
+      value: 'processing'
+    }, {
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.order_status.values.on-hold"),
+      value: 'on-hold'
+    }, {
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.order_status.values.completed"),
+      value: 'completed'
+    }, {
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.order_status.values.cancelled"),
+      value: 'cancelled'
+    }, {
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.order_status.values.refunded"),
+      value: 'refunded'
+    }, {
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.order_status.values.failed"),
+      value: 'failed'
+    }],
+    onChange: function onChange(value) {
+      return setOrderStatus(value);
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
+    label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.overlay_script.title"),
+    value: overlayScript,
+    options: [{
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.overlay_script.values.left"),
+      value: 'bottomLeft'
+    }, {
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.overlay_script.values.right"),
+      value: 'bottomRight'
+    }, {
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.overlay_script.values.hide"),
+      value: 'hide'
+    }],
+    onChange: function onChange(value) {
+      return setOverlayScript(value);
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
+    label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.form_language.title"),
+    value: formLanguage,
+    options: [{
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.form_language.values.automatic"),
+      value: ''
+    }, {
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.form_language.values.turkish"),
+      value: 'TR'
+    }, {
+      label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.form_language.values.english"),
+      value: 'EN'
+    }],
+    onChange: function onChange(value) {
+      return setFormLanguage(value);
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
+    value: affiliateNetwork,
+    label: (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.fields.affiliate_network.title"),
+    onChange: function onChange(value) {
+      return setAffiliateNetwork(value);
+    },
+    maxLength: 14
   })));
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DashboardSettings);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (IyzicoSettings);
 
 /***/ }),
 
@@ -1404,8 +1569,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _ConnectionSettings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ConnectionSettings */ "./src/pages/Settings/ConnectionSettings.js");
-/* harmony import */ var _DashboardSettings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DashboardSettings */ "./src/pages/Settings/DashboardSettings.js");
+/* harmony import */ var _IyzicoSettings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./IyzicoSettings */ "./src/pages/Settings/IyzicoSettings.js");
+/* harmony import */ var _components_Localization__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/Localization */ "./src/components/Localization.js");
+/* harmony import */ var _helper_api_helper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helper/api_helper */ "./src/helper/api_helper.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -1415,50 +1585,192 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
 var Settings = function Settings() {
-  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState2 = _slicedToArray(_useState, 2),
     environment = _useState2[0],
     setEnvironment = _useState2[1];
-  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState4 = _slicedToArray(_useState3, 2),
     apiKey = _useState4[0],
     setApiKey = _useState4[1];
-  var _useState5 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+  var _useState5 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState6 = _slicedToArray(_useState5, 2),
     secretKey = _useState6[0],
     setSecretKey = _useState6[1];
+  var _useState7 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState8 = _slicedToArray(_useState7, 2),
+    title = _useState8[0],
+    setTitle = _useState8[1];
+  var _useState9 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState10 = _slicedToArray(_useState9, 2),
+    description = _useState10[0],
+    setDescription = _useState10[1];
+  var _useState11 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState12 = _slicedToArray(_useState11, 2),
+    formClass = _useState12[0],
+    setFormClass = _useState12[1];
+  var _useState13 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState14 = _slicedToArray(_useState13, 2),
+    paymentCheckoutValue = _useState14[0],
+    setPaymentCheckoutValue = _useState14[1];
+  var _useState15 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState16 = _slicedToArray(_useState15, 2),
+    orderStatus = _useState16[0],
+    setOrderStatus = _useState16[1];
+  var _useState17 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState18 = _slicedToArray(_useState17, 2),
+    overlayScript = _useState18[0],
+    setOverlayScript = _useState18[1];
+  var _useState19 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState20 = _slicedToArray(_useState19, 2),
+    formLanguage = _useState20[0],
+    setFormLanguage = _useState20[1];
+  var _useState21 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState22 = _slicedToArray(_useState21, 2),
+    affiliateNetwork = _useState22[0],
+    setAffiliateNetwork = _useState22[1];
+  var _useState23 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState24 = _slicedToArray(_useState23, 2),
+    enabled = _useState24[0],
+    setEnabled = _useState24[1];
+  var _useState25 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState26 = _slicedToArray(_useState25, 2),
+    pwiEnabled = _useState26[0],
+    setPwiEnabled = _useState26[1];
+  var _useState27 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState28 = _slicedToArray(_useState27, 2),
+    isLoading = _useState28[0],
+    setIsLoading = _useState28[1];
+  var _useState29 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState30 = _slicedToArray(_useState29, 2),
+    isSuccessSave = _useState30[0],
+    setIsSuccessSave = _useState30[1];
+  var _useState31 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState32 = _slicedToArray(_useState31, 2),
+    iyzicoWebhookUrlKey = _useState32[0],
+    setIyzicoWebhookUrlKey = _useState32[1];
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (environment === 'sandbox') {
-      setApiKey('sandbox-');
-      setSecretKey('sandbox-');
-    }
-  }, [environment]);
-  return /*#__PURE__*/React.createElement("form", null, /*#__PURE__*/React.createElement("div", {
-    "class": "space-y-12"
-  }, /*#__PURE__*/React.createElement(_ConnectionSettings__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    var fetchOrders = /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              setIsLoading(true);
+              _context.next = 3;
+              return (0,_helper_api_helper__WEBPACK_IMPORTED_MODULE_3__.getSettings)().then(function (r) {
+                setEnvironment(r.checkout.api_type);
+                setApiKey(r.checkout.api_key);
+                setSecretKey(r.checkout.secret_key);
+                setTitle(r.checkout.title);
+                setDescription(r.checkout.description);
+                setFormClass(r.checkout.form_class);
+                setPaymentCheckoutValue(r.checkout.payment_checkout_value);
+                setOrderStatus(r.checkout.order_status);
+                setOverlayScript(r.checkout.overlay_script);
+                setFormLanguage(r.checkout.form_language);
+                setAffiliateNetwork(r.checkout.affiliate_network);
+                setEnabled(r.checkout.enabled === "false" ? false : true);
+                setPwiEnabled(r.pwi.enabled === "false" ? false : true);
+                setIyzicoWebhookUrlKey(r.iyzicoWebhookUrlKey);
+                setIsLoading(false);
+              });
+            case 3:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee);
+      }));
+      return function fetchOrders() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+    fetchOrders();
+  }, []);
+  var isLocalizationLoaded = (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.useLocalization)();
+  if (!isLocalizationLoaded) {
+    return null;
+  }
+  var handleSubmit = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(event) {
+      var formData;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            event.preventDefault();
+            formData = new FormData();
+            formData.append('api_type', environment);
+            formData.append('api_key', apiKey);
+            formData.append('secret_key', secretKey);
+            formData.append('title', title);
+            formData.append('description', description);
+            formData.append('form_class', formClass);
+            formData.append('payment_checkout_value', paymentCheckoutValue);
+            formData.append('order_status', orderStatus);
+            formData.append('overlay_script', overlayScript);
+            formData.append('form_language', formLanguage);
+            formData.append('affiliate_network', affiliateNetwork);
+            formData.append('enabled', enabled === true ? 'yes' : 'no');
+            formData.append('pwi_enabled', pwiEnabled === true ? 'yes' : 'no');
+            (0,_helper_api_helper__WEBPACK_IMPORTED_MODULE_3__.saveSettings)(formData).then(function (r) {
+              setIsSuccessSave(r.success);
+            });
+          case 16:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2);
+    }));
+    return function handleSubmit(_x) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+  return /*#__PURE__*/React.createElement("form", {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "space-y-12"
+  }, isSuccessSave && /*#__PURE__*/React.createElement("div", {
+    className: "bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative",
+    role: "alert"
+  }, /*#__PURE__*/React.createElement("strong", {
+    className: "font-bold"
+  }, (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.success")), /*#__PURE__*/React.createElement("span", {
+    className: "block sm:inline ms-2"
+  }, (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("settings.success_message"))), isLoading ? /*#__PURE__*/React.createElement("p", null, (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("orders.loading")) : /*#__PURE__*/React.createElement(_IyzicoSettings__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    iyzicoWebhookUrlKey: iyzicoWebhookUrlKey,
     environment: environment,
     setEnvironment: setEnvironment,
     apiKey: apiKey,
     setApiKey: setApiKey,
     secretKey: secretKey,
-    setSecretKey: setSecretKey
-  }), /*#__PURE__*/React.createElement(_DashboardSettings__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    environment: environment,
-    setEnvironment: setEnvironment,
-    apiKey: apiKey,
-    setApiKey: setApiKey,
-    secretKey: secretKey,
-    setSecretKey: setSecretKey
+    setSecretKey: setSecretKey,
+    title: title,
+    setTitle: setTitle,
+    description: description,
+    setDescription: setDescription,
+    formClass: formClass,
+    setFormClass: setFormClass,
+    paymentCheckoutValue: paymentCheckoutValue,
+    setPaymentCheckoutValue: setPaymentCheckoutValue,
+    orderStatus: orderStatus,
+    setOrderStatus: setOrderStatus,
+    overlayScript: overlayScript,
+    setOverlayScript: setOverlayScript,
+    formLanguage: formLanguage,
+    setFormLanguage: setFormLanguage,
+    affiliateNetwork: affiliateNetwork,
+    setAffiliateNetwork: setAffiliateNetwork,
+    enabled: enabled,
+    setEnabled: setEnabled,
+    pwiEnabled: pwiEnabled,
+    setPwiEnabled: setPwiEnabled
   })), /*#__PURE__*/React.createElement("div", {
-    "class": "mt-6 flex items-center justify-end gap-x-6"
+    className: "mt-6 flex items-center justify-end gap-x-6"
   }, /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    "class": "text-sm font-semibold leading-6 text-gray-900"
-  }, "Cancel"), /*#__PURE__*/React.createElement("button", {
     type: "submit",
-    "class": "rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-  }, "Save")));
+    className: "rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+  }, (0,_components_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("buttons.save"))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Settings);
 

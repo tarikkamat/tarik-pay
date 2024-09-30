@@ -238,3 +238,18 @@ msgstr "Growth Compared to Last Month"
 
 msgid "Number of Orders in the Last 30 Days"
 msgstr "Number of Orders in the Last 30 Days"
+
+msgid "This order will be processed on the iyzico payment page."
+msgstr "This order will be processed on the iyzico payment page."
+
+msgid "Token Not Found"
+msgstr "Token Not Found"
+
+msgid "Payment token is missing. Please try again or contact the store owner if the problem persists."
+msgtr "Payment token is missing. Please try again or contact the store owner if the problem persists."
+
+msgid "Payment process failed. Please try again or choose a different payment method."
+msgstr "Payment process failed. Please try again or choose a different payment method."
+
+msgid "An unknown error occurred during the payment process. Please try again."
+msgstr "An unknown error occurred during the payment process. Please try again."

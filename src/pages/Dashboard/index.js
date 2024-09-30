@@ -1,8 +1,8 @@
-import { useEffect, useState } from '@wordpress/element';
+import {useEffect, useState} from '@wordpress/element';
 import Widget from './Widget';
 import Chart from './Chart';
 
-import { getSettingsDashboardWidgets, getSettingsDashboardCharts } from '../../helper/api_helper';
+import {getSettingsDashboardWidgets, getSettingsDashboardCharts} from '../../helper/api_helper';
 
 const Dashboard = () => {
     const [settingsDashboardWidgets, setSettingsDashboardWidgets] = useState(null);
@@ -26,8 +26,8 @@ const Dashboard = () => {
 
     return (
         <div className="space-y-12">
-            <Widget stats={settingsDashboardWidgets} />
-            <Chart lastMonthOrders={settingsDashboardCharts} />
+            <Widget stats={settingsDashboardWidgets}/>
+            <Chart lastMonthOrders={settingsDashboardCharts}/>
         </div>
     );
 };

@@ -6,19 +6,19 @@ use Iyzico\IyzipayWoocommerce\Common\Abstracts\Config;
 
 class PwiSettings extends Config {
 	public $optionsTableKey = 'woocommerce_pwi_settings';
-	public $form_fields = array();
+	public $form_fields = [];
 
 	public function __construct() {
 		$this->form_fields = array(
-			'enabled'     => array(
+			'enabled' => [
 				'title'   => __( 'Enable/Disable', 'woocommerce-iyzico' ),
 				'label'   => __( 'Enable Pay with iyzico', 'woocommerce-iyzico' ),
 				'type'    => 'checkbox',
 				'default' => 'no'
-			)
+			],
 		);
 
-		$this->defaultSettings = array();
+		$this->defaultSettings = [];
 
 		foreach ( $this->form_fields as $key => $field ) {
 			$this->defaultSettings[ $key ] = $field['default'] ?? '';

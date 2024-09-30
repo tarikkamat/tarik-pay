@@ -49,6 +49,35 @@ export const getOrders = async (page = 1, perPage = 50, search = '', status = ''
     }
 };
 
+export const getSettings = async () => {
+    try {
+        const response = await apiFetch({
+            path: iyzicoRestApi.SettingsUrl,
+            method: 'GET',
+            headers: BASE_HEADERS
+        });
+        return response;
+    } catch (error) {
+        console.error('Error fetching dashboard widgets:', error);
+        return null;
+    }
+};
+
+export const saveSettings = async (formData = null) => {
+    try {
+        const response = await apiFetch({
+            path: iyzicoRestApi.SaveSettingsUrl,
+            method: 'POST',
+            headers: BASE_HEADERS,
+            body: formData
+        });
+        return response;
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        return null;
+    }
+};
+
 export const getSettingsDashboardWidgets = async () => {
     try {
         const response = await apiFetch({
@@ -77,6 +106,4 @@ export const getSettingsDashboardCharts = async () => {
     }
 };
 
-export const getLast30DaysRevenue = () => fetchData(iyzicoRestApi.Last30DaysTotalBalanceUrl);
-export const getLastMonthOrdersByStatus = () => fetchData(iyzicoRestApi.LastMonthOrdersByStatusUrl);
 export const getLocalizations = () => fetchData(iyzicoRestApi.LocalizationsUrl);

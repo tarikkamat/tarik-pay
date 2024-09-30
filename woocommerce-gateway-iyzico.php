@@ -32,6 +32,7 @@ define( 'PLUGIN_LANG_PATH', plugin_basename( dirname( PLUGIN_BASEFILE ) ) . '/i1
 define( 'PLUGIN_ASSETS_DIR_URL', plugin_dir_url( __FILE__ ) . 'assets' );
 define( 'PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
+define( 'WEBHOOK_URL_KEY', 'iyzicoWebhookUrlKey' );
 /**
  * Composer Autoload
  * This is used to autoload the classes.

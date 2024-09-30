@@ -33,8 +33,8 @@ class SettingsPage
 			'manage_options',
 			'iyzico',
 			[$this, 'renderPage'],
-			'dashicons-cart',
-			56
+			PLUGIN_URL . '/assets/images/icon.png',
+			59
 		);
 	}
 
