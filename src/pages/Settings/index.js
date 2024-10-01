@@ -25,7 +25,6 @@ const Settings = () => {
         const fetchOrders = async () => {
             setIsLoading(true);
             await getSettings().then((r) => {
-                console.log(r);
                 setEnvironment(r.checkout.api_type);
                 setApiKey(r.checkout.api_key);
                 setSecretKey(r.checkout.secret_key);
@@ -55,8 +54,6 @@ const Settings = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("enabled: ", enabled);
-        console.log("pwiEnabled: ", pwiEnabled);
         const formData = new FormData();
         formData.append('api_type', environment);
         formData.append('api_key', apiKey);
