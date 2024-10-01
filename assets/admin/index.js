@@ -112,8 +112,6 @@ var Content = function Content(_ref) {
     switch (activeMenuItem) {
       case 'dashboard':
         return /*#__PURE__*/React.createElement(_pages_Dashboard__WEBPACK_IMPORTED_MODULE_1__["default"], null);
-      case 'orders':
-        return /*#__PURE__*/React.createElement(_pages_Orders__WEBPACK_IMPORTED_MODULE_2__["default"], null);
       case 'settings':
         return /*#__PURE__*/React.createElement(_pages_Settings__WEBPACK_IMPORTED_MODULE_0__["default"], null);
       default:
@@ -168,9 +166,6 @@ var Header = function Header(_ref) {
   var menuItems = [{
     name: (0,_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("header.menu.dashboard"),
     key: 'dashboard'
-  }, {
-    name: (0,_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("header.menu.orders"),
-    key: 'orders'
   }, {
     name: (0,_Localization__WEBPACK_IMPORTED_MODULE_2__.Localization)("header.menu.settings"),
     key: 'settings'
@@ -589,7 +584,7 @@ var fetchData = /*#__PURE__*/function () {
           _context.prev = 0;
           _context.next = 3;
           return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
-            path: url,
+            url: url,
             method: 'GET',
             headers: BASE_HEADERS
           });
@@ -640,7 +635,7 @@ var getOrders = /*#__PURE__*/function () {
           }
           _context2.next = 10;
           return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
-            path: "".concat(iyzicoRestApi.GetOrdersUrl, "?").concat(queryParams.toString()),
+            url: "".concat(iyzicoRestApi.GetOrdersUrl, "?").concat(queryParams.toString()),
             method: 'GET',
             headers: BASE_HEADERS
           });
@@ -669,30 +664,15 @@ var getOrders = /*#__PURE__*/function () {
 }();
 var getSettings = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-    var response;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
-          _context3.prev = 0;
-          _context3.next = 3;
-          return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
-            path: iyzicoRestApi.SettingsUrl,
-            method: 'GET',
-            headers: BASE_HEADERS
-          });
-        case 3:
-          response = _context3.sent;
-          return _context3.abrupt("return", response);
-        case 7:
-          _context3.prev = 7;
-          _context3.t0 = _context3["catch"](0);
-          console.error('Error fetching dashboard widgets:', _context3.t0);
-          return _context3.abrupt("return", null);
-        case 11:
+          return _context3.abrupt("return", fetchData(iyzicoRestApi.SettingsUrl));
+        case 1:
         case "end":
           return _context3.stop();
       }
-    }, _callee3, null, [[0, 7]]);
+    }, _callee3);
   }));
   return function getSettings() {
     return _ref3.apply(this, arguments);
@@ -710,7 +690,7 @@ var saveSettings = /*#__PURE__*/function () {
           _context4.prev = 1;
           _context4.next = 4;
           return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
-            path: iyzicoRestApi.SaveSettingsUrl,
+            url: iyzicoRestApi.SaveSettingsUrl,
             method: 'POST',
             headers: BASE_HEADERS,
             body: formData
@@ -721,7 +701,7 @@ var saveSettings = /*#__PURE__*/function () {
         case 8:
           _context4.prev = 8;
           _context4.t0 = _context4["catch"](1);
-          console.error('Error fetching orders:', _context4.t0);
+          console.error('Error saving settings:', _context4.t0);
           return _context4.abrupt("return", null);
         case 12:
         case "end":
@@ -735,30 +715,15 @@ var saveSettings = /*#__PURE__*/function () {
 }();
 var getSettingsDashboardWidgets = /*#__PURE__*/function () {
   var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-    var response;
     return _regeneratorRuntime().wrap(function _callee5$(_context5) {
       while (1) switch (_context5.prev = _context5.next) {
         case 0:
-          _context5.prev = 0;
-          _context5.next = 3;
-          return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
-            path: iyzicoRestApi.SettingsDashboardWidgetsUrl,
-            method: 'GET',
-            headers: BASE_HEADERS
-          });
-        case 3:
-          response = _context5.sent;
-          return _context5.abrupt("return", response);
-        case 7:
-          _context5.prev = 7;
-          _context5.t0 = _context5["catch"](0);
-          console.error('Error fetching dashboard widgets:', _context5.t0);
-          return _context5.abrupt("return", null);
-        case 11:
+          return _context5.abrupt("return", fetchData(iyzicoRestApi.SettingsDashboardWidgetsUrl));
+        case 1:
         case "end":
           return _context5.stop();
       }
-    }, _callee5, null, [[0, 7]]);
+    }, _callee5);
   }));
   return function getSettingsDashboardWidgets() {
     return _ref5.apply(this, arguments);
@@ -766,30 +731,15 @@ var getSettingsDashboardWidgets = /*#__PURE__*/function () {
 }();
 var getSettingsDashboardCharts = /*#__PURE__*/function () {
   var _ref6 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
-    var response;
     return _regeneratorRuntime().wrap(function _callee6$(_context6) {
       while (1) switch (_context6.prev = _context6.next) {
         case 0:
-          _context6.prev = 0;
-          _context6.next = 3;
-          return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
-            path: iyzicoRestApi.SettingsDashboardChartsUrl,
-            method: 'GET',
-            headers: BASE_HEADERS
-          });
-        case 3:
-          response = _context6.sent;
-          return _context6.abrupt("return", response);
-        case 7:
-          _context6.prev = 7;
-          _context6.t0 = _context6["catch"](0);
-          console.error('Error fetching dashboard charts:', _context6.t0);
-          return _context6.abrupt("return", null);
-        case 11:
+          return _context6.abrupt("return", fetchData(iyzicoRestApi.SettingsDashboardChartsUrl));
+        case 1:
         case "end":
           return _context6.stop();
       }
-    }, _callee6, null, [[0, 7]]);
+    }, _callee6);
   }));
   return function getSettingsDashboardCharts() {
     return _ref6.apply(this, arguments);
@@ -1660,6 +1610,7 @@ var Settings = function Settings() {
               setIsLoading(true);
               _context.next = 3;
               return (0,_helper_api_helper__WEBPACK_IMPORTED_MODULE_3__.getSettings)().then(function (r) {
+                console.log(r);
                 setEnvironment(r.checkout.api_type);
                 setApiKey(r.checkout.api_key);
                 setSecretKey(r.checkout.secret_key);
@@ -1671,8 +1622,8 @@ var Settings = function Settings() {
                 setOverlayScript(r.checkout.overlay_script);
                 setFormLanguage(r.checkout.form_language);
                 setAffiliateNetwork(r.checkout.affiliate_network);
-                setEnabled(r.checkout.enabled === "false" ? false : true);
-                setPwiEnabled(r.pwi.enabled === "false" ? false : true);
+                setEnabled(r.checkout.enabled === "no" ? false : true);
+                setPwiEnabled(r.pwi.enabled === "no" ? false : true);
                 setIyzicoWebhookUrlKey(r.iyzicoWebhookUrlKey);
                 setIsLoading(false);
               });
@@ -1699,6 +1650,8 @@ var Settings = function Settings() {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
             event.preventDefault();
+            console.log("enabled: ", enabled);
+            console.log("pwiEnabled: ", pwiEnabled);
             formData = new FormData();
             formData.append('api_type', environment);
             formData.append('api_key', apiKey);
@@ -1716,7 +1669,7 @@ var Settings = function Settings() {
             (0,_helper_api_helper__WEBPACK_IMPORTED_MODULE_3__.saveSettings)(formData).then(function (r) {
               setIsSuccessSave(r.success);
             });
-          case 16:
+          case 18:
           case "end":
             return _context2.stop();
         }

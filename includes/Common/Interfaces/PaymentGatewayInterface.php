@@ -9,6 +9,5 @@ namespace Iyzico\IyzipayWoocommerce\Common\Interfaces;
  */
 interface PaymentGatewayInterface
 {
-	public function notify_process($response);
 
 }

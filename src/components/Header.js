@@ -12,7 +12,6 @@ const Header = ({ setActiveMenuItem, activeMenuItem }) => {
 
     const menuItems = [
         { name: Localization("header.menu.dashboard"), key: 'dashboard' },
-        { name: Localization("header.menu.orders"), key: 'orders' },
         { name: Localization("header.menu.settings"), key: 'settings' }
     ]
 

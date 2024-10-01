@@ -7,7 +7,7 @@ const BASE_HEADERS = {
 export const fetchData = async (url) => {
     try {
         const response = await apiFetch({
-            path: url,
+            url: url,
             method: 'GET',
             headers: BASE_HEADERS
         });
@@ -33,7 +33,7 @@ export const getOrders = async (page = 1, perPage = 50, search = '', status = ''
         }
 
         const response = await apiFetch({
-            path: `${iyzicoRestApi.GetOrdersUrl}?${queryParams.toString()}`,
+            url: `${iyzicoRestApi.GetOrdersUrl}?${queryParams.toString()}`,
             method: 'GET',
             headers: BASE_HEADERS
         });
@@ -50,60 +50,30 @@ export const getOrders = async (page = 1, perPage = 50, search = '', status = ''
 };
 
 export const getSettings = async () => {
-    try {
-        const response = await apiFetch({
-            path: iyzicoRestApi.SettingsUrl,
-            method: 'GET',
-            headers: BASE_HEADERS
-        });
-        return response;
-    } catch (error) {
-        console.error('Error fetching dashboard widgets:', error);
-        return null;
-    }
+    return fetchData(iyzicoRestApi.SettingsUrl);
 };
 
 export const saveSettings = async (formData = null) => {
     try {
         const response = await apiFetch({
-            path: iyzicoRestApi.SaveSettingsUrl,
+            url: iyzicoRestApi.SaveSettingsUrl,
             method: 'POST',
             headers: BASE_HEADERS,
             body: formData
         });
         return response;
     } catch (error) {
-        console.error('Error fetching orders:', error);
+        console.error('Error saving settings:', error);
         return null;
     }
 };
 
 export const getSettingsDashboardWidgets = async () => {
-    try {
-        const response = await apiFetch({
-            path: iyzicoRestApi.SettingsDashboardWidgetsUrl,
-            method: 'GET',
-            headers: BASE_HEADERS
-        });
-        return response;
-    } catch (error) {
-        console.error('Error fetching dashboard widgets:', error);
-        return null;
-    }
+    return fetchData(iyzicoRestApi.SettingsDashboardWidgetsUrl);
 };
 
 export const getSettingsDashboardCharts = async () => {
-    try {
-        const response = await apiFetch({
-            path: iyzicoRestApi.SettingsDashboardChartsUrl,
-            method: 'GET',
-            headers: BASE_HEADERS
-        });
-        return response;
-    } catch (error) {
-        console.error('Error fetching dashboard charts:', error);
-        return null;
-    }
+    return fetchData(iyzicoRestApi.SettingsDashboardChartsUrl);
 };
 
 export const getLocalizations = () => fetchData(iyzicoRestApi.LocalizationsUrl);

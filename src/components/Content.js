@@ -7,8 +7,6 @@ const Content = ({ activeMenuItem }) => {
         switch (activeMenuItem) {
             case 'dashboard':
                 return <Dashboard />
-            case 'orders':
-                return <Orders />
             case 'settings':
                 return <Settings />
             default:

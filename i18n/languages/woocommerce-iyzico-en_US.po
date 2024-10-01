@@ -253,3 +253,9 @@ msgstr "Payment process failed. Please try again or choose a different payment m
 
 msgid "An unknown error occurred during the payment process. Please try again."
 msgstr "An unknown error occurred during the payment process. Please try again."
+
+msgid "Currently in the process of applying for a shopping loan."
+msgstr "Currently in the process of applying for a shopping loan."
+
+msgid "The shopping credit transaction has been initiated."
+msgstr "The shopping credit transaction has been initiated."

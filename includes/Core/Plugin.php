@@ -6,6 +6,7 @@ use Iyzico\IyzipayWoocommerce\Common\Helpers\BlocksSupport;
 use Iyzico\IyzipayWoocommerce\Checkout\CheckoutForm;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\Logger;
 use Iyzico\IyzipayWoocommerce\Common\Hooks\AdminHooks;
+use Iyzico\IyzipayWoocommerce\Common\Hooks\PublicHooks;
 use Iyzico\IyzipayWoocommerce\Common\Hooks\RestHooks;
 use Iyzico\IyzipayWoocommerce\Common\Traits\PluginLoader;
 use Iyzico\IyzipayWoocommerce\Database\DatabaseManager;
@@ -21,6 +22,7 @@ class Plugin
 		$this->loadDependencies();
 		$this->setLocale();
 		$this->defineAdminHooks();
+		$this->definePublicHooks();
 		$this->initPaymentGateway();
 		$this->generateWebhookKey();
 
@@ -35,7 +37,13 @@ class Plugin
 
 		require_once PLUGIN_PATH . '/includes/Admin/SettingsPage.php';
 		require_once PLUGIN_PATH . '/includes/Common/Hooks/AdminHooks.php';
+
+		require_once PLUGIN_PATH . '/includes/Rest/RestAPI.php';
+		require_once PLUGIN_PATH . '/includes/Checkout/CheckoutSettings.php';
+		require_once PLUGIN_PATH . '/includes/common/Helpers/WebhookHelper.php';
+
 		require_once PLUGIN_PATH . '/includes/Common/Hooks/RestHooks.php';
+		require_once PLUGIN_PATH . '/includes/Common/Hooks/PublicHooks.php';
 
 		require_once PLUGIN_PATH . '/includes/Common/Interfaces/PaymentGatewayInterface.php';
 
@@ -44,6 +52,9 @@ class Plugin
 
 		require_once PLUGIN_PATH . '/includes/Pwi/Pwi.php';
 		require_once PLUGIN_PATH . '/includes/Pwi/BlocksPwiMethod.php';
+
+
+
 	}
 
 	private function setLocale(): void
@@ -63,8 +74,15 @@ class Plugin
 			$adminHooks->register();
 		}
 
+	}
+
+	private function definePublicHooks(): void
+	{
 		$restHooks = new RestHooks();
 		$restHooks->register();
+
+		$publicHooks = new PublicHooks();
+		$publicHooks->register();
 	}
 
 	private function initPaymentGateway(): void

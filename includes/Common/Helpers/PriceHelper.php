@@ -36,7 +36,7 @@ class PriceHelper {
 
 	public function priceParser( $price ) {
 
-		if ( ! str_contains( $price, "." ) ) {
+		if (strpos($price, ".") === false) {
 			return $price . ".0";
 		}
 

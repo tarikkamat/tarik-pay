@@ -265,3 +265,12 @@ msgstr "Ödeme işleme hatası. Lütfen tekrar deneyin veya farklı ödeme seçe
 
 msgid "An unknown error occurred during the payment process. Please try again."
 msgstr "Ödeme işlemi sırasında bilinmeyen bir hata oluştu. Lütfen tekrar deneyin."
+
+msgid "Currently in the process of applying for a shopping loan."
+msgstr "Alışveriş kredisi başvurusu sürecindedir."
+
+msgid "The shopping loan transaction was completed successfully."
+msgstr "Alışveriş kredisi işlemi başarıyla tamamlandı."
+
+msgid "The shopping credit transaction has been initiated."
+msgstr "Alışveriş kredisi işlemi başlatıldı."

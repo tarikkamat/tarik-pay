@@ -48,24 +48,59 @@ class PaymentProcessor
 			$checkoutFormResult = $this->retrieveCheckoutForm();
 			$order = $this->getOrder($checkoutFormResult->getBasketId());
 			$this->ensurePaymentMethod($order);
-			if ($this->isPaymentSuccessful($checkoutFormResult)) {
 
-				/** Use Mapper */
-				$checkoutFormResult = CheckoutFormMapper::create($checkoutFormResult)
-					->mapCheckoutForm($checkoutFormResult);
+			/** Use Mapper */
+			$checkoutFormResult = CheckoutFormMapper::create($checkoutFormResult)
+				->mapCheckoutForm($checkoutFormResult);
 
-				$this->addOrderComment($checkoutFormResult, $order);
-				$this->saveUserCard($checkoutFormResult);
-				$this->checkInstallment($checkoutFormResult, $order);
-				$this->saveCardType($checkoutFormResult, $order);
-				$this->saveCardAssociation($checkoutFormResult, $order);
-				$this->saveCardFamily($checkoutFormResult, $order);
-				$this->saveLastFourDigits($checkoutFormResult, $order);
-				$this->completeOrder($order);
-				$this->redirectToOrderReceived($order);
-			} else {
-				$this->handlePaymentFailure($order, $checkoutFormResult->getErrorMessage());
+			$this->addOrderComment($checkoutFormResult, $order);
+			$this->saveUserCard($checkoutFormResult);
+			$this->checkInstallment($checkoutFormResult, $order);
+			$this->saveCardType($checkoutFormResult, $order);
+			$this->saveCardAssociation($checkoutFormResult, $order);
+			$this->saveCardFamily($checkoutFormResult, $order);
+			$this->saveLastFourDigits($checkoutFormResult, $order);
+			$this->updateOrder($checkoutFormResult, $order);
+			$this->redirectToOrderReceived($order);
+
+		} catch (Exception $e) {
+			$this->handleException($e);
+		}
+	}
+
+
+	public function processWebhook($response)
+	{
+		try {
+			$checkoutFormResult = $this->retrieveCheckoutFormV2($response['token']);
+			$order = $this->getOrder($checkoutFormResult->getBasketId());
+
+			if ($order->get_status() == 'completed' || $order->get_status() == 'processing') {
+				return http_response_code(200);
 			}
+
+			if ($response['iyziEventType'] == 'CREDIT_PAYMENT_PENDING' && $checkoutFormResult->getPaymentStatus() == 'PENDING_CREDIT') {
+				$orderMessage = __("Currently in the process of applying for a shopping loan.", "woocommerce-iyzico");
+				$order->add_order_note($orderMessage, 0, true);
+				$order->update_status("on-hold");
+				return http_response_code(200);
+			}
+
+			if ($response['iyziEventType'] == 'CREDIT_PAYMENT_AUTH' && $checkoutFormResult->getStatus() == 'success') {
+				$orderMessage = __("The shopping loan transaction was completed successfully.", "woocommerce-iyzico");
+				$order->add_order_note($orderMessage, 0, true);
+				$order->update_status("processing");
+				return http_response_code(200);
+			}
+
+			if ($response['iyziEventType'] == 'CREDIT_PAYMENT_INIT' && $checkoutFormResult->getStatus() == 'INIT_CREDIT') {
+				$orderMessage = __("The shopping credit transaction has been initiated.", "woocommerce-iyzico");
+				$order->add_order_note($orderMessage, 0, true);
+				$order->update_status("on-hold");
+				return http_response_code(200);
+			}
+
+
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
@@ -164,6 +199,25 @@ class PaymentProcessor
 	/**
 	 * @throws Exception
 	 */
+	private function retrieveCheckoutFormV2(string $token)
+	{
+		$request = new RetrieveCheckoutFormRequest();
+		$locale = $this->checkoutSettings->findByKey('form_language') ?? "tr";
+		$request->setLocale($locale);
+		$request->setToken($token);
+
+		$checkoutFormResult = CheckoutFormModel::retrieve($request, $this->createOptions());
+
+		if (!$checkoutFormResult || $checkoutFormResult->getStatus() !== 'success') {
+			throw new Exception(__("Payment process failed. Please try again or choose a different payment method.", "woocommerce-iyzico"));
+		}
+
+		return $checkoutFormResult;
+	}
+
+	/**
+	 * @throws Exception
+	 */
 	private function getOrder($basketId): WC_Order
 	{
 		$order = wc_get_order($basketId);
@@ -190,15 +244,29 @@ class PaymentProcessor
 		return $checkoutFormResult->getPaymentStatus() === 'SUCCESS';
 	}
 
-	private function completeOrder(WC_Order $order): void
+	private function updateOrder($checkoutFormResult, WC_Order $order): void
 	{
-		$order->payment_complete();
-		$order->save();
+		if ($checkoutFormResult->getPaymentStatus() === 'SUCCESS') {
+			$order->payment_complete();
+			$order->save();
 
-		$orderStatus = $this->checkoutSettings->findByKey('order_status');
+			$orderStatus = $this->checkoutSettings->findByKey('order_status');
 
-		if ($orderStatus !== 'default' && !empty($orderStatus)) {
-			$order->update_status($orderStatus);
+			if ($orderStatus !== 'default' && !empty($orderStatus)) {
+				$order->update_status($orderStatus);
+			}
+		}
+
+		if ($checkoutFormResult->getPaymentStatus() === "INIT_BANK_TRANSFER" && $checkoutFormResult->getStatus() === "success") {
+			$order->update_status("on-hold");
+			$orderMessage = __('iyzico Bank transfer/EFT payment is pending.', 'woocommerce-iyzico');
+			$order->add_order_note($orderMessage, 0, true);
+		}
+
+		if ($checkoutFormResult->getPaymentStatus() === "PENDING_CREDIT" && $checkoutFormResult->getStatus() === "success") {
+			$order->update_status("on-hold");
+			$orderMessage = __('The shopping credit transaction has been initiated.', 'woocommerce-iyzico');
+			$order->add_order_note($orderMessage, 0, true);
 		}
 	}
 

@@ -139,8 +139,11 @@ class AdminHelper
 		unset($request['rest_route']);
 		unset($request['_locale']);
 
+		$pwi_data = [];
+		$pwi_data["enabled"] = $pwi_enable;
+
 		$checkoutSettings->setSettings($request);
-		$pwiSettings->setSettings(['enabled', $pwi_enable]);
+		$pwiSettings->setSettings($pwi_data);
 
 		return rest_ensure_response([
 			'success' => true,
