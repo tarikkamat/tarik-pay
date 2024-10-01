@@ -9,8 +9,8 @@ module.exports = {
         'react-dom': 'ReactDOM',
     },
     output: {
-        path: path.resolve(__dirname, 'assets/blocks/woocommerce'), // Çıkış dizini
-        filename: 'blocks.js', // 'block.js' yerine 'blocks.js' olmalı
+        path: path.resolve(__dirname, 'assets/admin'), // Çıkış dizini
+        filename: 'index.js', // JavaScript dosyasının adı
     },
     module: {
         rules: [
