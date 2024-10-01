@@ -20,7 +20,7 @@ trait PluginLoader {
 
 	abstract public function run();
 
-	public static function init(): null {
+	public static function init() {
 		return static::getInstance()->run();
 	}
 }
