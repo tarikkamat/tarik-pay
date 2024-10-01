@@ -37,7 +37,7 @@ class Plugin {
 
 		require_once PLUGIN_PATH . '/includes/Rest/RestAPI.php';
 		require_once PLUGIN_PATH . '/includes/Checkout/CheckoutSettings.php';
-		require_once PLUGIN_PATH . '/includes/common/Helpers/WebhookHelper.php';
+		require_once PLUGIN_PATH . '/includes/Common/Helpers/WebhookHelper.php';
 
 		require_once PLUGIN_PATH . '/includes/Common/Hooks/RestHooks.php';
 		require_once PLUGIN_PATH . '/includes/Common/Hooks/PublicHooks.php';
