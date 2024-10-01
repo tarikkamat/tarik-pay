@@ -35,7 +35,7 @@ class TlsVerifier {
 		if ( get_option( 'iyziTLS' ) ) {
 			update_option( 'iyziTLS', $version );
 		} else {
-			add_option( 'iyziTLS', $version, '', 'no' );
+			add_option( 'iyziTLS', $version, '', false );
 		}
 	}
 }
