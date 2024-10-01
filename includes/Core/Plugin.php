@@ -42,8 +42,6 @@ class Plugin {
 		require_once PLUGIN_PATH . '/includes/Common/Hooks/RestHooks.php';
 		require_once PLUGIN_PATH . '/includes/Common/Hooks/PublicHooks.php';
 
-		require_once PLUGIN_PATH . '/includes/Common/Interfaces/PaymentGatewayInterface.php';
-
 		require_once PLUGIN_PATH . '/includes/Checkout/CheckoutForm.php';
 		require_once PLUGIN_PATH . '/includes/Checkout/BlocksCheckoutMethod.php';
 
