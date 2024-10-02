@@ -6,7 +6,7 @@
  * Description: iyzico Payment Gateway for WooCommerce.
  * Author: iyzico
  * Author URI: https://iyzico.com
- * Version: 3.5.5
+ * Version: 3.5.6
  * Requires Plugins: woocommerce
  * Requires at least: 6.6.2
  * Tested up to: 6.6.2

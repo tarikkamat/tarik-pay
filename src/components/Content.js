@@ -1,6 +1,5 @@
 import Settings from "../pages/Settings";
 import Dashboard from "../pages/Dashboard";
-import Orders from "../pages/Orders";
 
 const Content = ({activeMenuItem}) => {
     const renderContent = () => {
@@ -19,7 +18,7 @@ const Content = ({activeMenuItem}) => {
             <div className="bg-white p-6 rounded shadow">
                 {renderContent()}
             </div>
-            <span className="mt-1">v3.5.0</span>
+            <span className="mt-1">v3.5.6</span>
         </>
     )
 }
