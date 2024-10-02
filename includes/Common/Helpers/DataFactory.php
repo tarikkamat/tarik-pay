@@ -72,6 +72,8 @@ class DataFactory {
 			if ( $categories && ! is_wp_error( $categories ) ) {
 				$category_names = wp_list_pluck( $categories, 'name' );
 				$basketItem->setCategory1( implode( ', ', $category_names ) );
+			} else {
+				$basketItem->setCategory1('UNKNOWN');
 			}
 
 			$basketItem->setItemType( $product->is_virtual() ? BasketItemType::VIRTUAL : BasketItemType::PHYSICAL );
