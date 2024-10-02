@@ -259,3 +259,6 @@ msgstr "Currently in the process of applying for a shopping loan."
 
 msgid "The shopping credit transaction has been initiated."
 msgstr "The shopping credit transaction has been initiated."
+
+msgid "Refunded %s"
+msgstr "Refunded %s"

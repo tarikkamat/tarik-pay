@@ -274,3 +274,6 @@ msgstr "Alışveriş kredisi işlemi başarıyla tamamlandı."
 
 msgid "The shopping credit transaction has been initiated."
 msgstr "Alışveriş kredisi işlemi başlatıldı."
+
+msgid "Refunded %s"
+msgstr "İade edildi %s"
