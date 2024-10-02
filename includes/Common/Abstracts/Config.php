@@ -56,6 +56,7 @@ abstract class Config {
 					'secret_key'             => '',
 					'api_key'                => '',
 					'api_type'               => 'https://sandbox-api.iyzipay.com',
+					'request_log_enabled'    => 'no',
 				),
 				'woocommerce_pwi_settings'    => array(
 					'enabled'     => 'yes',

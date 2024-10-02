@@ -1,7 +1,7 @@
-import { useState, useEffect } from '@wordpress/element';
+import {useState, useEffect} from '@wordpress/element';
 import IyzicoSettings from './IyzicoSettings';
-import { useLocalization, Localization } from "../../components/Localization";
-import { getSettings, saveSettings } from '../../helper/api_helper';
+import {useLocalization, Localization} from "../../components/Localization";
+import {getSettings, saveSettings} from '../../helper/api_helper';
 
 const Settings = () => {
     const [environment, setEnvironment] = useState(null);
@@ -17,6 +17,7 @@ const Settings = () => {
     const [affiliateNetwork, setAffiliateNetwork] = useState(null);
     const [enabled, setEnabled] = useState(null);
     const [pwiEnabled, setPwiEnabled] = useState(null);
+    const [requestLogEnabled, setRequestLogEnabled] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
     const [isSuccessSave, setIsSuccessSave] = useState(null);
     const [iyzicoWebhookUrlKey, setIyzicoWebhookUrlKey] = useState(null);
@@ -39,6 +40,7 @@ const Settings = () => {
                 setAffiliateNetwork(r.checkout.affiliate_network);
                 setEnabled(r.checkout.enabled === "no" ? false : true);
                 setPwiEnabled(r.pwi.enabled === "no" ? false : true);
+                setRequestLogEnabled(r.checkout.request_log_enabled === "no" ? false : true);
                 setIyzicoWebhookUrlKey(r.iyzicoWebhookUrlKey);
                 setIsLoading(false);
             });
@@ -77,6 +79,7 @@ const Settings = () => {
         formData.append('affiliate_network', affiliateNetwork);
         formData.append('enabled', enabled === true ? 'yes' : 'no');
         formData.append('pwi_enabled', pwiEnabled === true ? 'yes' : 'no');
+        formData.append('request_log_enabled', requestLogEnabled === true ? 'yes' : 'no');
 
         saveSettings(formData).then((r) => {
             setIsSuccessSave(r.success);
@@ -87,13 +90,15 @@ const Settings = () => {
         <form onSubmit={handleSubmit}>
             <div className="space-y-12">
                 {isSuccessSave && (
-                    <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                    <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                         role="alert">
                         <strong className="font-bold">{Localization("settings.success")}</strong>
                         <span className="block sm:inline ms-2">{Localization("settings.success_message")}</span>
                     </div>
                 )}
                 {errorMessage && (
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                         role="alert">
                         <strong className="font-bold">{Localization("settings.error")}</strong>
                         <span className="block sm:inline ms-2">{errorMessage}</span>
                     </div>
@@ -129,6 +134,8 @@ const Settings = () => {
                         setEnabled={setEnabled}
                         pwiEnabled={pwiEnabled}
                         setPwiEnabled={setPwiEnabled}
+                        requestLogEnabled={requestLogEnabled}
+                        setRequestLogEnabled={setRequestLogEnabled}
                     />
                 )}
             </div>

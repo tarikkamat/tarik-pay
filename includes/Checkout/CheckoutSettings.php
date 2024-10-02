@@ -110,6 +110,12 @@ class CheckoutSettings extends Config {
 				'type'    => 'checkbox',
 				'default' => 'no'
 			],
+			'request_log_enabled'    => [
+				'title'   => __( 'Request Log', 'woocommerce-iyzico' ),
+				'label'   => __( 'Enable request log', 'woocommerce-iyzico' ),
+				'type'    => 'checkbox',
+				'default' => 'no'
+			],
 		];
 
 		$this->defaultSettings = [];

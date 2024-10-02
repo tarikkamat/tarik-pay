@@ -84,7 +84,6 @@ class Pwi extends WC_Payment_Gateway {
 			$paymentPageUrl = $pwiInitialize->getPayWithIyzicoPageUrl();
 
 			return $this->redirect_to_iyzico( $paymentPageUrl );
-
 		} catch ( Exception $e ) {
 			wc_add_notice( $e->getMessage(), 'error' );
 		}
@@ -140,6 +139,11 @@ class Pwi extends WC_Payment_Gateway {
 
 		// Create Options
 		$options = $this->create_options();
+
+		// Check Request Logs Settings
+		$isSave = $this->checkoutSettings->findByKey( 'request_log_enabled' );
+
+		$isSave === 'yes' ? $this->logger->info( "CheckoutFormInitialize Request: " . $request->toJsonString() ) : null;
 
 		return PayWithIyzicoInitialize::create( $request, $options );
 	}

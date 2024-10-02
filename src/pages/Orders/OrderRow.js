@@ -1,4 +1,4 @@
-import { useLocalization, Localization } from "../../components/Localization";
+import {useLocalization, Localization} from "../../components/Localization";
 
 const parsePrice = (htmlString) => {
     const parser = new DOMParser();
@@ -6,7 +6,7 @@ const parsePrice = (htmlString) => {
     return doc.body.textContent || "";
 };
 
-const StatusBadge = ({ status }) => {
+const StatusBadge = ({status}) => {
     const getStatusColor = (status) => {
         switch (status) {
             case 'completed':
@@ -31,11 +31,11 @@ const StatusBadge = ({ status }) => {
         const labels = {
             'pending': Localization("orders.row.pending"),
             'processing': Localization("orders.row.processing"),
-            'on-hold':  Localization("orders.row.on-hold"),
-            'completed':  Localization("orders.row.completed"),
-            'cancelled':  Localization("orders.row.cancelled"),
-            'refunded':  Localization("orders.row.refunded"),
-            'failed':  Localization("orders.row.failed"),
+            'on-hold': Localization("orders.row.on-hold"),
+            'completed': Localization("orders.row.completed"),
+            'cancelled': Localization("orders.row.cancelled"),
+            'refunded': Localization("orders.row.refunded"),
+            'failed': Localization("orders.row.failed"),
         };
         return labels[status] || status;
     };
@@ -51,7 +51,7 @@ const getCustomerName = (customer) => {
     return customer && customer.trim() !== '' ? customer : Localization("orders.row.guest");
 };
 
-const OrderRow = ({ order }) => {
+const OrderRow = ({order}) => {
     const isLocalizationLoaded = useLocalization();
 
     if (!order || !isLocalizationLoaded) {
@@ -69,7 +69,7 @@ const OrderRow = ({ order }) => {
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{order.date}</td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{parsePrice(order.total)}</td>
             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <StatusBadge status={order.status} />
+                <StatusBadge status={order.status}/>
             </td>
         </tr>
     );

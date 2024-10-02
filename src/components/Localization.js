@@ -1,5 +1,5 @@
-import { useEffect, useState } from '@wordpress/element'
-import { getLocalizations } from '../helper/api_helper'
+import {useEffect, useState} from '@wordpress/element'
+import {getLocalizations} from '../helper/api_helper'
 
 let localizations = {}
 

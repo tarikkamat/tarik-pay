@@ -1,7 +1,7 @@
-import { useState, useEffect } from '@wordpress/element';
+import {useState, useEffect} from '@wordpress/element';
 import OrderTable from "./OrderTable";
-import { getOrders } from '../../helper/api_helper';
-import { useLocalization, Localization } from "../../components/Localization";
+import {getOrders} from '../../helper/api_helper';
+import {useLocalization, Localization} from "../../components/Localization";
 
 const Orders = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -53,7 +53,8 @@ const Orders = () => {
                 {Localization("orders.description")}
             </p>
 
-            <div className="mb-6 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <div
+                className="mb-6 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4">
                 <input
                     type="text"
                     value={searchTerm}
@@ -80,7 +81,7 @@ const Orders = () => {
                 <p>{Localization("orders.loading")}</p>
             ) : (
                 <>
-                    <OrderTable orders={orders} />
+                    <OrderTable orders={orders}/>
                     <div className="mt-4 flex justify-between">
                         <button
                             onClick={() => handlePageChange(currentPage - 1)}

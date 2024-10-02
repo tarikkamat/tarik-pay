@@ -1,19 +1,31 @@
 // src/pages/Dashboard/Chart.js
 
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/Card';
-import { useLocalization, Localization } from "../../components/Localization";
+import {
+    LineChart,
+    Line,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    Legend,
+    ResponsiveContainer,
+    PieChart,
+    Pie,
+    Cell
+} from 'recharts';
+import {Card, CardContent, CardHeader, CardTitle} from '../../components/Card';
+import {useLocalization, Localization} from "../../components/Localization";
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF'];
 
-const Chart = ({ lastMonthOrders }) => {
+const Chart = ({lastMonthOrders}) => {
     const isLocalizationLoaded = useLocalization();
 
     if (!lastMonthOrders || !isLocalizationLoaded) {
         return null;
     }
 
-    const { ordersData, topProductsData, topCategoriesData } = lastMonthOrders;
+    const {ordersData, topProductsData, topCategoriesData} = lastMonthOrders;
 
     return (
         <div className="border-b border-gray-900/10 pb-12">
@@ -32,19 +44,24 @@ const Chart = ({ lastMonthOrders }) => {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div style={{ width: '100%', height: 300 }}>
+                        <div style={{width: '100%', height: 300}}>
                             <ResponsiveContainer>
                                 <LineChart data={ordersData}>
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="day" />
-                                    <YAxis />
-                                    <Tooltip />
-                                    <Legend />
-                                    <Line type="monotone" dataKey="total" name={Localization("dashboard.chart.keys.total")} stroke="#8884d8" />
-                                    <Line type="monotone" dataKey="completed" name={Localization("dashboard.chart.keys.completed")} stroke="#82ca9d" />
-                                    <Line type="monotone" dataKey="processing" name={Localization("dashboard.chart.keys.processing")} stroke="#ffc658" />
-                                    <Line type="monotone" dataKey="pending" name={Localization("dashboard.chart.keys.pending")} stroke="#ff0000" />
-                                    <Line type="monotone" dataKey="failed" name={Localization("dashboard.chart.keys.failed")} stroke="#000000" />
+                                    <CartesianGrid strokeDasharray="3 3"/>
+                                    <XAxis dataKey="day"/>
+                                    <YAxis/>
+                                    <Tooltip/>
+                                    <Legend/>
+                                    <Line type="monotone" dataKey="total"
+                                          name={Localization("dashboard.chart.keys.total")} stroke="#8884d8"/>
+                                    <Line type="monotone" dataKey="completed"
+                                          name={Localization("dashboard.chart.keys.completed")} stroke="#82ca9d"/>
+                                    <Line type="monotone" dataKey="processing"
+                                          name={Localization("dashboard.chart.keys.processing")} stroke="#ffc658"/>
+                                    <Line type="monotone" dataKey="pending"
+                                          name={Localization("dashboard.chart.keys.pending")} stroke="#ff0000"/>
+                                    <Line type="monotone" dataKey="failed"
+                                          name={Localization("dashboard.chart.keys.failed")} stroke="#000000"/>
                                 </LineChart>
                             </ResponsiveContainer>
                         </div>
@@ -59,7 +76,7 @@ const Chart = ({ lastMonthOrders }) => {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div style={{ width: '100%', height: 300 }}>
+                        <div style={{width: '100%', height: 300}}>
                             <ResponsiveContainer>
                                 <PieChart>
                                     <Pie
@@ -72,11 +89,11 @@ const Chart = ({ lastMonthOrders }) => {
                                         label
                                     >
                                         {topProductsData.map((entry, index) => (
-                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
                                         ))}
                                     </Pie>
-                                    <Tooltip />
-                                    <Legend />
+                                    <Tooltip/>
+                                    <Legend/>
                                 </PieChart>
                             </ResponsiveContainer>
                         </div>
@@ -91,7 +108,7 @@ const Chart = ({ lastMonthOrders }) => {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div style={{ width: '100%', height: 300 }}>
+                        <div style={{width: '100%', height: 300}}>
                             <ResponsiveContainer>
                                 <PieChart>
                                     <Pie
@@ -104,11 +121,11 @@ const Chart = ({ lastMonthOrders }) => {
                                         label
                                     >
                                         {topCategoriesData.map((entry, index) => (
-                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
                                         ))}
                                     </Pie>
-                                    <Tooltip />
-                                    <Legend />
+                                    <Tooltip/>
+                                    <Legend/>
                                 </PieChart>
                             </ResponsiveContainer>
                         </div>
