@@ -8,14 +8,17 @@ use Iyzipay\Model\Address;
 use Iyzipay\Model\BasketItem;
 use Iyzipay\Model\BasketItemType;
 use WC_Order;
+use Iyzico\IyzipayWoocommerce\Common\Helpers\Logger;
 
 class DataFactory {
 	protected $priceHelper;
 	protected $checkoutSettings;
+	public $logger;
 
-	public function __construct( PriceHelper $priceHelper, CheckoutSettings $checkoutSettings ) {
+	public function __construct( PriceHelper $priceHelper, CheckoutSettings $checkoutSettings, Logger $logger ) {
 		$this->priceHelper      = $priceHelper;
 		$this->checkoutSettings = $checkoutSettings;
+		$this->logger           = $logger;
 	}
 
 	protected function createBuyer( $customer, WC_Order $order ): Buyer {
@@ -40,23 +43,23 @@ class DataFactory {
 	protected function createAddress( WC_Order $order, string $type ): Address {
 		$isTypeBilling = $type === "billing";
 
-		$firstName   = $isTypeBilling ? $order->get_billing_first_name() : $order->get_shipping_first_name();
-		$lastName    = $isTypeBilling ? $order->get_billing_last_name() : $order->get_shipping_last_name();
+		$firstName   = $this->validateStringVal( $isTypeBilling ? $order->get_billing_first_name() : $order->get_shipping_first_name() );
+		$lastName    = $this->validateStringVal( $isTypeBilling ? $order->get_billing_last_name() : $order->get_shipping_last_name() );
 		$contactName = $firstName . ' ' . $lastName;
 
-		$city        = $isTypeBilling ? $order->get_billing_city() : $order->get_shipping_city();
-		$country     = $isTypeBilling ? $order->get_billing_country() : $order->get_shipping_country();
-		$address1    = $isTypeBilling ? $order->get_billing_address_1() : $order->get_shipping_address_1();
-		$address2    = $isTypeBilling ? $order->get_billing_address_2() : $order->get_shipping_address_2();
+		$city        = $this->validateStringVal( $isTypeBilling ? $order->get_billing_city() : $order->get_shipping_city() );
+		$country     = $this->validateStringVal( $isTypeBilling ? $order->get_billing_country() : $order->get_shipping_country() );
+		$address1    = $this->validateStringVal( $isTypeBilling ? $order->get_billing_address_1() : $order->get_shipping_address_1() );
+		$address2    = $this->validateStringVal( $isTypeBilling ? $order->get_billing_address_2() : $order->get_shipping_address_2() );
 		$fullAddress = trim( $address1 . ' ' . $address2 );
 		$zipCode     = $isTypeBilling ? $order->get_billing_postcode() : $order->get_shipping_postcode();
 
 		$address = new Address();
-		$address->setContactName( $this->validateStringVal( $contactName ) );
-		$address->setCity( $this->validateStringVal( $city ) );
-		$address->setCountry( $this->validateStringVal( $country ) );
-		$address->setAddress( $this->validateStringVal( $fullAddress ) );
-		$address->setZipCode( $this->validateStringVal( $zipCode ) );
+		$address->setContactName( $contactName );
+		$address->setCity( $city );
+		$address->setCountry( $country );
+		$address->setAddress( $fullAddress );
+		$address->setZipCode( $zipCode );
 
 		return $address;
 	}
@@ -93,8 +96,12 @@ class DataFactory {
 
 			$basketItem->setCategory1( $this->validateStringVal( $category1 ) );
 			$basketItem->setItemType( $product->is_virtual() ? BasketItemType::VIRTUAL : BasketItemType::PHYSICAL );
-			$basketItem->setPrice( $item['quantity'] * $this->priceHelper->priceParser( $product->get_price() ) );
-			$basketItems[] = $basketItem;
+			$basketItemPrice = $item['quantity'] * $this->priceHelper->priceParser( $product->get_price() );
+			$basketItem->setPrice( $basketItemPrice );
+
+			if ( $basketItemPrice > 0 ) {
+				$basketItems[] = $basketItem;
+			}
 		}
 
 		return $basketItems;
@@ -109,9 +116,12 @@ class DataFactory {
 			'basketItems'     => $this->createBasket( $order, $cart ),
 		];
 
-		if ( ! $cartHasPhysicalProduct ) {
+		if ( ! $cartHasPhywsicalProduct ) {
 			unset( $data['shippingAddress'] );
 		}
+
+
+		$this->logger->info( "Checkout Data: " . json_encode( $data ) );
 
 		return $data;
 
@@ -140,10 +150,10 @@ class DataFactory {
 			return 'UNKNOWN';
 		}
 
-		if ( strlen( $string ) === 0 ) {
+		if ( strlen( $string ) <= 0 ) {
 			return 'UNKNOWN';
 		}
 
-		return $string;
+		return substr( $string, 0, 249 );
 	}
 }

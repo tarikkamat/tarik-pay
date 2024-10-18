@@ -133,7 +133,7 @@ class PaymentProcessor {
 			$order->add_item( $itemFee );
 			$order->calculate_totals( true );
 
-			$order->update_meta_data( 'iyzico_no_of_installment', $response->installment );
+			$order->update_meta_data( 'iyzico_no_of_installment', $response->getInstallment() );
 			$order->update_meta_data( 'iyzico_installment_fee', $installmentFee );
 		}
 	}

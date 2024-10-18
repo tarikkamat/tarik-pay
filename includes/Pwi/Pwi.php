@@ -72,7 +72,7 @@ class Pwi extends WC_Payment_Gateway {
 			$this->databaseManager
 		);
 
-		$this->pwiDataFactory  = new DataFactory( $this->priceHelper, $this->checkoutSettings );
+		$this->pwiDataFactory  = new DataFactory( $this->priceHelper, $this->checkoutSettings, $this->logger );
 		$this->refundProcessor = new RefundProcessor();
 	}
 
@@ -143,7 +143,7 @@ class Pwi extends WC_Payment_Gateway {
 		// Check Request Logs Settings
 		$isSave = $this->checkoutSettings->findByKey( 'request_log_enabled' );
 
-		$isSave === 'yes' ? $this->logger->info( "CheckoutFormInitialize Request: " . $request->toJsonString() ) : null;
+		$isSave === 'yes' ? $this->logger->info( "PwiInitialize Request: " . $request->toJsonString() ) : null;
 
 		return PayWithIyzicoInitialize::create( $request, $options );
 	}

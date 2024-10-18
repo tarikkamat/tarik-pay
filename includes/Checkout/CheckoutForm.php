@@ -76,7 +76,7 @@ class CheckoutForm extends WC_Payment_Gateway {
 			$this->databaseManager
 		);
 
-		$this->checkoutDataFactory = new DataFactory( $this->priceHelper, $this->checkoutSettings );
+		$this->checkoutDataFactory = new DataFactory( $this->priceHelper, $this->checkoutSettings, $this->logger );
 		$this->checkoutView        = new CheckoutView( $this->checkoutSettings );
 		$this->adminSettings       = new SettingsPage();
 		$this->refundProcessor     = new RefundProcessor();
