@@ -1,8 +1,8 @@
-import { useState } from '@wordpress/element';
+import {useState} from '@wordpress/element';
 import Logo from './Logo';
-import { useLocalization, Localization } from './Localization';
+import {useLocalization, Localization} from './Localization';
 
-const Header = ({ setActiveMenuItem, activeMenuItem }) => {
+const Header = ({setActiveMenuItem, activeMenuItem}) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const isLocalizationLoaded = useLocalization()
 
@@ -11,8 +11,8 @@ const Header = ({ setActiveMenuItem, activeMenuItem }) => {
     }
 
     const menuItems = [
-        { name: Localization("header.menu.dashboard"), key: 'dashboard' },
-        { name: Localization("header.menu.settings"), key: 'settings' }
+        {name: Localization("header.menu.dashboard"), key: 'dashboard'},
+        {name: Localization("header.menu.settings"), key: 'settings'}
     ]
 
     const handleMenuItemClick = (key) => {
@@ -35,18 +35,19 @@ const Header = ({ setActiveMenuItem, activeMenuItem }) => {
                     <div className="relative flex h-16 items-center">
                         <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                             <button type="button"
-                                className="relative inline-flex items-center justify-start rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                                    className="relative inline-flex items-center justify-start rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
                             </button>
                         </div>
                         <div className="flex items-center">
                             <div className="flex-shrink-0">
-                                <Logo />
+                                <Logo/>
                             </div>
                             <div className="hidden sm:ml-6 sm:block">
                                 <div className="flex space-x-4">
                                     {menuItems.map((item) => (
-                                        <button key={item.key} className={getMenuItemClass(item.key)} onClick={() => handleMenuItemClick(item.key)}>
+                                        <button key={item.key} className={getMenuItemClass(item.key)}
+                                                onClick={() => handleMenuItemClick(item.key)}>
                                             {item.name}
                                         </button>
                                     ))}

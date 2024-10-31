@@ -1,44 +1,45 @@
 import React from 'react';
-import { SelectControl, TextControl, CheckboxControl } from '@wordpress/components';
-import { useLocalization, Localization } from "../../components/Localization";
+import {SelectControl, TextControl, CheckboxControl} from '@wordpress/components';
+import {useLocalization, Localization} from "../../components/Localization";
 
 const IyzicoSettings = ({
-    iyzicoWebhookUrlKey,
-    environment,
-    setEnvironment,
-    apiKey,
-    setApiKey,
-    secretKey,
-    setSecretKey,
-    title,
-    setTitle,
-    description,
-    setDescription,
-    formClass,
-    setFormClass,
-    paymentCheckoutValue,
-    setPaymentCheckoutValue,
-    orderStatus,
-    setOrderStatus,
-    overlayScript,
-    setOverlayScript,
-    formLanguage,
-    setFormLanguage,
-    affiliateNetwork,
-    setAffiliateNetwork,
-    enabled,
-    setEnabled,
-    pwiEnabled,
-    setPwiEnabled
-}) => {
+                            iyzicoWebhookUrlKey,
+                            environment,
+                            setEnvironment,
+                            apiKey,
+                            setApiKey,
+                            secretKey,
+                            setSecretKey,
+                            title,
+                            setTitle,
+                            description,
+                            setDescription,
+                            formClass,
+                            setFormClass,
+                            paymentCheckoutValue,
+                            setPaymentCheckoutValue,
+                            orderStatus,
+                            setOrderStatus,
+                            overlayScript,
+                            setOverlayScript,
+                            formLanguage,
+                            setFormLanguage,
+                            affiliateNetwork,
+                            setAffiliateNetwork,
+                            enabled,
+                            setEnabled,
+                            pwiEnabled,
+                            setPwiEnabled,
+                            requestLogEnabled,
+                            setRequestLogEnabled,
+                        }) => {
     const isLocalizationLoaded = useLocalization();
 
     if (!isLocalizationLoaded) {
         return null;
     }
 
-    return (
-        <div className="border-b border-gray-900/10 pb-12">
+    return (<div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
                 {Localization("settings.title")}
             </h2>
@@ -54,10 +55,12 @@ const IyzicoSettings = ({
                 <SelectControl
                     label={Localization("settings.fields.environment.title")}
                     value={environment}
-                    options={[
-                        { label: Localization("settings.fields.environment.values.live"), value: 'https://api.iyzipay.com' },
-                        { label: Localization("settings.fields.environment.values.sandbox"), value: 'https://sandbox-api.iyzipay.com' },
-                    ]}
+                    options={[{
+                        label: Localization("settings.fields.environment.values.live"), value: 'https://api.iyzipay.com'
+                    }, {
+                        label: Localization("settings.fields.environment.values.sandbox"),
+                        value: 'https://sandbox-api.iyzipay.com'
+                    },]}
                     onChange={(value) => setEnvironment(value)}
                 />
                 <TextControl
@@ -81,7 +84,20 @@ const IyzicoSettings = ({
                         checked={pwiEnabled}
                         onChange={(value) => setPwiEnabled(value)}
                     />
+                    <CheckboxControl
+                        label={Localization("settings.fields.enabled.title_request_log")}
+                        checked={requestLogEnabled}
+                        onChange={(value) => setRequestLogEnabled(value)}
+                    />
                 </div>
+                {
+                    requestLogEnabled && (
+                        <div className="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative"
+                             role="alert">
+                            <span className="block sm:inline ms-2">{Localization("settings.message")}</span>
+                        </div>
+                    )
+                }
                 <TextControl
                     value={title}
                     label={Localization("settings.fields.title.title")}
@@ -95,11 +111,13 @@ const IyzicoSettings = ({
                 <SelectControl
                     label={Localization("settings.fields.form_class.title")}
                     value={formClass}
-                    options={[
-                        { label: Localization("settings.fields.form_class.values.responsive"), value: 'responsive' },
-                        { label: Localization("settings.fields.form_class.values.popup"), value: 'popup' },
-                        { label: Localization("settings.fields.form_class.values.redirect"), value: 'redirect' },
-                    ]}
+                    options={[{
+                        label: Localization("settings.fields.form_class.values.responsive"),
+                        value: 'responsive'
+                    }, {
+                        label: Localization("settings.fields.form_class.values.popup"),
+                        value: 'popup'
+                    }, {label: Localization("settings.fields.form_class.values.redirect"), value: 'redirect'},]}
                     onChange={(value) => setFormClass(value)}
                 />
                 <TextControl
@@ -110,36 +128,52 @@ const IyzicoSettings = ({
                 <SelectControl
                     label={Localization("settings.fields.order_status.title")}
                     value={orderStatus}
-                    options={[
-                        { label: Localization("settings.fields.order_status.values.default"), value: 'default' },
-                        { label: Localization("settings.fields.order_status.values.pending"), value: 'pending' },
-                        { label: Localization("settings.fields.order_status.values.processing"), value: 'processing' },
-                        { label: Localization("settings.fields.order_status.values.on-hold"), value: 'on-hold' },
-                        { label: Localization("settings.fields.order_status.values.completed"), value: 'completed' },
-                        { label: Localization("settings.fields.order_status.values.cancelled"), value: 'cancelled' },
-                        { label: Localization("settings.fields.order_status.values.refunded"), value: 'refunded' },
-                        { label: Localization("settings.fields.order_status.values.failed"), value: 'failed' },
-                    ]}
+                    options={[{
+                        label: Localization("settings.fields.order_status.values.default"),
+                        value: 'default'
+                    }, {
+                        label: Localization("settings.fields.order_status.values.pending"),
+                        value: 'pending'
+                    }, {
+                        label: Localization("settings.fields.order_status.values.processing"),
+                        value: 'processing'
+                    }, {
+                        label: Localization("settings.fields.order_status.values.on-hold"),
+                        value: 'on-hold'
+                    }, {
+                        label: Localization("settings.fields.order_status.values.completed"),
+                        value: 'completed'
+                    }, {
+                        label: Localization("settings.fields.order_status.values.cancelled"),
+                        value: 'cancelled'
+                    }, {
+                        label: Localization("settings.fields.order_status.values.refunded"),
+                        value: 'refunded'
+                    }, {label: Localization("settings.fields.order_status.values.failed"), value: 'failed'},]}
                     onChange={(value) => setOrderStatus(value)}
                 />
                 <SelectControl
                     label={Localization("settings.fields.overlay_script.title")}
                     value={overlayScript}
-                    options={[
-                        { label: Localization("settings.fields.overlay_script.values.left"), value: 'bottomLeft' },
-                        { label: Localization("settings.fields.overlay_script.values.right"), value: 'bottomRight' },
-                        { label: Localization("settings.fields.overlay_script.values.hide"), value: 'hide' },
-                    ]}
+                    options={[{
+                        label: Localization("settings.fields.overlay_script.values.left"),
+                        value: 'bottomLeft'
+                    }, {
+                        label: Localization("settings.fields.overlay_script.values.right"),
+                        value: 'bottomRight'
+                    }, {label: Localization("settings.fields.overlay_script.values.hide"), value: 'hide'},]}
                     onChange={(value) => setOverlayScript(value)}
                 />
                 <SelectControl
                     label={Localization("settings.fields.form_language.title")}
                     value={formLanguage}
-                    options={[
-                        { label: Localization("settings.fields.form_language.values.automatic"), value: '' },
-                        { label: Localization("settings.fields.form_language.values.turkish"), value: 'TR' },
-                        { label: Localization("settings.fields.form_language.values.english"), value: 'EN' },
-                    ]}
+                    options={[{
+                        label: Localization("settings.fields.form_language.values.automatic"),
+                        value: ''
+                    }, {
+                        label: Localization("settings.fields.form_language.values.turkish"),
+                        value: 'TR'
+                    }, {label: Localization("settings.fields.form_language.values.english"), value: 'EN'},]}
                     onChange={(value) => setFormLanguage(value)}
                 />
                 <TextControl
@@ -149,8 +183,7 @@ const IyzicoSettings = ({
                     maxLength={14}
                 />
             </div>
-        </div>
-    );
+        </div>);
 }
 
 export default IyzicoSettings;

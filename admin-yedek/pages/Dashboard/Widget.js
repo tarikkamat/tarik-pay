@@ -1,7 +1,7 @@
 import StatCard from "../../components/StatCard";
-import { useLocalization, Localization } from "../../components/Localization";
+import {useLocalization, Localization} from "../../components/Localization";
 
-const Widget = ({ stats }) => {
+const Widget = ({stats}) => {
     const isLocalizationLoaded = useLocalization();
 
     if (!stats || !isLocalizationLoaded) {
