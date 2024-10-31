@@ -3,20 +3,21 @@
 namespace Iyzico\IyzipayWoocommerce\Pwi;
 
 use Exception;
-use Iyzico\IyzipayWoocommerce\Common\Helpers\RefundProcessor;
-use WC_Payment_Gateway;
 use Iyzico\IyzipayWoocommerce\Checkout\CheckoutSettings;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\CookieManager;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\DataFactory;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\Logger;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\PaymentProcessor;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\PriceHelper;
+use Iyzico\IyzipayWoocommerce\Common\Helpers\RefundProcessor;
+use Iyzico\IyzipayWoocommerce\Common\Helpers\SignatureChecker;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\TlsVerifier;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\VersionChecker;
 use Iyzico\IyzipayWoocommerce\Database\DatabaseManager;
-use Iyzipay\Options;
 use Iyzipay\Model\PayWithIyzicoInitialize;
+use Iyzipay\Options;
 use Iyzipay\Request\CreatePayWithIyzicoInitializeRequest;
+use WC_Payment_Gateway;
 
 class Pwi extends WC_Payment_Gateway {
 
@@ -33,6 +34,8 @@ class Pwi extends WC_Payment_Gateway {
 	public $pwiDataFactory;
 	public $paymentProcessor;
 	public $refundProcessor;
+	public $signatureChecker;
+
 
 	public function __construct() {
 		$this->id                 = "pwi";
@@ -61,6 +64,7 @@ class Pwi extends WC_Payment_Gateway {
 		$this->priceHelper      = new PriceHelper();
 		$this->databaseManager  = new DatabaseManager();
 		$this->checkoutSettings = new CheckoutSettings();
+		$this->signatureChecker = new SignatureChecker();
 
 		$this->paymentProcessor = new PaymentProcessor(
 			$this->logger,
@@ -69,7 +73,8 @@ class Pwi extends WC_Payment_Gateway {
 			$this->versionChecker,
 			$this->tlsVerifier,
 			$this->checkoutSettings,
-			$this->databaseManager
+			$this->databaseManager,
+			$this->signatureChecker
 		);
 
 		$this->pwiDataFactory  = new DataFactory( $this->priceHelper, $this->checkoutSettings, $this->logger );
@@ -87,10 +92,6 @@ class Pwi extends WC_Payment_Gateway {
 		} catch ( Exception $e ) {
 			wc_add_notice( $e->getMessage(), 'error' );
 		}
-	}
-
-	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-		return $this->refundProcessor->refund( $order_id, $amount );
 	}
 
 	protected function create_payment( $orderId ) {
@@ -112,7 +113,7 @@ class Pwi extends WC_Payment_Gateway {
 
 		// Payment Source Settings
 		$affiliate     = $this->checkoutSettings->findByKey( 'affiliate_network' );
-		$paymentSource = "WOOCOMMERCE|$woocommerce->version|CARRERA-PWI-3.5.7";
+		$paymentSource = "WOOCOMMERCE|$woocommerce->version|CARRERA-PWI-3.5.8";
 
 		if ( strlen( $affiliate ) > 0 ) {
 			$paymentSource = "$paymentSource|$affiliate";
@@ -122,7 +123,7 @@ class Pwi extends WC_Payment_Gateway {
 		$request = new CreatePayWithIyzicoInitializeRequest();
 		$request->setLocale( $language );
 		$request->setConversationId( $orderId );
-		$request->setPrice( $this->priceHelper->subTotalPriceCalc( $cart, $order ) );
+		$request->setPrice( $this->pwiDataFactory->createPrice( $order, $cart ) );
 		$request->setPaidPrice( $this->priceHelper->priceParser( round( $order->get_total(), 2 ) ) );
 		$request->setCurrency( $currency );
 		$request->setBasketId( $orderId );
@@ -145,14 +146,26 @@ class Pwi extends WC_Payment_Gateway {
 
 		$isSave === 'yes' ? $this->logger->info( "PwiInitialize Request: " . $request->toJsonString() ) : null;
 
-		return PayWithIyzicoInitialize::create( $request, $options );
-	}
+		$pwiResponse       = PayWithIyzicoInitialize::create( $request, $options );
+		$rawResult         = $pwiResponse->getRawResult();
+		$rawResultResponse = json_decode( $rawResult );
 
-	public function redirect_to_iyzico( string $paymentPageUrl ) {
-		return [
-			'result'   => 'success',
-			'redirect' => $paymentPageUrl
-		];
+		// Check Request Signature
+		$conversationId = $pwiResponse->getConversationId();
+		$token          = $pwiResponse->getToken();
+		$signature      = $rawResultResponse->signature;
+
+		$secretKey           = $options->getSecretKey();
+		$calculatedSignature = $this->signatureChecker->calculateHmacSHA256Signature( [
+			$conversationId,
+			$token
+		], $secretKey );
+
+		if ( $signature != $calculatedSignature ) {
+			$this->logger->error( "Signature is not valid" );
+		}
+
+		return $pwiResponse;
 	}
 
 	protected function create_options(): Options {
@@ -162,6 +175,17 @@ class Pwi extends WC_Payment_Gateway {
 		$options->setBaseUrl( $this->checkoutSettings->findByKey( 'api_type' ) );
 
 		return $options;
+	}
+
+	public function redirect_to_iyzico( string $paymentPageUrl ) {
+		return [
+			'result'   => 'success',
+			'redirect' => $paymentPageUrl
+		];
+	}
+
+	public function process_refund( $order_id, $amount = null, $reason = '' ) {
+		return $this->refundProcessor->refund( $order_id, $amount );
 	}
 
 }

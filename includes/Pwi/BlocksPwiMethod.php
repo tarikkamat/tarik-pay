@@ -2,56 +2,21 @@
 
 namespace Iyzico\IyzipayWoocommerce\Pwi;
 
-use Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType;
 use Iyzico\IyzipayWoocommerce\Checkout\CheckoutSettings;
+use Iyzico\IyzipayWoocommerce\Common\Abstracts\AbstractBlocksMethod;
 
 /**
  * Class BlocksPwiMethod
  *
- * @extends AbstractPaymentMethodType
+ * @extends AbstractBlocksMethod
  */
-class BlocksPwiMethod extends AbstractPaymentMethodType {
-
-	public $gateway;
+class BlocksPwiMethod extends AbstractBlocksMethod {
 	protected $name = 'pwi';
-	public $pwiSettings;
-	public $checkoutSettings;
-
-	public function __construct() {
-		$this->pwiSettings      = new PwiSettings();
-		$this->checkoutSettings = new CheckoutSettings();
-	}
-
+	protected $pwiSettings;
+	protected $checkoutSettings;
 
 	public function initialize(): void {
 		$this->settings = $this->pwiSettings->getSettings();
-	}
-
-	public function is_active(): bool {
-		return ! empty( $this->settings['enabled'] ) && 'yes' === $this->settings['enabled'];
-	}
-
-	public function get_payment_method_script_handles(): array {
-		$dependencies = [];
-		$version      = time();
-
-		$path = plugin_dir_path( PLUGIN_BASEFILE ) . 'assets/blocks/woocommerce/blocks.asset.php';
-
-		if ( file_exists( $path ) ) {
-			$asset        = require $path;
-			$version      = filemtime( plugin_dir_path( PLUGIN_BASEFILE ) . 'assets/blocks/woocommerce/blocks.js' );
-			$dependencies = is_null( $asset['dependencies'] );
-		}
-
-		wp_register_script(
-			'wc-pwi-blocks-integration',
-			plugin_dir_url( PLUGIN_BASEFILE ) . 'assets/blocks/woocommerce/blocks.js',
-			$dependencies,
-			$version,
-			true
-		);
-
-		return [ 'wc-pwi-blocks-integration' ];
 	}
 
 	public function get_payment_method_data(): array {
@@ -73,5 +38,11 @@ class BlocksPwiMethod extends AbstractPaymentMethodType {
 			'description' => $description,
 			'icon'        => $image_path
 		];
+	}
+
+	protected function initializeSettings() {
+		$this->pwiSettings      = new PwiSettings();
+		$this->checkoutSettings = new CheckoutSettings();
+		$this->settings         = $this->pwiSettings->getSettings();
 	}
 }

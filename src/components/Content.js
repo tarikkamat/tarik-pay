@@ -18,7 +18,7 @@ const Content = ({activeMenuItem}) => {
             <div className="bg-white p-6 rounded shadow">
                 {renderContent()}
             </div>
-            <span className="mt-1">v3.5.7</span>
+            <span className="mt-1">v3.5.8</span>
         </>
     )
 }
