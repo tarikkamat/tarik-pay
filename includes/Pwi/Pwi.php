@@ -3,6 +3,7 @@
 namespace Iyzico\IyzipayWoocommerce\Pwi;
 
 use Exception;
+use Iyzico\IyzipayWoocommerce\Admin\SettingsPage;
 use Iyzico\IyzipayWoocommerce\Checkout\CheckoutSettings;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\CookieManager;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\DataFactory;
@@ -35,6 +36,7 @@ class Pwi extends WC_Payment_Gateway {
 	public $paymentProcessor;
 	public $refundProcessor;
 	public $signatureChecker;
+	public $adminSettings;
 
 
 	public function __construct() {
@@ -65,6 +67,7 @@ class Pwi extends WC_Payment_Gateway {
 		$this->databaseManager  = new DatabaseManager();
 		$this->checkoutSettings = new CheckoutSettings();
 		$this->signatureChecker = new SignatureChecker();
+		$this->adminSettings    = new SettingsPage();
 
 		$this->paymentProcessor = new PaymentProcessor(
 			$this->logger,
@@ -186,6 +189,10 @@ class Pwi extends WC_Payment_Gateway {
 
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		return $this->refundProcessor->refund( $order_id, $amount );
+	}
+
+	public function admin_options() {
+		$this->adminSettings->renderAdminOptions();
 	}
 
 }
