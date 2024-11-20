@@ -7,27 +7,17 @@ use Iyzico\IyzipayWoocommerce\Common\Helpers\Logger;
 
 class DatabaseManager {
 	private static $wpdb;
-	private static Logger $logger;
+	private static $logger;
 
 	/**
 	 * @param $wpdb
-	 * @param Logger $logger
+	 * @param  Logger  $logger
 	 *
 	 * @return void
 	 */
 	public static function init( $wpdb, Logger $logger ): void {
 		self::$wpdb   = $wpdb;
 		self::$logger = $logger;
-	}
-
-	private static function ensureInitialized(): void {
-		if ( ! isset( self::$wpdb ) || self::$wpdb === null ) {
-			global $wpdb;
-			self::$wpdb = $wpdb;
-		}
-		if ( ! isset( self::$logger ) ) {
-			self::$logger = new Logger();
-		}
 	}
 
 	public static function createTables(): void {
@@ -67,6 +57,16 @@ class DatabaseManager {
 		}
 	}
 
+	private static function ensureInitialized(): void {
+		if ( ! isset( self::$wpdb ) || self::$wpdb === null ) {
+			global $wpdb;
+			self::$wpdb = $wpdb;
+		}
+		if ( ! isset( self::$logger ) ) {
+			self::$logger = new Logger();
+		}
+	}
+
 	public static function dropTables(): void {
 		self::ensureInitialized();
 		try {
@@ -92,10 +92,10 @@ class DatabaseManager {
 	}
 
 	/**
-	 * @param $paymentId * iyzico Response PaymentId
-	 * @param $orderId * WooCommerce OrderId
-	 * @param $totalAmount * Order Total Amount
-	 * @param $status * Order Status
+	 * @param $paymentId  * iyzico Response PaymentId
+	 * @param $orderId  * WooCommerce OrderId
+	 * @param $totalAmount  * Order Total Amount
+	 * @param $status  * Order Status
 	 *
 	 * @return mixed
 	 */

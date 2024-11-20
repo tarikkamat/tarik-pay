@@ -88,10 +88,17 @@ class WebhookHelper {
 		}
 
 		if ( $key !== null ) {
-			match ( $key ) {
-				'X-IYZ-SIGNATURE-V3', 'X-Iyz-Signature-V3', 'x-iyz-signature-v3', 'x_iyz_signature_v3' => $this->processWebhookV3( $request, $iyzicoSignature ),
-				default => $this->processWebhookDefault( $request ),
-			};
+			switch ( $key ) {
+				case 'X-IYZ-SIGNATURE-V3':
+				case 'X-Iyz-Signature-V3':
+				case 'x-iyz-signature-v3':
+				case 'x_iyz_signature_v3':
+					$this->processWebhookV3( $request, $iyzicoSignature );
+					break;
+				default:
+					$this->processWebhookDefault( $request );
+					break;
+			}
 		} else {
 			$this->processWebhookDefault( $request );
 		}

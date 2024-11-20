@@ -45,8 +45,9 @@ class CheckoutForm extends WC_Payment_Gateway {
 		$this->id                 = "iyzico";
 		$this->method_title       = __( 'iyzico Checkout', 'woocommerce-iyzico' );
 		$this->method_description = __( 'Best Payment Solution', 'woocommerce-iyzico' );
-		$this->checkoutSettings   = new CheckoutSettings();
-		$this->form_fields        = $this->checkoutSettings->getFormFields();
+
+		$this->checkoutSettings = new CheckoutSettings();
+		$this->form_fields      = $this->checkoutSettings->getFormFields();
 		$this->init_settings();
 		$settings = $this->checkoutSettings->getSettings();
 
@@ -133,7 +134,8 @@ class CheckoutForm extends WC_Payment_Gateway {
 			$formType    = $this->checkoutSettings->findByKey( 'form_class' );
 
 			if ( $formType === 'redirect' ) {
-				$this->order->add_order_note( __( "This order will be processed on the iyzico payment page.", "woocommerce-iyzico" ) );
+				$this->order->add_order_note( __( "This order will be processed on the iyzico payment page.",
+					"woocommerce-iyzico" ) );
 				$checkoutFormInitialize = $this->create_payment( $order_id );
 				$paymentPageUrl         = $checkoutFormInitialize->getPaymentPageUrl();
 
@@ -144,7 +146,6 @@ class CheckoutForm extends WC_Payment_Gateway {
 				'result'   => 'success',
 				'redirect' => $this->order->get_checkout_payment_url( true )
 			];
-
 		} catch ( Exception $e ) {
 			wc_add_notice( $e->getMessage(), 'error' );
 
@@ -245,13 +246,19 @@ class CheckoutForm extends WC_Payment_Gateway {
 				wc_add_notice( $error, 'error' );
 				WC()->session->set( 'iyzico_error', null );
 			} else {
-				wc_add_notice( __( "An unknown error occurred during the payment process. Please try again.", "woocommerce-iyzico" ), 'error' );
+				wc_add_notice( __( "An unknown error occurred during the payment process. Please try again.",
+					"woocommerce-iyzico" ), 'error' );
 			}
 		}
 	}
 
 	public function admin_options() {
-		$this->adminSettings->renderAdminOptions();
+		ob_start();
+		parent::admin_options();
+		$parent_options = ob_get_contents();
+		ob_end_clean();
+		echo $parent_options;
+		$this->adminSettings->getHtmlContent();
 	}
 
 	public function load_form() {

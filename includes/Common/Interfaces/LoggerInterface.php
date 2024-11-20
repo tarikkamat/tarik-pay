@@ -9,21 +9,21 @@ namespace Iyzico\IyzipayWoocommerce\Common\Interfaces;
  */
 interface LoggerInterface {
 	/**
-	 * @param string $message
+	 * @param  string  $message
 	 *
 	 * @return void
 	 */
 	public function info( string $message ): void;
 
 	/**
-	 * @param string $message
+	 * @param  string  $message
 	 *
 	 * @return void
 	 */
 	public function error( string $message ): void;
 
 	/**
-	 * @param string $message
+	 * @param  string  $message
 	 *
 	 * @return void
 	 */

@@ -12,7 +12,7 @@ use Iyzico\IyzipayWoocommerce\Common\Abstracts\AbstractLogger;
 class Logger extends AbstractLogger {
 
 	/**
-	 * @param string $message
+	 * @param  string  $message
 	 *
 	 * @return void
 	 */
@@ -21,7 +21,7 @@ class Logger extends AbstractLogger {
 	}
 
 	/**
-	 * @param string $message
+	 * @param  string  $message
 	 *
 	 * @return void
 	 */
@@ -31,7 +31,7 @@ class Logger extends AbstractLogger {
 	}
 
 	/**
-	 * @param string $message
+	 * @param  string  $message
 	 *
 	 * @return void
 	 */
@@ -40,7 +40,7 @@ class Logger extends AbstractLogger {
 	}
 
 	/**
-	 * @param string $message
+	 * @param  string  $message
 	 *
 	 * @return void
 	 */

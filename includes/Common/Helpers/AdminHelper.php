@@ -24,7 +24,8 @@ class AdminHelper {
 
 		$args_last_month           = [
 			'status'       => [ 'wc-completed', 'wc-processing', 'wc-on-hold' ],
-			'date_created' => date( 'Y-m-d', strtotime( '-60 days' ) ) . '...' . date( 'Y-m-d', strtotime( '-31 days' ) ),
+			'date_created' => date( 'Y-m-d', strtotime( '-60 days' ) ) . '...' . date( 'Y-m-d',
+					strtotime( '-31 days' ) ),
 			'return'       => 'ids',
 		];
 		$orders_last_month         = wc_get_orders( $args_last_month );
@@ -112,6 +113,64 @@ class AdminHelper {
 		];
 	}
 
+	private function getTopProductsData(): array {
+		global $wpdb;
+
+		$results = $wpdb->get_results( "
+        SELECT order_item_meta.meta_value AS product_id, SUM(order_item_meta_qty.meta_value) AS quantity
+        FROM {$wpdb->prefix}woocommerce_order_items AS order_items
+        LEFT JOIN {$wpdb->prefix}woocommerce_order_itemmeta AS order_item_meta ON order_items.order_item_id = order_item_meta.order_item_id
+        LEFT JOIN {$wpdb->prefix}woocommerce_order_itemmeta AS order_item_meta_qty ON order_items.order_item_id = order_item_meta_qty.order_item_id
+        WHERE order_items.order_item_type = 'line_item'
+        AND order_item_meta.meta_key = '_product_id'
+        AND order_item_meta_qty.meta_key = '_qty'
+        GROUP BY product_id
+        ORDER BY quantity DESC
+        LIMIT 5
+    " );
+
+		$top_products_data = [];
+		foreach ( $results as $row ) {
+			$product = wc_get_product( $row->product_id );
+			if ( $product ) {
+				$top_products_data[] = [
+					'name'  => $product->get_name(),
+					'value' => (int) $row->quantity,
+				];
+			}
+		}
+
+		return $top_products_data;
+	}
+
+	private function getTopCategoriesData(): array {
+		global $wpdb;
+
+		$results = $wpdb->get_results( "
+        SELECT term_taxonomy.term_id, COUNT(*) as count
+        FROM {$wpdb->prefix}term_relationships AS term_relationships
+        INNER JOIN {$wpdb->prefix}term_taxonomy AS term_taxonomy ON term_relationships.term_taxonomy_id = term_taxonomy.term_taxonomy_id
+        INNER JOIN {$wpdb->prefix}posts AS posts ON term_relationships.object_id = posts.ID
+        WHERE term_taxonomy.taxonomy = 'product_cat' AND posts.post_type = 'product' AND posts.post_status = 'publish'
+        GROUP BY term_taxonomy.term_id
+        ORDER BY count DESC
+        LIMIT 5
+    " );
+
+		$top_categories_data = [];
+		foreach ( $results as $row ) {
+			$term = get_term( $row->term_id );
+			if ( $term ) {
+				$top_categories_data[] = [
+					'name'  => $term->name,
+					'value' => (int) $row->count,
+				];
+			}
+		}
+
+		return $top_categories_data;
+	}
+
 	public function getSettings() {
 		$checkoutSettings = new CheckoutSettings();
 		$pwiSettings      = new PwiSettings();
@@ -197,63 +256,5 @@ class AdminHelper {
 			'total_pages'  => $total_pages,
 			'current_page' => $page,
 		] );
-	}
-
-	private function getTopProductsData(): array {
-		global $wpdb;
-
-		$results = $wpdb->get_results( "
-        SELECT order_item_meta.meta_value AS product_id, SUM(order_item_meta_qty.meta_value) AS quantity
-        FROM {$wpdb->prefix}woocommerce_order_items AS order_items
-        LEFT JOIN {$wpdb->prefix}woocommerce_order_itemmeta AS order_item_meta ON order_items.order_item_id = order_item_meta.order_item_id
-        LEFT JOIN {$wpdb->prefix}woocommerce_order_itemmeta AS order_item_meta_qty ON order_items.order_item_id = order_item_meta_qty.order_item_id
-        WHERE order_items.order_item_type = 'line_item'
-        AND order_item_meta.meta_key = '_product_id'
-        AND order_item_meta_qty.meta_key = '_qty'
-        GROUP BY product_id
-        ORDER BY quantity DESC
-        LIMIT 5
-    " );
-
-		$top_products_data = [];
-		foreach ( $results as $row ) {
-			$product = wc_get_product( $row->product_id );
-			if ( $product ) {
-				$top_products_data[] = [
-					'name'  => $product->get_name(),
-					'value' => (int) $row->quantity,
-				];
-			}
-		}
-
-		return $top_products_data;
-	}
-
-	private function getTopCategoriesData(): array {
-		global $wpdb;
-
-		$results = $wpdb->get_results( "
-        SELECT term_taxonomy.term_id, COUNT(*) as count
-        FROM {$wpdb->prefix}term_relationships AS term_relationships
-        INNER JOIN {$wpdb->prefix}term_taxonomy AS term_taxonomy ON term_relationships.term_taxonomy_id = term_taxonomy.term_taxonomy_id
-        INNER JOIN {$wpdb->prefix}posts AS posts ON term_relationships.object_id = posts.ID
-        WHERE term_taxonomy.taxonomy = 'product_cat' AND posts.post_type = 'product' AND posts.post_status = 'publish'
-        GROUP BY term_taxonomy.term_id
-        ORDER BY count DESC
-        LIMIT 5
-    " );
-
-		$top_categories_data = [];
-		foreach ( $results as $row ) {
-			$term = get_term( $row->term_id );
-			if ( $term ) {
-				$top_categories_data[] = [
-					'name'  => $term->name,
-					'value' => (int) $row->count,
-				];
-			}
-		}
-
-		return $top_categories_data;
 	}
 }

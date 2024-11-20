@@ -16,7 +16,7 @@ class HighPerformanceOrderStorageSupport {
 	public static function init(): void {
 		add_action( 'before_woocommerce_init', [ self::class, 'woocommerce_hpos_compatibility' ] );
 	}
-
+ 
 	/**
 	 * Declare compatibility with WooCommerce High Performance Order Storage
 	 */

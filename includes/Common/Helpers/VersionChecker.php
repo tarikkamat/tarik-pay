@@ -4,7 +4,7 @@ namespace Iyzico\IyzipayWoocommerce\Common\Helpers;
 
 class VersionChecker {
 
-	protected Logger $logger;
+	protected $logger;
 
 	public function __construct( Logger $logger ) {
 		$this->logger = $logger;

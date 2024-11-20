@@ -65,7 +65,6 @@ class PaymentProcessor {
 			$this->updateOrder( $checkoutFormResult, $order );
 			$this->saveOrder( $checkoutFormResult, $order );
 			$this->redirectToOrderReceived( $checkoutFormResult, $order );
-
 		} catch ( Exception $e ) {
 			$this->handleException( $e );
 		}
@@ -76,7 +75,8 @@ class PaymentProcessor {
 	 */
 	private function validateToken(): void {
 		if ( empty( $_POST['token'] ) ) {
-			throw new Exception( __( "Payment token is missing. Please try again or contact the store owner if the problem persists.", "woocommerce-iyzico" ) );
+			throw new Exception( __( "Payment token is missing. Please try again or contact the store owner if the problem persists.",
+				"woocommerce-iyzico" ) );
 		}
 	}
 
@@ -93,8 +93,10 @@ class PaymentProcessor {
 		$checkoutFormResult = CheckoutFormModel::retrieve( $request, $this->createOptions() );
 
 		if ( ! $checkoutFormResult || $checkoutFormResult->getStatus() !== 'success' ) {
-			$this->logger->error( 'PaymentProcessor.php: ' . __( "Payment process failed. Please try again or choose a different payment method.", "woocommerce-iyzico" ) );
-			throw new Exception( __( "Payment process failed. Please try again or choose a different payment method.", "woocommerce-iyzico" ) );
+			$this->logger->error( 'PaymentProcessor.php: ' . __( "Payment process failed. Please try again or choose a different payment method.",
+					"woocommerce-iyzico" ) );
+			throw new Exception( __( "Payment process failed. Please try again or choose a different payment method.",
+				"woocommerce-iyzico" ) );
 		}
 
 		$rawResult         = $checkoutFormResult->getRawResult();
@@ -174,12 +176,13 @@ class PaymentProcessor {
 			$customer = wp_get_current_user();
 
 			if ( $customer->ID ) {
-				$cardUserKey = $this->databaseManager->findUserCardKey( $customer->ID, $this->checkoutSettings->findByKey( 'api_key' ) );
+				$cardUserKey = $this->databaseManager->findUserCardKey( $customer->ID,
+					$this->checkoutSettings->findByKey( 'api_key' ) );
 
 				if ( $checkoutFormResult->cardUserKey != $cardUserKey ) {
-					$this->databaseManager->saveUserCardKey( $customer->ID, $checkoutFormResult->cardUserKey, $this->checkoutSettings->findByKey( 'api_key' ) );
+					$this->databaseManager->saveUserCardKey( $customer->ID, $checkoutFormResult->cardUserKey,
+						$this->checkoutSettings->findByKey( 'api_key' ) );
 				}
-
 			}
 		}
 	}
@@ -191,7 +194,8 @@ class PaymentProcessor {
 
 			$installmentFee = $response->getPaidPrice() - $orderTotal;
 			$itemFee        = new WC_Order_Item_Fee();
-			$itemFee->set_name( $response->getInstallment() . " " . __( "Installment Commission", 'woocommerce-iyzico' ) );
+			$itemFee->set_name( $response->getInstallment() . " " . __( "Installment Commission",
+					'woocommerce-iyzico' ) );
 			$itemFee->set_amount( $installmentFee );
 			$itemFee->set_tax_class( '' );
 			$itemFee->set_tax_status( 'none' );
@@ -256,7 +260,6 @@ class PaymentProcessor {
 
 	private function saveOrder( $checkoutFormResult, WC_Order $order ) {
 		if ( $checkoutFormResult->getStatus() === "success" ) {
-
 			$orderId = $order->get_id();
 			$checkoutFormResult->getPaymentId();
 			$totalAmount = $checkoutFormResult->getPaidPrice();
@@ -268,9 +271,7 @@ class PaymentProcessor {
 				$totalAmount,
 				$status
 			);
-
 		}
-
 	}
 
 	/**
@@ -300,7 +301,8 @@ class PaymentProcessor {
 
 	public function processWebhook( $response ) {
 		try {
-			$checkoutFormResult = $this->retrieveCheckoutFormV2( $response['token'], $response['paymentConversationId'] );
+			$checkoutFormResult = $this->retrieveCheckoutFormV2( $response['token'],
+				$response['paymentConversationId'] );
 			$order              = $this->getOrder( $checkoutFormResult->getConversationId() );
 
 			if ( $order->get_status() == 'completed' || $order->get_status() == 'processing' ) {
@@ -340,7 +342,8 @@ class PaymentProcessor {
 			}
 
 			if ( $response['iyziEventType'] == 'BALANCE' && $checkoutFormResult->getPaymentStatus() == 'SUCCESS' && $checkoutFormResult->getStatus() == 'success' ) {
-				$orderMessage = __( "The balance payment transaction was completed successfully.", "woocommerce-iyzico" );
+				$orderMessage = __( "The balance payment transaction was completed successfully.",
+					"woocommerce-iyzico" );
 				$order->add_order_note( $orderMessage, 0, true );
 				$order->update_status( "processing" );
 
@@ -354,8 +357,6 @@ class PaymentProcessor {
 
 				return http_response_code( 200 );
 			}
-
-
 		} catch ( Exception $e ) {
 			$this->handleException( $e );
 		}
@@ -374,7 +375,8 @@ class PaymentProcessor {
 		$checkoutFormResult = CheckoutFormModel::retrieve( $request, $this->createOptions() );
 
 		if ( ! $checkoutFormResult || $checkoutFormResult->getStatus() !== 'success' ) {
-			throw new Exception( __( "Payment process failed. Please try again or choose a different payment method.", "woocommerce-iyzico" ) );
+			throw new Exception( __( "Payment process failed. Please try again or choose a different payment method.",
+				"woocommerce-iyzico" ) );
 		}
 
 		return $checkoutFormResult;
@@ -421,7 +423,8 @@ class PaymentProcessor {
 			}
 
 			if ( $response['iyziEventType'] == 'BALANCE' && $response['status'] == 'SUCCESS' ) {
-				$orderMessage = __( "The balance payment transaction was completed successfully.", "woocommerce-iyzico" );
+				$orderMessage = __( "The balance payment transaction was completed successfully.",
+					"woocommerce-iyzico" );
 				$order->add_order_note( $orderMessage, 0, true );
 				$order->update_status( "processing" );
 
@@ -435,8 +438,6 @@ class PaymentProcessor {
 
 				return http_response_code( 200 );
 			}
-
-
 		} catch ( Exception $e ) {
 			$this->handleException( $e );
 		}

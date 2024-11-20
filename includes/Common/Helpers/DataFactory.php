@@ -148,7 +148,8 @@ class DataFactory {
 			$basketItem->setCategory1( $this->validateStringVal( $category1 ) );
 			$basketItem->setItemType( $product->is_virtual() ? BasketItemType::VIRTUAL : BasketItemType::PHYSICAL );
 
-			$realPrice = $item['quantity'] * $this->priceHelper->realPrice( $product->get_sale_price(), $product->get_price() );
+			$realPrice = $item['quantity'] * $this->priceHelper->realPrice( $product->get_sale_price(),
+					$product->get_price() );
 
 			$basketItemPrice = $this->priceHelper->priceParser( round( $realPrice, 2 ) );
 			$basketItem->setPrice( $basketItemPrice );
@@ -199,7 +200,8 @@ class DataFactory {
 			}
 
 
-			$price += round( $item['quantity'] * $this->priceHelper->realPrice( $product->get_sale_price(), $product->get_price() ), 2 );
+			$price += round( $item['quantity'] * $this->priceHelper->realPrice( $product->get_sale_price(),
+					$product->get_price() ), 2 );
 		}
 
 		return $this->priceHelper->priceParser( round( $price, 2 ) );

@@ -46,8 +46,7 @@ class Pwi extends WC_Payment_Gateway {
 		$this->pwiSettings        = new PwiSettings();
 		$this->form_fields        = $this->pwiSettings->getFormFields();
 		$this->init_settings();
-		$settings = $this->pwiSettings->getSettings();
-
+		$settings                = $this->pwiSettings->getSettings();
 		$this->enabled           = $settings['enabled'];
 		$this->title             = $settings['title'];
 		$this->description       = $settings['description'];
@@ -87,7 +86,8 @@ class Pwi extends WC_Payment_Gateway {
 	public function process_payment( $order_id ) {
 		try {
 			$this->order = wc_get_order( $order_id );
-			$this->order->add_order_note( __( "This order will be processed on the iyzico payment page.", "woocommerce-iyzico" ) );
+			$this->order->add_order_note( __( "This order will be processed on the iyzico payment page.",
+				"woocommerce-iyzico" ) );
 			$pwiInitialize  = $this->create_payment( $order_id );
 			$paymentPageUrl = $pwiInitialize->getPayWithIyzicoPageUrl();
 
@@ -192,7 +192,12 @@ class Pwi extends WC_Payment_Gateway {
 	}
 
 	public function admin_options() {
-		$this->adminSettings->renderAdminOptions();
+		ob_start();
+		parent::admin_options();
+		$parent_options = ob_get_contents();
+		ob_end_clean();
+		echo $parent_options;
+		$this->adminSettings->getHtmlContent();
 	}
 
 }

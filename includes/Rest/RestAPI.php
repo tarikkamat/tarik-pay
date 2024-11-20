@@ -83,7 +83,6 @@ class RestAPI {
 		} else {
 			return rest_ensure_response( $json_data['tr_TR'] );
 		}
-
 	}
 
 

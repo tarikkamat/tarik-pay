@@ -26,9 +26,12 @@ class SettingsPage {
             }
         </style>
         <h3>
-			<?php esc_html_e( 'These payment method settings are made through the admin menu.', 'woocommerce-iyzico' ); ?>
-            <a href="<?php echo esc_url( admin_url( 'admin.php?page=iyzico' ) ); ?>">
-				<?php esc_html_e( 'Click to go to settings.', 'woocommerce-iyzico' ); ?>
+			<?php
+			esc_html_e( 'These payment method settings are made through the admin menu.', 'woocommerce-iyzico' ); ?>
+            <a href="<?php
+			echo esc_url( admin_url( 'admin.php?page=iyzico' ) ); ?>">
+				<?php
+				esc_html_e( 'Click to go to settings.', 'woocommerce-iyzico' ); ?>
             </a>
         </h3>
 		<?php

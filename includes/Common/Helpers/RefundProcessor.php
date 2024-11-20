@@ -12,10 +12,10 @@ use Iyzipay\Request\AmountBaseRefundRequest;
 use WC_Order;
 
 class RefundProcessor {
-	private Logger $logger;
-	private DatabaseManager $databaseManager;
-	private PriceHelper $priceHelper;
-	private CheckoutSettings $checkoutSettings;
+	private $logger;
+	private $databaseManager;
+	private $priceHelper;
+	private $checkoutSettings;
 
 	public function __construct() {
 		$this->logger           = new Logger();

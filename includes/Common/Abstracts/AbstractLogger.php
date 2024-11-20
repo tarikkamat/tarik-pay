@@ -14,12 +14,12 @@ abstract class AbstractLogger implements LoggerInterface {
 	protected const ERROR_LOG = 'iyzico_error.log';
 	protected const WARN_LOG = 'iyzico_warn.log';
 	protected const WEBHOOK_LOG = 'iyzico_webhook.log';
-	protected string $logDir;
+	protected $logDir;
 
 	/**
 	 * AbstractLogger constructor.
 	 *
-	 * @param string $logDir
+	 * @param  string  $logDir
 	 */
 	public function __construct( string $logDir = '' ) {
 		$this->logDir = $logDir ?: PLUGIN_PATH . '/log_files/';
@@ -45,37 +45,37 @@ abstract class AbstractLogger implements LoggerInterface {
 	}
 
 	/**
-	 * @param string $message
+	 * @param  string  $message
 	 *
 	 * @return void
 	 */
 	abstract public function info( string $message ): void;
 
 	/**
-	 * @param string $message
+	 * @param  string  $message
 	 *
 	 * @return void
 	 */
 	abstract public function error( string $message ): void;
 
 	/**
-	 * @param string $message
+	 * @param  string  $message
 	 *
 	 * @return void
 	 */
 	abstract public function warn( string $message ): void;
 
 	/**
-	 * @param string $message
+	 * @param  string  $message
 	 *
 	 * @return void
 	 */
 	abstract public function webhook( string $message ): void;
 
 	/**
-	 * @param string $file
-	 * @param string $level
-	 * @param string $message
+	 * @param  string  $file
+	 * @param  string  $level
+	 * @param  string  $message
 	 *
 	 * @return void
 	 */

@@ -12,9 +12,21 @@ class BuyerProtection {
 		$this->checkoutSettings = new CheckoutSettings();
 	}
 
+	public static function iyzicoOverlayScriptMobileCss() {
+		echo '<style>
+	                @media screen and (max-width: 380px) {
+                        ._1xrVL7npYN5CKybp32heXk {
+		                    position: fixed;
+			                bottom: 0!important;
+    		                top: unset;
+    		                left: 0;
+    		                width: 100%;
+                        }
+                    }
+	            </style>';
+	}
 
 	public function getOverlayScript() {
-
 		$token    = get_option( 'iyzico_overlay_token' );
 		$position = $this->checkoutSettings->findByKey( 'overlay_script' );
 
@@ -27,20 +39,5 @@ class BuyerProtection {
 		}
 
 		echo $overlayScript;
-	}
-
-	public static function iyzicoOverlayScriptMobileCss() {
-
-		echo '<style>
-	                @media screen and (max-width: 380px) {
-                        ._1xrVL7npYN5CKybp32heXk {
-		                    position: fixed;
-			                bottom: 0!important;
-    		                top: unset;
-    		                left: 0;
-    		                width: 100%;
-                        }
-                    }
-	            </style>';
 	}
 }
