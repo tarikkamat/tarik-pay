@@ -22,8 +22,13 @@ class AdminHooks {
 	}
 
 	public function register(): void {
-		add_action( 'admin_menu', [ $this->page, 'addAdminMenu' ] );
-		add_action( 'admin_enqueue_scripts', [ $this->page, 'enqueueAdminAssets' ] );
+		/**
+		 * This blocks for the admin menu and admin assets
+		 *
+		 * add_action( 'admin_menu', [ $this->page, 'addAdminMenu' ] );
+		 * add_action( 'admin_enqueue_scripts', [ $this->page, 'enqueueAdminAssets' ] );
+		 *
+		 */
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->checkoutForm->id, [
 			$this->checkoutForm,
