@@ -4,30 +4,21 @@ namespace Iyzico\IyzipayWoocommerce\Checkout;
 
 use Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType;
 
-/**
- * Class BlocksCheckoutMethod
- *
- * @extends AbstractPaymentMethodType
- */
 class BlocksCheckoutMethod extends AbstractPaymentMethodType {
 
 	public $gateway;
-	public $checkoutSettings;
 	protected $name = 'iyzico';
 
-	public function __construct() {
-		$this->checkoutSettings = new CheckoutSettings();
+	public function initialize() {
+		$checkoutSettings = new CheckoutSettings();
+		$this->settings   = $checkoutSettings->getSettings();
 	}
 
-	public function initialize(): void {
-		$this->settings = $this->checkoutSettings->getSettings();
-	}
-
-	public function is_active(): bool {
+	public function is_active() {
 		return ! empty( $this->settings['enabled'] ) && 'yes' === $this->settings['enabled'];
 	}
 
-	public function get_payment_method_script_handles(): array {
+	public function get_payment_method_script_handles() {
 		$dependencies = [];
 		$version      = time();
 
@@ -50,7 +41,7 @@ class BlocksCheckoutMethod extends AbstractPaymentMethodType {
 		return [ 'wc-iyzico-blocks-integration' ];
 	}
 
-	public function get_payment_method_data(): array {
+	public function get_payment_method_data() {
 		$title       = $this->settings['title'];
 		$description = $this->settings['description'];
 		$image       = plugin_dir_url( PLUGIN_BASEFILE ) . 'assets/images/cards.png';

@@ -2,8 +2,6 @@
 
 namespace Iyzico\IyzipayWoocommerce\Common\Helpers;
 
-use DateTime;
-use Exception;
 use Iyzico\IyzipayWoocommerce\Checkout\CheckoutSettings;
 use Iyzico\IyzipayWoocommerce\Database\DatabaseManager;
 use Iyzipay\Model\AmountBaseRefund;
@@ -80,23 +78,5 @@ class RefundProcessor {
 		$options->setBaseUrl( $this->checkoutSettings->findByKey( 'api_type' ) );
 
 		return $options;
-	}
-
-	/**
-	 * @throws Exception
-	 */
-	private function isCancellationAvailable( $orderId ): bool {
-		$order = $this->getOrderByOrderId( $orderId );
-
-		$orderDate = new DateTime( $order->created_at );
-		$now       = new DateTime();
-		$interval  = $now->diff( $orderDate );
-		if ( $interval->days > 1 ) {
-			$this->logger->error( 'RefundProcessor: Order cancellation is not available for order ' . $orderId . ' because it is older than 24 hours.' );
-
-			return false;
-		}
-
-		return true;
 	}
 }

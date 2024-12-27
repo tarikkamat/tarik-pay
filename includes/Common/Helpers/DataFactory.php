@@ -2,7 +2,6 @@
 
 namespace Iyzico\IyzipayWoocommerce\Common\Helpers;
 
-use Iyzico\IyzipayWoocommerce\Checkout\CheckoutSettings;
 use Iyzipay\Model\Address;
 use Iyzipay\Model\BasketItem;
 use Iyzipay\Model\BasketItemType;
@@ -11,17 +10,13 @@ use stdClass;
 use WC_Order;
 
 class DataFactory {
-	public $logger;
 	protected $priceHelper;
-	protected $checkoutSettings;
 
-	public function __construct( PriceHelper $priceHelper, CheckoutSettings $checkoutSettings, Logger $logger ) {
-		$this->priceHelper      = $priceHelper;
-		$this->checkoutSettings = $checkoutSettings;
-		$this->logger           = $logger;
+	public function __construct() {
+		$this->priceHelper = new PriceHelper();
 	}
 
-	public function prepareCheckoutData( $customer, WC_Order $order, array $cart ): array {
+	public function prepareCheckoutData( $customer, WC_Order $order, array $cart ) {
 		$cartHasPhysicalProduct = $this->cartHasPhysicalProduct( $cart );
 		$data                   = [
 			'buyer'           => $this->createBuyer( $customer, $order ),
@@ -37,7 +32,7 @@ class DataFactory {
 		return $data;
 	}
 
-	protected function cartHasPhysicalProduct( array $cart ): bool {
+	protected function cartHasPhysicalProduct( array $cart ) {
 		foreach ( $cart as $item ) {
 			if ( ! $item['data']->is_virtual() ) {
 				return true;
@@ -47,7 +42,7 @@ class DataFactory {
 		return false;
 	}
 
-	protected function createBuyer( $customer, WC_Order $order ): Buyer {
+	protected function createBuyer( $customer, WC_Order $order ) {
 		$buyer = new Buyer();
 		$buyer->setId( $this->validateStringVal( $customer->ID ) );
 		$buyer->setName( $this->validateStringVal( $order->get_billing_first_name() ) );
@@ -66,7 +61,7 @@ class DataFactory {
 		return $buyer;
 	}
 
-	protected function validateStringVal( $string ): string {
+	protected function validateStringVal( $string ) {
 		if ( empty( $string ) ) {
 			return 'UNKNOWN';
 		}
@@ -82,7 +77,7 @@ class DataFactory {
 		return substr( $string, 0, 249 );
 	}
 
-	protected function createAddress( WC_Order $order, string $type ): Address {
+	protected function createAddress( WC_Order $order, string $type ) {
 		$isTypeBilling = $type === "billing";
 
 		$firstName   = $this->validateStringVal( $isTypeBilling ? $order->get_billing_first_name() : $order->get_shipping_first_name() );
@@ -106,7 +101,7 @@ class DataFactory {
 		return $address;
 	}
 
-	protected function createBasket( WC_Order $order, array $cart ): array {
+	protected function createBasket( WC_Order $order, array $cart ) {
 		$basketItems             = [];
 		$isShippingPriceIncluded = $this->orderHasShippingPrice( $order );
 
@@ -148,8 +143,10 @@ class DataFactory {
 			$basketItem->setCategory1( $this->validateStringVal( $category1 ) );
 			$basketItem->setItemType( $product->is_virtual() ? BasketItemType::VIRTUAL : BasketItemType::PHYSICAL );
 
-			$realPrice = $item['quantity'] * $this->priceHelper->realPrice( $product->get_sale_price(),
-					$product->get_price() );
+			$realPrice = $item['quantity'] * $this->priceHelper->realPrice(
+					$product->get_sale_price(),
+					$product->get_price()
+				);
 
 			$basketItemPrice = $this->priceHelper->priceParser( round( $realPrice, 2 ) );
 			$basketItem->setPrice( $basketItemPrice );
@@ -162,7 +159,7 @@ class DataFactory {
 		return $basketItems;
 	}
 
-	protected function orderHasShippingPrice( WC_Order $order ): bool {
+	protected function orderHasShippingPrice( WC_Order $order ) {
 		return $order->get_shipping_total() > 0;
 	}
 
@@ -179,7 +176,7 @@ class DataFactory {
 		return $basketItems;
 	}
 
-	public function createPrice( WC_Order $order, array $cart ): string {
+	public function createPrice( WC_Order $order, array $cart ) {
 		$price                   = 0.00;
 		$isShippingPriceIncluded = $this->orderHasShippingPrice( $order );
 
@@ -200,8 +197,10 @@ class DataFactory {
 			}
 
 
-			$price += round( $item['quantity'] * $this->priceHelper->realPrice( $product->get_sale_price(),
-					$product->get_price() ), 2 );
+			$price += round( $item['quantity'] * $this->priceHelper->realPrice(
+					$product->get_sale_price(),
+					$product->get_price()
+				), 2 );
 		}
 
 		return $this->priceHelper->priceParser( round( $price, 2 ) );

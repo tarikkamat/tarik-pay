@@ -3,41 +3,19 @@
 namespace Iyzico\IyzipayWoocommerce\Common\Helpers;
 
 use Iyzico\IyzipayWoocommerce\Checkout\CheckoutSettings;
-use Iyzico\IyzipayWoocommerce\Database\DatabaseManager;
 use WP_Error;
 
 class WebhookHelper {
 	private $checkoutSettings;
 	private $paymentProcessor;
 	private $logger;
-	private $priceHelper;
-	private $cookieManager;
-	private $versionChecker;
 	private $tlsVerifier;
-	private $databaseManager;
-	private $signatureChecker;
-
-
+	
 	public function __construct() {
 		$this->logger           = new Logger();
-		$this->priceHelper      = new PriceHelper();
-		$this->cookieManager    = new CookieManager();
-		$this->versionChecker   = new VersionChecker( $this->logger );
 		$this->tlsVerifier      = new TlsVerifier();
 		$this->checkoutSettings = new CheckoutSettings();
-		$this->databaseManager  = new DatabaseManager();
-		$this->signatureChecker = new SignatureChecker();
-
-		$this->paymentProcessor = new PaymentProcessor(
-			$this->logger,
-			$this->priceHelper,
-			$this->cookieManager,
-			$this->versionChecker,
-			$this->tlsVerifier,
-			$this->checkoutSettings,
-			$this->databaseManager,
-			$this->signatureChecker
-		);
+		$this->paymentProcessor = new PaymentProcessor();
 	}
 
 	public function addRoute(): void {
@@ -58,7 +36,6 @@ class WebhookHelper {
 	private function handleSuccessfulPayment( $data, $isValidateSignature = false ) {
 		if ( $isValidateSignature ) {
 			$this->logger->webhook( "USE X-IYZ-SIGNATURE-V3: " . print_r( $data, true ) );
-
 			return $this->paymentProcessor->processWebhookWithSignature( $data );
 		}
 

@@ -11,9 +11,7 @@ use Iyzico\IyzipayWoocommerce\Common\Helpers\PaymentProcessor;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\PriceHelper;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\RefundProcessor;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\SignatureChecker;
-use Iyzico\IyzipayWoocommerce\Common\Helpers\TlsVerifier;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\VersionChecker;
-use Iyzico\IyzipayWoocommerce\Database\DatabaseManager;
 use Iyzipay\Model\CheckoutFormInitialize;
 use Iyzipay\Model\ProtectedOverleyScript;
 use Iyzipay\Options;
@@ -30,14 +28,12 @@ class CheckoutForm extends WC_Payment_Gateway {
 	public $has_fields;
 	public $cookieManager;
 	public $versionChecker;
-	public $tlsVerifier;
 	public $logger;
 	public $priceHelper;
 	public $paymentProcessor;
 	public $checkoutDataFactory;
 	public $checkoutView;
 	public $adminSettings;
-	public $databaseManager;
 	public $refundProcessor;
 	public $signatureChecker;
 
@@ -62,27 +58,14 @@ class CheckoutForm extends WC_Payment_Gateway {
 			'refunds'
 		];
 
-		$this->logger           = new Logger();
-		$this->cookieManager    = new CookieManager();
-		$this->versionChecker   = new VersionChecker( $this->logger );
-		$this->tlsVerifier      = new TlsVerifier();
-		$this->priceHelper      = new PriceHelper();
-		$this->databaseManager  = new DatabaseManager();
-		$this->signatureChecker = new SignatureChecker();
-
-		$this->paymentProcessor = new PaymentProcessor(
-			$this->logger,
-			$this->priceHelper,
-			$this->cookieManager,
-			$this->versionChecker,
-			$this->tlsVerifier,
-			$this->checkoutSettings,
-			$this->databaseManager,
-			$this->signatureChecker
-		);
-
-		$this->checkoutDataFactory = new DataFactory( $this->priceHelper, $this->checkoutSettings, $this->logger );
-		$this->checkoutView        = new CheckoutView( $this->checkoutSettings );
+		$this->logger              = new Logger();
+		$this->cookieManager       = new CookieManager();
+		$this->versionChecker      = new VersionChecker();
+		$this->priceHelper         = new PriceHelper();
+		$this->signatureChecker    = new SignatureChecker();
+		$this->paymentProcessor    = new PaymentProcessor();
+		$this->checkoutDataFactory = new DataFactory();
+		$this->checkoutView        = new CheckoutView();
 		$this->adminSettings       = new SettingsPage();
 		$this->refundProcessor     = new RefundProcessor();
 	}
@@ -98,17 +81,13 @@ class CheckoutForm extends WC_Payment_Gateway {
 
 		if ( $overlayScriptResponse->getProtectedShopId() !== null ) {
 			esc_js( $overlayScriptResponse->getProtectedShopId() );
-			if ( empty( $iyzicoOverlayToken ) ) {
-				update_option( 'iyzico_overlay_token', $overlayScriptResponse->getProtectedShopId() );
-			} else {
-				update_option( 'iyzico_overlay_token', $overlayScriptResponse->getProtectedShopId() );
-			}
+			update_option( 'iyzico_overlay_token', $overlayScriptResponse->getProtectedShopId() );
 		}
 
 		return true;
 	}
 
-	protected function create_options(): Options {
+	protected function create_options() {
 		$options = new Options();
 		$options->setApiKey( $this->checkoutSettings->findByKey( 'api_key' ) );
 		$options->setSecretKey( $this->checkoutSettings->findByKey( 'secret_key' ) );
@@ -134,8 +113,10 @@ class CheckoutForm extends WC_Payment_Gateway {
 			$formType    = $this->checkoutSettings->findByKey( 'form_class' );
 
 			if ( $formType === 'redirect' ) {
-				$this->order->add_order_note( __( "This order will be processed on the iyzico payment page.",
-					"woocommerce-iyzico" ) );
+				$this->order->add_order_note( __(
+					"This order will be processed on the iyzico payment page.",
+					"woocommerce-iyzico"
+				) );
 				$checkoutFormInitialize = $this->create_payment( $order_id );
 				$paymentPageUrl         = $checkoutFormInitialize->getPaymentPageUrl();
 
@@ -246,8 +227,10 @@ class CheckoutForm extends WC_Payment_Gateway {
 				wc_add_notice( $error, 'error' );
 				WC()->session->set( 'iyzico_error', null );
 			} else {
-				wc_add_notice( __( "An unknown error occurred during the payment process. Please try again.",
-					"woocommerce-iyzico" ), 'error' );
+				wc_add_notice( __(
+					"An unknown error occurred during the payment process. Please try again.",
+					"woocommerce-iyzico"
+				), 'error' );
 			}
 		}
 	}

@@ -8,13 +8,10 @@ use Iyzico\IyzipayWoocommerce\Checkout\CheckoutSettings;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\CookieManager;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\DataFactory;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\Logger;
-use Iyzico\IyzipayWoocommerce\Common\Helpers\PaymentProcessor;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\PriceHelper;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\RefundProcessor;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\SignatureChecker;
-use Iyzico\IyzipayWoocommerce\Common\Helpers\TlsVerifier;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\VersionChecker;
-use Iyzico\IyzipayWoocommerce\Database\DatabaseManager;
 use Iyzipay\Model\PayWithIyzicoInitialize;
 use Iyzipay\Options;
 use Iyzipay\Request\CreatePayWithIyzicoInitializeRequest;
@@ -28,12 +25,9 @@ class Pwi extends WC_Payment_Gateway {
 	public $logger;
 	public $cookieManager;
 	public $versionChecker;
-	public $tlsVerifier;
 	public $priceHelper;
-	public $databaseManager;
 	public $checkoutSettings;
 	public $pwiDataFactory;
-	public $paymentProcessor;
 	public $refundProcessor;
 	public $signatureChecker;
 	public $adminSettings;
@@ -60,34 +54,24 @@ class Pwi extends WC_Payment_Gateway {
 
 		$this->logger           = new Logger();
 		$this->cookieManager    = new CookieManager();
-		$this->versionChecker   = new VersionChecker( $this->logger );
-		$this->tlsVerifier      = new TlsVerifier();
+		$this->versionChecker   = new VersionChecker();
 		$this->priceHelper      = new PriceHelper();
-		$this->databaseManager  = new DatabaseManager();
 		$this->checkoutSettings = new CheckoutSettings();
 		$this->signatureChecker = new SignatureChecker();
 		$this->adminSettings    = new SettingsPage();
 
-		$this->paymentProcessor = new PaymentProcessor(
-			$this->logger,
-			$this->priceHelper,
-			$this->cookieManager,
-			$this->versionChecker,
-			$this->tlsVerifier,
-			$this->checkoutSettings,
-			$this->databaseManager,
-			$this->signatureChecker
-		);
 
-		$this->pwiDataFactory  = new DataFactory( $this->priceHelper, $this->checkoutSettings, $this->logger );
+		$this->pwiDataFactory  = new DataFactory();
 		$this->refundProcessor = new RefundProcessor();
 	}
 
 	public function process_payment( $order_id ) {
 		try {
 			$this->order = wc_get_order( $order_id );
-			$this->order->add_order_note( __( "This order will be processed on the iyzico payment page.",
-				"woocommerce-iyzico" ) );
+			$this->order->add_order_note( __(
+				"This order will be processed on the iyzico payment page.",
+				"woocommerce-iyzico"
+			) );
 			$pwiInitialize  = $this->create_payment( $order_id );
 			$paymentPageUrl = $pwiInitialize->getPayWithIyzicoPageUrl();
 

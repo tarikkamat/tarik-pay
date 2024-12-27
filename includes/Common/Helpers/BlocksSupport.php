@@ -7,25 +7,13 @@ use Automattic\WooCommerce\Utilities\FeaturesUtil;
 use Iyzico\IyzipayWoocommerce\Checkout\BlocksCheckoutMethod;
 use Iyzico\IyzipayWoocommerce\Pwi\BlocksPwiMethod;
 
-/**
- * Class BlocksCheckoutSupport
- *
- * @package Iyzico\IyzipayWoocommerce\Checkout
- */
 class BlocksSupport {
-
-	/**
-	 * @return void
-	 */
-	public static function init(): void {
+	public static function init() {
 		add_action( 'woocommerce_blocks_loaded', [ self::class, 'woocommerce_blocks_support' ] );
 		add_action( 'before_woocommerce_init', [ self::class, 'woocommerce_blocks_compatibility' ] );
 	}
 
-	/**
-	 * @return void
-	 */
-	public static function woocommerce_blocks_support(): void {
+	public static function woocommerce_blocks_support() {
 		if ( ! class_exists( 'Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType' ) ) {
 			return;
 		}
@@ -39,10 +27,7 @@ class BlocksSupport {
 		);
 	}
 
-	/**
-	 * @return void
-	 */
-	public static function woocommerce_blocks_compatibility(): void {
+	public static function woocommerce_blocks_compatibility() {
 		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
 			FeaturesUtil::declare_compatibility(
 				'cart_checkout_blocks',

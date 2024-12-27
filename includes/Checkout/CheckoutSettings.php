@@ -9,7 +9,14 @@ class CheckoutSettings extends Config {
 	public $form_fields = [];
 
 	public function __construct() {
+		$webhookUrl = get_site_url() . "/wp-json/iyzico/v1/webhook/" . get_option( 'iyzicoWebhookUrlKey' );
+
 		$this->form_fields = [
+			'webhook_url'            => [
+				'title'       => __( 'Webhook URL', 'woocommerce-iyzico' ),
+				'type'        => 'title',
+				'description' => $webhookUrl,
+			],
 			'api_type'               => [
 				'title'    => __( 'Api Type', 'woocommerce-iyzico' ),
 				'type'     => 'select',
@@ -37,8 +44,10 @@ class CheckoutSettings extends Config {
 			'description'            => [
 				'title'       => __( 'Payment Form Description Value', 'woocommerce-iyzico' ),
 				'type'        => 'text',
-				'description' => __( 'This controls the description which the user sees during checkout.',
-					'woocommerce-iyzico' ),
+				'description' => __(
+					'This controls the description which the user sees during checkout.',
+					'woocommerce-iyzico'
+				),
 				'default'     => __( 'Pay with your credit card or debit card via iyzico.', 'woocommerce-iyzico' ),
 				'desc_tip'    => true
 			],
@@ -56,8 +65,10 @@ class CheckoutSettings extends Config {
 				'title'       => __( 'Payment Checkout Value', 'woocommerce-iyzico' ),
 				'type'        => 'text',
 				'description' => __( 'Ödeme formun yüklendiği sayfada gösterilen mesaj', 'woocommerce-iyzico' ),
-				'default'     => __( 'Thank you for your order, please enter your card information in the payment form below to pay with iyzico checkout.',
-					'woocommerce-iyzico' ),
+				'default'     => __(
+					'Thank you for your order, please enter your card information in the payment form below to pay with iyzico checkout.',
+					'woocommerce-iyzico'
+				),
 				'desc_tip'    => true,
 			],
 			'order_status'           => [

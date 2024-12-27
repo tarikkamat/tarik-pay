@@ -8,13 +8,6 @@ use Iyzico\IyzipayWoocommerce\Common\Helpers\Logger;
 class DatabaseManager {
 	private static $wpdb;
 	private static $logger;
-
-	/**
-	 * @param $wpdb
-	 * @param  Logger  $logger
-	 *
-	 * @return void
-	 */
 	public static function init( $wpdb, Logger $logger ): void {
 		self::$wpdb   = $wpdb;
 		self::$logger = $logger;
@@ -91,14 +84,6 @@ class DatabaseManager {
 		}
 	}
 
-	/**
-	 * @param $paymentId  * iyzico Response PaymentId
-	 * @param $orderId  * WooCommerce OrderId
-	 * @param $totalAmount  * Order Total Amount
-	 * @param $status  * Order Status
-	 *
-	 * @return mixed
-	 */
 	public static function createOrder( $paymentId, $orderId, $totalAmount, $status ) {
 		self::ensureInitialized();
 		$tableName = self::$wpdb->prefix . 'iyzico_order';

@@ -7,7 +7,6 @@ use Iyzico\IyzipayWoocommerce\Common\Helpers\BlocksSupport;
 use Iyzico\IyzipayWoocommerce\Common\Helpers\Logger;
 use Iyzico\IyzipayWoocommerce\Common\Hooks\AdminHooks;
 use Iyzico\IyzipayWoocommerce\Common\Hooks\PublicHooks;
-use Iyzico\IyzipayWoocommerce\Common\Hooks\RestHooks;
 use Iyzico\IyzipayWoocommerce\Common\Traits\PluginLoader;
 use Iyzico\IyzipayWoocommerce\Database\DatabaseManager;
 use Iyzico\IyzipayWoocommerce\Pwi\Pwi;
@@ -16,11 +15,11 @@ class Plugin {
 
 	use PluginLoader;
 
-	public static function activate(): void {
+	public static function activate() {
 		DatabaseManager::createTables();
 	}
 
-	public static function deactivate(): void {
+	public static function deactivate() {
 		global $wpdb;
 		$logger = new Logger();
 		DatabaseManager::init( $wpdb, $logger );
@@ -34,7 +33,7 @@ class Plugin {
 		flush_rewrite_rules();
 	}
 
-	public function run(): void {
+	public function run() {
 		$this->loadDependencies();
 		$this->setLocale();
 		$this->defineAdminHooks();
@@ -53,11 +52,9 @@ class Plugin {
 		require_once PLUGIN_PATH . '/includes/Admin/SettingsPage.php';
 		require_once PLUGIN_PATH . '/includes/Common/Hooks/AdminHooks.php';
 
-		require_once PLUGIN_PATH . '/includes/Rest/RestAPI.php';
 		require_once PLUGIN_PATH . '/includes/Checkout/CheckoutSettings.php';
 		require_once PLUGIN_PATH . '/includes/Common/Helpers/WebhookHelper.php';
 
-		require_once PLUGIN_PATH . '/includes/Common/Hooks/RestHooks.php';
 		require_once PLUGIN_PATH . '/includes/Common/Hooks/PublicHooks.php';
 
 		require_once PLUGIN_PATH . '/includes/Checkout/CheckoutForm.php';
@@ -67,11 +64,11 @@ class Plugin {
 		require_once PLUGIN_PATH . '/includes/Pwi/BlocksPwiMethod.php';
 	}
 
-	private function setLocale(): void {
+	private function setLocale() {
 		load_plugin_textdomain( 'woocommerce-iyzico', false, PLUGIN_LANG_PATH );
 	}
 
-	private function defineAdminHooks(): void {
+	private function defineAdminHooks() {
 		if ( is_admin() ) {
 			add_filter(
 				'plugin_action_links_' . plugin_basename( PLUGIN_BASEFILE ),
@@ -83,19 +80,16 @@ class Plugin {
 		}
 	}
 
-	private function definePublicHooks(): void {
-		$restHooks = new RestHooks();
-		$restHooks->register();
-
+	private function definePublicHooks() {
 		$publicHooks = new PublicHooks();
 		$publicHooks->register();
 	}
 
-	private function initPaymentGateway(): void {
+	private function initPaymentGateway() {
 		add_filter( 'woocommerce_payment_gateways', [ $this, 'addGateways' ] );
 	}
 
-	private function generateWebhookKey(): void {
+	private function generateWebhookKey() {
 		$uniqueUrlId = substr( base64_encode( time() . mt_rand() ), 15, 6 );
 		$iyziUrlId   = get_option( "iyzicoWebhookUrlKey" );
 		if ( ! $iyziUrlId ) {

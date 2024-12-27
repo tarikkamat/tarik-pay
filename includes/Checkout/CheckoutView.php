@@ -3,15 +3,10 @@
 namespace Iyzico\IyzipayWoocommerce\Checkout;
 
 class CheckoutView {
-	protected $checkoutSettings;
-
-	public function __construct( CheckoutSettings $checkoutSettings ) {
-		$this->checkoutSettings = $checkoutSettings;
-	}
-
 	public function renderCheckoutForm( $checkoutFormInitialize ) {
-		$className = $this->checkoutSettings->findByKey( 'form_class' );
-		$message   = '<p id="infoBox" style="display:none;">' . esc_html( $this->checkoutSettings->findByKey( 'payment_checkout_value' ) ) . '</p>';
+		$checkoutSettings = new CheckoutSettings();
+		$className        = $checkoutSettings->findByKey( 'form_class' );
+		$message          = '<p id="infoBox" style="display:none;">' . esc_html( $checkoutSettings->findByKey( 'payment_checkout_value' ) ) . '</p>';
 		echo '<script>
                 jQuery(window).on("load", function(){
                     document.getElementById("loadingBar").style.display="none";

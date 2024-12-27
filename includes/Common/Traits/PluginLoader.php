@@ -2,11 +2,6 @@
 
 namespace Iyzico\IyzipayWoocommerce\Common\Traits;
 
-/**
- * PluginLoader
- *
- * @package Iyzico\IyzipayWoocommerce\Common\Traits
- */
 trait PluginLoader {
 	private static $instance = null;
 
