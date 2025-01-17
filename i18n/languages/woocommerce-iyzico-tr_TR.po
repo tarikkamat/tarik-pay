@@ -15,11 +15,11 @@ msgstr ""
 "X-Loco-Version: 2.6.3; wp-6.3-alpha-55617"
 
 # This file is distributed under the GNU General Public License v2 or later.
-msgid "Api Type"
+msgid "API Type"
 msgstr "Api Türü"
 
-msgid "Api Key"
-msgstr "Api Anahtarı"
+msgid "API Key"
+msgstr "API Anahtarı"
 
 msgid "Secret Key"
 msgstr "Güvenlik Anahtarı"
@@ -36,8 +36,8 @@ msgstr "Ödeme Seçeneği Açıklaması"
 msgid "Enable/Disable"
 msgstr "Eklenti Durumu"
 
-msgid "Enable iyzico checkout"
-msgstr "iyzico ödeme formunu etkinleştir"
+msgid "Enable iyzico Checkout Form"
+msgstr "iyzico Ödeme Formu Etkinleştir"
 
 msgid "Payment Form Design"
 msgstr "Ödeme Formu Görünümü"
@@ -80,7 +80,7 @@ msgstr ""
 "Siparişiniz için teşekkür ederiz, iyzico ile ödemek için aşağıdaki ödeme "
 "formu alanına kart bilgilerinizi girebilirsiniz. "
 
-msgid "Pay With Card"
+msgid "Pay with Credit/Bank Card"
 msgstr "Kredi/Banka Kartı ile Öde"
 
 msgid "Order Status"
