@@ -20,7 +20,7 @@ class CheckoutSettings extends Config
 				'description' => $webhookUrl,
 			],
 			'api_type' => [
-				'title' => __('API Type', 'woocommerce-iyzico'),
+				'title' => __('Environment', 'woocommerce-iyzico'),
 				'type' => 'select',
 				'required' => true,
 				'default' => 'responsive',
@@ -46,12 +46,8 @@ class CheckoutSettings extends Config
 			'description' => [
 				'title' => __('Payment Form Description Value', 'woocommerce-iyzico'),
 				'type' => 'text',
-				'description' => __(
-					'This controls the description which the user sees during checkout.',
-					'woocommerce-iyzico'
-				),
-				'default' => __('Pay with your credit card or debit card via iyzico.', 'woocommerce-iyzico'),
-				'desc_tip' => true
+				'description' => __('This controls the description which the user sees during checkout.','woocommerce-iyzico'),
+				'default' => __('Pay with your credit card or debit card via iyzico.', 'woocommerce-iyzico')
 			],
 			'form_class' => [
 				'title' => __('Payment Form Design', 'woocommerce-iyzico'),
@@ -66,7 +62,7 @@ class CheckoutSettings extends Config
 			'payment_checkout_value' => [
 				'title' => __('Payment Checkout Value', 'woocommerce-iyzico'),
 				'type' => 'text',
-				'description' => __('Ödeme formun yüklendiği sayfada gösterilen mesaj', 'woocommerce-iyzico'),
+				'description' => __('This controls the description which the user sees during checkout.', 'woocommerce-iyzico'),
 				'default' => __(
 					'Thank you for your order, please enter your card information in the payment form below to pay with iyzico checkout.',
 					'woocommerce-iyzico'
@@ -101,12 +97,11 @@ class CheckoutSettings extends Config
 				]
 			],
 			'form_language' => [
-				'title' => __('Ödeme Formu Dili', 'woocommerce-iyzico'),
+				'title' => __('Payment Form Language', 'woocommerce-iyzico'),
 				'type' => 'select',
 				'required' => true,
 				'default' => 'TR',
 				'options' => [
-					'' => __('Automatic', 'woocommerce-iyzico'),
 					'TR' => __('Turkish', 'woocommerce-iyzico'),
 					'EN' => __('English', 'woocommerce-iyzico')
 				]

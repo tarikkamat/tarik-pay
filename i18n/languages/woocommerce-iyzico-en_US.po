@@ -15,8 +15,8 @@ msgstr ""
 "X-Loco-Version: 2.6.3; wp-6.3-alpha-55617"
 
 # This file is distributed under the GNU General Public License v2 or later.
-msgid "API Type"
-msgstr "API Type"
+msgid "Environment"
+msgstr "Environment"
 
 msgid "API Key"
 msgstr "API Key"
@@ -57,12 +57,8 @@ msgstr "This message will show to the user during checkout."
 msgid "Pay with your credit card or debit card via iyzico."
 msgstr "Pay with your credit card or debit card via iyzico."
 
-msgid ""
-"Thank you for your order, please enter your card information in the payment "
-"form below to pay with iyzico checkout."
-msgstr ""
-"Thank you for your order, please enter your card information in the payment "
-"form below to pay with iyzico checkout. "
+msgid "Thank you for your order, please enter your card information in the payment form below to pay with iyzico checkout."
+msgstr "Thank you for your order, please enter your card information in the payment form below to pay with iyzico checkout."
 
 msgid "Pay with Credit/Bank Card"
 msgstr "Pay with Credit/Bank Card"
@@ -118,9 +114,6 @@ msgstr "iyzico Checkout"
 msgid "Support"
 msgstr "Support"
 
-msgid "Automatic"
-msgstr "Automatic"
-
 msgid "Turkish"
 msgstr "Turkish"
 
@@ -135,9 +128,6 @@ msgstr "Payment Checkout Message "
 
 msgid "Your money safe with iyzico! Store your iyzico card and enjoy one-click payment. All your transactions under the iyzico Buyer Protection guarantee. Get live support 24/7."
 msgstr "Your money safe with iyzico! Store your iyzico card and enjoy one-click payment. All your transactions under the iyzico Buyer Protection guarantee. Get live support 24/7."
-
-msgid "Save Settings"
-msgstr "Save Settings"
 
 msgid "Error"
 msgstr "Error"
@@ -177,3 +167,6 @@ msgstr "The BKM Express transaction was completed successfully."
 
 msgid "iyzico Bank transfer/EFT payment is pending."
 msgstr "iyzico Bank transfer/EFT payment is pending."
+
+msgid "Payment Form Language"
+msgstr "Ödeme Formu Dili"
