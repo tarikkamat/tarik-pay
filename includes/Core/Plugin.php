@@ -71,7 +71,9 @@ class Plugin
 
 	private function setLocale()
 	{
-		load_plugin_textdomain('woocommerce-iyzico', false, PLUGIN_LANG_PATH);
+		add_action('init', function () {
+			load_plugin_textdomain('woocommerce-iyzico', false, PLUGIN_LANG_PATH);
+		});
 	}
 
 	private function defineAdminHooks()
