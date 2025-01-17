@@ -1,4 +1,5 @@
 <?php
+
 /**
  * iyzipay WooCommerce
  *
@@ -14,7 +15,7 @@
  * Version: 3.5.8
  * Requires at least: 6.6.2
  * WC requires at least: 9.3.3
- * Requires PHP: 8.2
+ * Requires PHP: 7.4.33
  * Author: iyzico
  * Author URI: https://iyzico.com
  * Text Domain: woocommerce-iyzico
@@ -44,7 +45,6 @@ define( 'PLUGIN_LANG_PATH', plugin_basename( dirname( PLUGIN_BASEFILE ) ) . '/i1
 define( 'PLUGIN_ASSETS_DIR_URL', plugin_dir_url( __FILE__ ) . 'assets' );
 define( 'PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
-define( 'WEBHOOK_URL_KEY', 'iyzicoWebhookUrlKey' );
 
 /**
  * Composer Autoload
