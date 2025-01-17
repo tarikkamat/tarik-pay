@@ -2,11 +2,13 @@
 
 namespace Iyzico\IyzipayWoocommerce\Checkout;
 
-class CheckoutView {
-	public function renderCheckoutForm( $checkoutFormInitialize ) {
+class CheckoutView
+{
+	public function renderCheckoutForm($checkoutFormInitialize)
+	{
 		$checkoutSettings = new CheckoutSettings();
-		$className        = $checkoutSettings->findByKey( 'form_class' );
-		$message          = '<p id="infoBox" style="display:none;">' . esc_html( $checkoutSettings->findByKey( 'payment_checkout_value' ) ) . '</p>';
+		$className = $checkoutSettings->findByKey('form_class');
+		$message = '<p id="infoBox" style="display:none;">' . esc_html($checkoutSettings->findByKey('payment_checkout_value')) . '</p>';
 		echo '<script>
                 jQuery(window).on("load", function(){
                     document.getElementById("loadingBar").style.display="none";
@@ -15,15 +17,16 @@ class CheckoutView {
                 });
               </script>';
 
-		if ( $checkoutFormInitialize->getStatus() === "success" ) {
+		if ($checkoutFormInitialize->getStatus() === "success") {
 			echo $message;
-			echo ' <div style="display:none" id="iyzipay-checkout-form" class="' . esc_attr( $className ) . '">' . $checkoutFormInitialize->getCheckoutFormContent() . '</div>';
+			echo ' <div style="display:none" id="iyzipay-checkout-form" class="' . esc_attr($className) . '">' . $checkoutFormInitialize->getCheckoutFormContent() . '</div>';
 		} else {
-			echo esc_html( $checkoutFormInitialize->getErrorMessage() );
+			echo esc_html($checkoutFormInitialize->getErrorMessage());
 		}
 	}
 
-	public function renderLoadingHtml() {
+	public function renderLoadingHtml()
+	{
 		echo '<div id="loadingBar">
                 <div class="loading"></div>
                 <div class="brand">

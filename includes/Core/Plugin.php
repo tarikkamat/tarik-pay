@@ -11,29 +11,33 @@ use Iyzico\IyzipayWoocommerce\Common\Traits\PluginLoader;
 use Iyzico\IyzipayWoocommerce\Database\DatabaseManager;
 use Iyzico\IyzipayWoocommerce\Pwi\Pwi;
 
-class Plugin {
+class Plugin
+{
 
 	use PluginLoader;
 
-	public static function activate() {
+	public static function activate()
+	{
 		DatabaseManager::createTables();
 	}
 
-	public static function deactivate() {
+	public static function deactivate()
+	{
 		global $wpdb;
 		$logger = new Logger();
-		DatabaseManager::init( $wpdb, $logger );
+		DatabaseManager::init($wpdb, $logger);
 		DatabaseManager::dropTables();
 
-		delete_option( 'iyzico_overlay_token' );
-		delete_option( 'iyzico_overlay_position' );
-		delete_option( 'iyzico_thank_you' );
-		delete_option( 'init_active_webhook_url' );
+		delete_option('iyzico_overlay_token');
+		delete_option('iyzico_overlay_position');
+		delete_option('iyzico_thank_you');
+		delete_option('init_active_webhook_url');
 
 		flush_rewrite_rules();
 	}
 
-	public function run() {
+	public function run()
+	{
 		$this->loadDependencies();
 		$this->setLocale();
 		$this->defineAdminHooks();
@@ -45,7 +49,8 @@ class Plugin {
 		HighPerformanceOrderStorageSupport::init();
 	}
 
-	private function loadDependencies(): void {
+	private function loadDependencies(): void
+	{
 		require_once PLUGIN_PATH . '/includes/Common/Helpers/BlocksSupport.php';
 		require_once PLUGIN_PATH . '/includes/Common/Helpers/HighPerformanceOrderStorageSupport.php';
 
@@ -64,15 +69,17 @@ class Plugin {
 		require_once PLUGIN_PATH . '/includes/Pwi/BlocksPwiMethod.php';
 	}
 
-	private function setLocale() {
-		load_plugin_textdomain( 'woocommerce-iyzico', false, PLUGIN_LANG_PATH );
+	private function setLocale()
+	{
+		load_plugin_textdomain('woocommerce-iyzico', false, PLUGIN_LANG_PATH);
 	}
 
-	private function defineAdminHooks() {
-		if ( is_admin() ) {
+	private function defineAdminHooks()
+	{
+		if (is_admin()) {
 			add_filter(
-				'plugin_action_links_' . plugin_basename( PLUGIN_BASEFILE ),
-				[ $this, 'actionLinks' ]
+				'plugin_action_links_' . plugin_basename(PLUGIN_BASEFILE),
+				[$this, 'actionLinks']
 			);
 
 			$adminHooks = new AdminHooks();
@@ -80,38 +87,47 @@ class Plugin {
 		}
 	}
 
-	private function definePublicHooks() {
+	private function definePublicHooks()
+	{
 		$publicHooks = new PublicHooks();
 		$publicHooks->register();
 	}
 
-	private function initPaymentGateway() {
-		add_filter( 'woocommerce_payment_gateways', [ $this, 'addGateways' ] );
+	private function initPaymentGateway()
+	{
+		add_filter('woocommerce_payment_gateways', [$this, 'addGateways']);
 	}
 
-	private function generateWebhookKey() {
-		$uniqueUrlId = substr( base64_encode( time() . mt_rand() ), 15, 6 );
-		$iyziUrlId   = get_option( "iyzicoWebhookUrlKey" );
-		if ( ! $iyziUrlId ) {
-			add_option( "iyzicoWebhookUrlKey", $uniqueUrlId, '', false );
+	private function generateWebhookKey()
+	{
+		$uniqueUrlId = substr(base64_encode(time() . mt_rand()), 15, 6);
+		$iyziUrlId = get_option("iyzicoWebhookUrlKey");
+		if (!$iyziUrlId) {
+			add_option("iyzicoWebhookUrlKey", $uniqueUrlId, '', false);
 		}
 	}
 
-	public function addGateways( $methods ) {
+	public function addGateways($methods)
+	{
 		$methods[] = CheckoutForm::class;
 		$methods[] = Pwi::class;
 
 		return $methods;
 	}
 
-	public function actionLinks( $links ): array {
-		$custom_links   = [];
-		$custom_links[] = '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout&section=iyzico' ) . '">' . __( 'Settings',
-				'woocommerce' ) . '</a>';
-		$custom_links[] = '<a target="_blank" href="https://docs.iyzico.com/">' . __( 'Docs', 'woocommerce' ) . '</a>';
-		$custom_links[] = '<a target="_blank" href="https://iyzico.com/destek/iletisim">' . __( 'Support',
-				'woocommerce-iyzico' ) . '</a>';
+	public function actionLinks($links): array
+	{
+		$custom_links = [];
+		$custom_links[] = '<a href="' . admin_url('admin.php?page=wc-settings&tab=checkout&section=iyzico') . '">' . __(
+			'Settings',
+			'woocommerce'
+		) . '</a>';
+		$custom_links[] = '<a target="_blank" href="https://docs.iyzico.com/">' . __('Docs', 'woocommerce') . '</a>';
+		$custom_links[] = '<a target="_blank" href="https://iyzico.com/destek/iletisim">' . __(
+			'Support',
+			'woocommerce-iyzico'
+		) . '</a>';
 
-		return array_merge( $custom_links, $links );
+		return array_merge($custom_links, $links);
 	}
 }

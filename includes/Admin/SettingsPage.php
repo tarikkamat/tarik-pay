@@ -2,9 +2,11 @@
 
 namespace Iyzico\IyzipayWoocommerce\Admin;
 
-class SettingsPage {
-	public function getHtmlContent() {
-		$html = '<style scoped>
+class SettingsPage
+{
+    public function getHtmlContent()
+    {
+        $html = '<style scoped>
                     @media (max-width:768px){.iyziBrand{position:fixed;bottom:0;top:auto!important;right:0!important}}
                 </style>
                 <div class="iyziBrandWrap">
@@ -13,6 +15,6 @@ class SettingsPage {
                         <p style="text-align:center;"><strong>Version: </strong>3.5.8</p>
                     </div>
                 </div>';
-		echo $html;
-	}
+        echo $html;
+    }
 }
