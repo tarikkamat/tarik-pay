@@ -35,33 +35,33 @@ abstract class Config
 			'iyzico_default_settings',
 			array(
 				'woocommerce_iyzico_settings' => array(
-					'enabled' => 'yes',
-					'affiliate_network' => '',
-					'form_language' => 'TR',
-					'order_status' => 'default',
+					'enabled'                => 'yes',
+					'affiliate_network'      => '',
+					'form_language'          => 'TR',
+					'order_status'           => 'default',
 					'payment_checkout_value' => __(
 						'Thank you for your order, please enter your card information in the payment form below to pay with iyzico checkout.',
 						'woocommerce-iyzico'
 					),
-					'title' => __('Pay with Bank/Debit Card', 'woocommerce-iyzico'),
-					'button_text' => __('Pay With Card', 'woocommerce-iyzico'),
-					'description' => __(
+					'title'                  => __('Pay with Bank/Debit Card', 'woocommerce-iyzico'),
+					'button_text'            => __('Pay with Bank/Debit Card', 'woocommerce-iyzico'),
+					'description'            => __(
 						'Pay with your credit card or debit card via iyzico.',
 						'woocommerce-iyzico'
 					),
-					'icon' => PLUGIN_ASSETS_DIR_URL . '/images/cards_v2.png',
-					'success_status' => 'processing',
-					'overlay_script' => 'left',
-					'form_class' => 'popup',
-					'secret_key' => '',
-					'api_key' => '',
-					'api_type' => 'https://sandbox-api.iyzipay.com',
-					'request_log_enabled' => 'no',
+					'icon'                   => PLUGIN_ASSETS_DIR_URL . '/images/cards_v2.png',
+					'success_status'         => 'processing',
+					'overlay_script'         => 'left',
+					'form_class'             => 'popup',
+					'secret_key'             => '',
+					'api_key'                => '',
+					'api_type'               => 'https://sandbox-api.iyzipay.com',
+					'request_log_enabled'    => 'no',
 				),
-				'woocommerce_pwi_settings' => array(
-					'enabled' => 'yes',
-					'icon' => PLUGIN_ASSETS_DIR_URL . '/images/iyzico.png',
-					'title' => __('Pay with iyzico', 'woocommerce-iyzico'),
+				'woocommerce_pwi_settings'    => array(
+					'enabled'     => 'yes',
+					'icon'        => PLUGIN_ASSETS_DIR_URL . '/images/iyzico.png',
+					'title'       => __('Pay with iyzico', 'woocommerce-iyzico'),
 					'button_text' => __('Pay with iyzico', 'woocommerce-iyzico'),
 					'description' => __(
 						"Your money safe with iyzico! Store your iyzico card and enjoy one-click payment. All your transactions under the iyzico Buyer Protection guarantee. Get live support 24/7.",

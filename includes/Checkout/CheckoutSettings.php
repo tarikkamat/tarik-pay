@@ -20,7 +20,7 @@ class CheckoutSettings extends Config
 				'description' => $webhookUrl,
 			],
 			'api_type' => [
-				'title' => __('Api Type', 'woocommerce-iyzico'),
+				'title' => __('API Type', 'woocommerce-iyzico'),
 				'type' => 'select',
 				'required' => true,
 				'default' => 'responsive',
@@ -30,7 +30,7 @@ class CheckoutSettings extends Config
 				],
 			],
 			'api_key' => [
-				'title' => __('Api Key', 'woocommerce-iyzico'),
+				'title' => __('API Key', 'woocommerce-iyzico'),
 				'type' => 'text'
 			],
 			'secret_key' => [
@@ -121,7 +121,7 @@ class CheckoutSettings extends Config
 			],
 			'enabled' => [
 				'title' => __('Enable/Disable', 'woocommerce-iyzico'),
-				'label' => __('Enable iyzico checkout', 'woocommerce-iyzico'),
+				'label' => __('Enable iyzico Checkout Form', 'woocommerce-iyzico'),
 				'type' => 'checkbox',
 				'default' => 'no'
 			],
