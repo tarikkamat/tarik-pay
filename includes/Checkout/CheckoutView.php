@@ -18,9 +18,6 @@ class CheckoutView
     }
     
     /**
-     * Renders the checkout form with proper error handling and display logic
-     *
-     * @param CheckoutFormInitialize $checkoutFormInitialize
      * @return void
      */
     public function renderCheckoutForm(CheckoutFormInitialize $checkoutFormInitialize): void
@@ -44,10 +41,8 @@ class CheckoutView
             echo esc_html($checkoutFormInitialize->getErrorMessage());
         }
     }
-    
+
     /**
-     * Renders the loading animation HTML
-     *
      * @return void
      */
     public function renderLoadingHtml(): void
@@ -64,8 +59,6 @@ class CheckoutView
     }
     
     /**
-     * Renders the info box with payment checkout value
-     *
      * @return void
      */
     private function renderInfoBox(): void
@@ -79,9 +72,6 @@ class CheckoutView
     }
     
     /**
-     * Renders the UI control script
-     * Bu script iyziInit yüklendikten sonra UI elementlerini gösterir
-     *
      * @return void
      */
     private function renderUiControlScript(): void
@@ -90,7 +80,6 @@ class CheckoutView
         <script type="text/javascript">
             var checkIyziInit = function() {
                 if (typeof iyziInit !== 'undefined') {
-                    // iyzico script yüklendi, UI elementlerini göster
                     document.getElementById('<?php echo esc_js(self::LOADING_ID); ?>').style.display = 'none';
                     document.getElementById('<?php echo esc_js(self::INFO_BOX_ID); ?>').style.display = 'block';
                     document.getElementById('<?php echo esc_js(self::CHECKOUT_FORM_ID); ?>').style.display = 'block';
