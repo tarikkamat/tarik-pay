@@ -28,10 +28,10 @@ class DatabaseManager
 
 			$sql = "CREATE TABLE $table_name (
                 iyzico_order_id int(11) NOT NULL AUTO_INCREMENT,
-                payment_id  bigint(11) NOT NULL,
+                payment_id  varchar(50),
                 order_id int(11) NOT NULL,
-                total_amount decimal( 10, 2 ) NOT NULL,
-                status varchar(20) NOT NULL,
+                total_amount decimal( 10, 2 ),
+                status varchar(20),
                 created_at  timestamp DEFAULT current_timestamp,
               PRIMARY KEY (iyzico_order_id)
             ) $charset_collate;";
@@ -50,6 +50,49 @@ class DatabaseManager
 			self::$logger->info('Tables created successfully');
 		} catch (Exception $e) {
 			self::$logger->error('Error creating tables: ' . $e->getMessage());
+		}
+	}
+
+	public static function updateTables(): void
+	{
+		self::ensureInitialized();
+		try {
+			global $wpdb;
+			$table_name = $wpdb->prefix . 'iyzico_order';
+
+			$table_exists = $wpdb->get_var(
+				$wpdb->prepare(
+					"SHOW TABLES LIKE %s",
+					$table_name
+				)
+			);
+
+			if ($table_exists) {
+				$conversation_id_exists = $wpdb->get_results("SHOW COLUMNS FROM {$table_name} LIKE 'conversation_id'");
+				if (empty($conversation_id_exists)) {
+					$wpdb->query("ALTER TABLE {$table_name} ADD conversation_id VARCHAR(50) NULL AFTER status");
+				}
+
+				$token_exists = $wpdb->get_results("SHOW COLUMNS FROM {$table_name} LIKE 'token'");
+				if (empty($token_exists)) {
+					$wpdb->query("ALTER TABLE {$table_name} ADD token VARCHAR(100) NULL AFTER conversation_id");
+				}
+
+				$payment_status_exists = $wpdb->get_results("SHOW COLUMNS FROM {$table_name} LIKE 'payment_status'");
+				if (empty($payment_status_exists)) {
+					$wpdb->query("ALTER TABLE {$table_name} ADD payment_status VARCHAR(50) NULL AFTER token");
+				}
+
+				$wpdb->query("ALTER TABLE {$table_name} MODIFY payment_id VARCHAR(50) NULL");
+				$wpdb->query("ALTER TABLE {$table_name} MODIFY conversation_id VARCHAR(50) NULL");
+				$wpdb->query("ALTER TABLE {$table_name} MODIFY token VARCHAR(100) NULL");
+
+				self::$logger->info('Table columns added and modified successfully');
+			} else {
+				self::$logger->error('iyzico_order table does not exist');
+			}
+		} catch (Exception $e) {
+			self::$logger->error('Error updating tables: ' . $e->getMessage());
 		}
 	}
 
@@ -89,7 +132,7 @@ class DatabaseManager
 		}
 	}
 
-	public static function createOrder($paymentId, $orderId, $totalAmount, $status)
+	public static function createOrder($paymentId, $orderId, $totalAmount, $status, $conversationId, $token, $paymentStatus)
 	{
 		self::ensureInitialized();
 		$tableName = self::$wpdb->prefix . 'iyzico_order';
@@ -100,9 +143,113 @@ class DatabaseManager
 				'payment_id' => $paymentId,
 				'order_id' => $orderId,
 				'total_amount' => $totalAmount,
-				'status' => $status
+				'status' => $status,
+				'conversation_id' => $conversationId,
+				'token' => $token,
+				'payment_status' => $paymentStatus
 			],
-			['%s', '%d', '%f', '%s']
+			['%s', '%d', '%f', '%s', '%s', '%s', '%s']
+		);
+	}
+
+	public static function createOrUpdateOrder($paymentId, $orderId, $conversationId, $token, $totalAmount, $status, $paymentStatus)
+	{
+		try {
+			self::ensureInitialized();
+			$tableName = self::$wpdb->prefix . 'iyzico_order';
+
+			$existingOrder = self::findOrderByOrderId($orderId);
+			if (is_array($existingOrder)) {
+				$existingOrderId = $existingOrder['iyzico_order_id'];
+				self::$wpdb->update(
+					$tableName,
+					[
+						'payment_id' => $paymentId,
+						'order_id' => $orderId,
+						'conversation_id' => $conversationId,
+						'token' => $token,
+						'total_amount' => $totalAmount,
+						'status' => $status,
+						'payment_status' => $paymentStatus
+					],
+					['iyzico_order_id' => $existingOrderId],
+					['%s', '%d', '%s', '%s', '%f', '%s', '%s'],
+					['%d']
+				);
+			} else {
+				self::$wpdb->insert(
+					$tableName,
+					[
+						'payment_id' => $paymentId,
+						'order_id' => $orderId,
+						'conversation_id' => $conversationId,
+						'token' => $token,
+						'total_amount' => $totalAmount,
+						'status' => $status,
+						'payment_status' => $paymentStatus
+					],
+					['%s', '%d', '%s', '%s', '%f', '%s', '%s']
+				);
+			}
+		} catch (Exception $e) {
+			self::$logger->error('Error in createOrUpdateOrder: ' . $e->getMessage());
+			return false;
+		}
+	}
+
+	public static function updateStatusByOrderId($orderId, $status)
+	{
+		self::ensureInitialized();
+		$tableName = self::$wpdb->prefix . 'iyzico_order';
+
+		return self::$wpdb->update(
+			$tableName,
+			['status' => $status],
+			['order_id' => $orderId],
+			['%s'],
+			['%d']
+		);
+	}
+
+	public static function updatePaymentStatusByOrderId($orderId, $paymentStatus)
+	{
+		self::ensureInitialized();
+		$tableName = self::$wpdb->prefix . 'iyzico_order';
+
+		return self::$wpdb->update(
+			$tableName,
+			['payment_status' => $paymentStatus],
+			['order_id' => $orderId],
+			['%s'],
+			['%d']
+		);
+	}
+
+	public static function updatePaymentIdByOrderId($orderId, $paymentId)
+	{
+		self::ensureInitialized();
+		$tableName = self::$wpdb->prefix . 'iyzico_order';
+
+		return self::$wpdb->update(
+			$tableName,
+			['payment_id' => $paymentId],
+			['order_id' => $orderId],
+			['%s'],
+			['%d']
+		);
+	}
+
+	public static function updateTotalAmountByOrderId($orderId, $totalAmount)
+	{
+		self::ensureInitialized();
+		$tableName = self::$wpdb->prefix . 'iyzico_order';
+
+		return self::$wpdb->update(
+			$tableName,
+			['total_amount' => $totalAmount],
+			['order_id' => $orderId],
+			['%f'],
+			['%d']
 		);
 	}
 
@@ -117,6 +264,21 @@ class DatabaseManager
 			WHERE order_id = %d
 			ORDER BY iyzico_order_id DESC LIMIT 1;
 		", $orderId);
+
+		return self::$wpdb->get_row($sql, ARRAY_A);
+	}
+
+	public static function findOrderByToken($token)
+	{
+		self::ensureInitialized();
+		$tableName = self::$wpdb->prefix . 'iyzico_order';
+
+		$sql = self::$wpdb->prepare("
+			SELECT *
+			FROM $tableName
+			WHERE token = %s
+			ORDER BY iyzico_order_id DESC LIMIT 1;
+		", $token);
 
 		return self::$wpdb->get_row($sql, ARRAY_A);
 	}
@@ -152,6 +314,4 @@ class DatabaseManager
 			['%d', '%s', '%s']
 		);
 	}
-
-
 }

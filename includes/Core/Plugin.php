@@ -19,6 +19,9 @@ class Plugin
 	public static function activate()
 	{
 		DatabaseManager::createTables();
+		if (IYZICO_DB_VERSION >= 3.58) {
+			DatabaseManager::updateTables();
+		}
 	}
 
 	public static function deactivate()

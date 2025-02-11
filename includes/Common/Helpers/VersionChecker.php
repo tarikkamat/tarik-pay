@@ -20,9 +20,9 @@ class VersionChecker
 
 	private function checkPhpVersion()
 	{
-		$requiredPhpVersion = 8.2;
+		$requiredPhpVersion = 7.4;
 		if (phpversion() < $requiredPhpVersion) {
-			$this->logger->error('Required PHP 8.2 and greater for iyzico WooCommerce Payment Gateway');
+			$this->logger->error('Required PHP 7.4 and greater for iyzico WooCommerce Payment Gateway');
 		}
 	}
 

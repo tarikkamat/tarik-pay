@@ -110,6 +110,7 @@ class WebhookHelper
 
 		if ($iyzicoSignature === $hmac256Signature) {
 			$data = [
+				'token' => $token,
 				'iyziEventType' => $iyziEventType,
 				'paymentConversationId' => $paymentConversationId,
 				'status' => $status,

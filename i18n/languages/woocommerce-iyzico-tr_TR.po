@@ -170,3 +170,6 @@ msgstr "iyzico Havale/EFT ödemesi bekleniyor."
 
 msgid "Payment Form Language"
 msgstr "Ödeme Formu Dili"
+
+msgid "This payment was confirmed via webhook."
+msgstr "Bu ödeme webhook ile doğrulandı."

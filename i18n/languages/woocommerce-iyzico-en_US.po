@@ -169,4 +169,7 @@ msgid "iyzico Bank transfer/EFT payment is pending."
 msgstr "iyzico Bank transfer/EFT payment is pending."
 
 msgid "Payment Form Language"
-msgstr "Ödeme Formu Dili"
+msgstr "Payment Form Language"
+
+msgid "This payment was confirmed via webhook."
+msgstr "This payment was confirmed via webhook."

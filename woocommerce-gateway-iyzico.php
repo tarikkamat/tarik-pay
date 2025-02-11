@@ -36,7 +36,8 @@ defined('ABSPATH') || exit;
  *
  * These constants are used to define the plugin version, base file, path, url and language path.
  */
-const PLUGIN_VERSION = '3.5.8';
+const IYZICO_PLUGIN_VERSION = '3.5.8';
+const IYZICO_DB_VERSION = 3.58;
 const PLUGIN_BASEFILE = __FILE__;
 
 define('PLUGIN_PATH', untrailingslashit(plugin_dir_path(PLUGIN_BASEFILE)));

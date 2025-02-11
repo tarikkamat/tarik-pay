@@ -6,9 +6,9 @@ use Iyzico\IyzipayWoocommerce\Checkout\CheckoutSettings;
 
 class BuyerProtection
 {
-	public static function iyzicoOverlayScriptMobileCss()
-	{
-		echo '<style>
+    public static function iyzicoOverlayScriptMobileCss()
+    {
+        echo '<style>
 	                @media screen and (max-width: 380px) {
                         ._1xrVL7npYN5CKybp32heXk {
 		                    position: fixed;
@@ -19,24 +19,20 @@ class BuyerProtection
                         }
                     }
 	            </style>';
-	}
+    }
 
-	public function getOverlayScript()
-	{
-		$checkoutSettings = new CheckoutSettings();
-		$token = get_option('iyzico_overlay_token');
-		$position = $checkoutSettings->findByKey('overlay_script');
-		$overlayScript = false;
+    public function getOverlayScript()
+    {
+        $checkoutSettings = new CheckoutSettings();
+        $token = get_option('iyzico_overlay_token');
+        $position = $checkoutSettings->findByKey('overlay_script');
+        $overlayScript = false;
 
-		if ($position != 'hide') {
-			$overlayScript = "<script> window.iyz = { token:'" . $token . "', position:'" . $position . "',ideaSoft: false, pwi:true};</script>
+        if ($position === 'bottomLeft' || $position === 'bottomRight') {
+            $overlayScript = "<script> window.iyz = { token:'" . $token . "', position:'" . $position . "',ideaSoft: false, pwi:true};</script>
                     <script src='https://static.iyzipay.com/buyer-protection/buyer-protection.js' type='text/javascript'></script>";
-		}
+        }
 
-		if ($position == '') {
-			$overlayScript = false;
-		}
-
-		echo $overlayScript;
-	}
+        echo $overlayScript;
+    }
 }

@@ -23,7 +23,7 @@ class CheckoutSettings extends Config
 				'title' => __('Environment', 'woocommerce-iyzico'),
 				'type' => 'select',
 				'required' => true,
-				'default' => 'responsive',
+				'default' => 'https://sandbox-api.iyzipay.com',
 				'options' => [
 					'https://api.iyzipay.com' => __('Live', 'woocommerce-iyzico'),
 					'https://sandbox-api.iyzipay.com' => __('Sandbox / Test', 'woocommerce-iyzico')
