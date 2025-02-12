@@ -136,7 +136,21 @@ class DataFactory
 			}
 
 			$basketItem = new BasketItem();
-			$basketItem->setId($this->validateStringVal((string) $item['product_id']));
+			$basketItemId = 'UNKNOWN';
+
+			if (get_class($product) === 'WC_Product_Composite') {
+				$basketItemId = $this->validateStringVal($product->get_id());
+			}
+
+			if (get_class($product) === 'WC_Product_Variation') {
+				$basketItemId = $this->validateStringVal(isset($item['variation_id']) && $item['variation_id'] ? (string) $item['variation_id'] : (string) $item['product_id']);
+			}
+
+			if ($basketItemId === 'UNKNOWN') {
+				$basketItemId = $this->validateStringVal(isset($item['product_id']) && $item['product_id'] ? (string) $item['product_id'] : (string) $product->get_sku());
+			}
+
+			$basketItem->setId($this->validateStringVal($basketItemId));
 			$basketItem->setName($this->validateStringVal($product->get_name()));
 
 			$product_id = $product->is_type('variation') ? $product->get_parent_id() : $product->get_id();

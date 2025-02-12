@@ -37,6 +37,7 @@ class RefundProcessor
 		}
 
 		$paymentId = $order['payment_id'];
+		$conversationId = $order['conversation_id'];
 
 		if (is_null($amount)) {
 			$amount = $order['total_amount'];
@@ -46,7 +47,7 @@ class RefundProcessor
 
 		$request = new AmountBaseRefundRequest();
 		$request->setPaymentId($paymentId);
-		$request->setConversationId($orderId);
+		$request->setConversationId($conversationId);
 		$request->setPrice($this->priceHelper->priceParser($amount));
 		$request->setIp($_SERVER['REMOTE_ADDR']);
 
