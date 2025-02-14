@@ -60,6 +60,7 @@ if (file_exists(PLUGIN_PATH . '/vendor/autoload.php')) {
  */
 register_activation_hook(PLUGIN_BASEFILE, ['\Iyzico\IyzipayWoocommerce\Core\Plugin', 'activate']);
 register_deactivation_hook(PLUGIN_BASEFILE, ['\Iyzico\IyzipayWoocommerce\Core\Plugin', 'deactivate']);
+add_action('upgrader_process_complete', ['\Iyzico\IyzipayWoocommerce\Core\Plugin', 'update']);
 
 /**
  * Initialize the plugin
