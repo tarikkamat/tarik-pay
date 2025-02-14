@@ -65,11 +65,9 @@ class Plugin
 	{
 		$installed_version = get_option('iyzico_db_version', '0');
 
-		if (version_compare($installed_version, IYZICO_DB_VERSION, '<')) {
-			if (IYZICO_DB_VERSION >= 3.58) {
-				DatabaseManager::updateTables();
-			}
-			update_option('iyzico_db_version', IYZICO_DB_VERSION);
+		if (version_compare($installed_version, (string)IYZICO_DB_VERSION, '<')) {
+			DatabaseManager::updateTables();
+			update_option('iyzico_db_version', (string)IYZICO_DB_VERSION);
 		}
 	}
 
